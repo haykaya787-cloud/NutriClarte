@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="fr" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NutriClarte</title>
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Aller au contenu</a>
+  <header>
+    <div class="container nav">
+      <a class="brand" href="#top" aria-label="Accueil NutriClarte">
+        <svg viewBox="0 0 64 64" aria-hidden="true" fill="none">
+          <rect x="8" y="8" width="48" height="48" rx="16" stroke="currentColor" stroke-width="4"></rect>
+          <path d="M22 34c4 4 8 6 10 6 8 0 14-10 14-18-8 0-18 6-18 14 0 2 .5 4 2 6 2-10 10-13 16-14" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+        <span>NutriClarte</span>
+      </a>
+      <div class="nav-actions">
+        <a class="ghost-btn" href="/en/">EN</a>
+        <a class="ghost-btn" href="/fr/">FR</a>
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Passer au mode sombre">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero container">
+      <div class="hero-grid">
+        <div>
+          <span class="eyebrow">Lecture de code-barres et conseils nutritionnels selon la condition</span>
+          <h1>Créez une application inspirée de Yuka, centrée sur le diabète, le cholestérol et l’hypertension.</h1>
+          <p>Ce prototype montre l’expérience principale : scanner un aliment emballé, analyser les nutriments de l’étiquette, puis afficher des recommandations simples adaptées au diabète, au cholestérol LDL et au risque d’hypertension.</p>
+          <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:1.5rem;">
+            <a class="primary-btn" href="#scanner">Essayer la logique de démonstration</a>
+            <a class="secondary-btn" href="#architecture">Voir l’architecture de l’application</a>
+          </div>
+        </div>
+        <article class="hero-card" aria-label="Résumé du produit">
+          <h2 style="margin-bottom:1rem;">Ce que fait le MVP</h2>
+          <div class="hero-stats">
+            <div class="stat"><strong>Scan</strong><span>Code-barres, OCR ou recherche du produit.</span></div>
+            <div class="stat"><strong>Score</strong><span>Score nutritionnel spécifique à chaque condition.</span></div>
+            <div class="stat"><strong>Substitution</strong><span>Alternatives plus saines dans la même catégorie.</span></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="container">
+      <h2>Fonctionnalités clés</h2>
+      <div class="feature-grid">
+        <article class="card">
+          <h3>Saisie intelligente du scan</h3>
+          <p>Utilisez d’abord le scan du code-barres, puis la recherche textuelle et l’OCR de l’étiquette nutritionnelle si le produit manque au catalogue.</p>
+        </article>
+        <article class="card">
+          <h3>Moteur par condition</h3>
+          <p>Évaluez les produits selon les sucres ajoutés, les fibres, les graisses saturées, le sodium et le contexte de la catégorie pour générer des conseils adaptés à chaque condition.</p>
+        </article>
+        <article class="card">
+          <h3>Substitutions concrètes</h3>
+          <p>Recommandez des alternatives moins sucrées, moins salées ou moins riches en graisses saturées dans la même famille de produits, plutôt que des conseils génériques.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="container">
+      <h2>Axes cliniques</h2>
+      <div class="conditions">
+        <article class="card">
+          <h3>Diabète</h3>
+          <p>Priorisez les sucres ajoutés, les glucides totaux par portion, les fibres, la taille réelle de la portion et le fait que l’aliment ressemble à une boisson ou à un dessert.</p>
+        </article>
+        <article class="card">
+          <h3>Cholestérol</h3>
+          <p>Priorisez les graisses saturées, les graisses trans si disponibles, les fibres et la composition globale plutôt que le gras total seul.</p>
+        </article>
+        <article class="card">
+          <h3>Hypertension artérielle</h3>
+          <p>Priorisez la densité en sodium, le réalisme de la portion et les pénalités pour aliments transformés, car le sodium s’accumule souvent sur plusieurs portions.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="scanner" class="container">
+      <h2>Prototype MVP</h2>
+      <div class="scanner">
+        <form class="panel" id="product-form">
+          <div class="form-grid">
+            <div>
+              <label for="productName">Nom du produit</label>
+              <input id="productName" name="productName" value="Soupe à la tomate">
+            </div>
+            <div>
+              <label for="category">Catégorie</label>
+              <select id="category" name="category">
+                <option>Soupe</option>
+                <option>Céréales du petit-déjeuner</option>
+                <option>Yaourt</option>
+                <option>Barre collation</option>
+                <option>Boisson</option>
+                <option>Repas congelé</option>
+              </select>
+            </div>
+            <div>
+              <label for="serving">Taille de portion</label>
+              <input id="serving" name="serving" value="250 g">
+            </div>
+            <div>
+              <label for="servingsPerPack">Portions par emballage</label>
+              <input id="servingsPerPack" name="servingsPerPack" type="number" value="2" min="1" step="1">
+            </div>
+            <div>
+              <label for="sodium">Sodium mg</label>
+              <input id="sodium" name="sodium" type="number" value="780" min="0" step="1">
+            </div>
+            <div>
+              <label for="addedSugar">Sucres ajoutés g</label>
+              <input id="addedSugar" name="addedSugar" type="number" value="4" min="0" step="0.1">
+            </div>
+            <div>
+              <label for="satFat">Graisses saturées g</label>
+              <input id="satFat" name="satFat" type="number" value="1.5" min="0" step="0.1">
+            </div>
+            <div>
+              <label for="fiber">Fibres g</label>
+              <input id="fiber" name="fiber" type="number" value="3" min="0" step="0.1">
+            </div>
+            <div>
+              <label for="carbs">Glucides totaux g</label>
+              <input id="carbs" name="carbs" type="number" value="16" min="0" step="0.1">
+            </div>
+            <div>
+              <label for="calories">Calories</label>
+              <input id="calories" name="calories" type="number" value="110" min="0" step="1">
+            </div>
+          </div>
+
+          <div style="margin-top:1rem;">
+            <label>Profil de santé</label>
+            <div class="checks">
+              <label class="pill"><input type="checkbox" name="profile" value="diabetes" checked> Diabète</label>
+              <label class="pill"><input type="checkbox" name="profile" value="cholesterol" checked> Cholestérol</label>
+              <label class="pill"><input type="checkbox" name="profile" value="hypertension" checked> Hypertension artérielle</label>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:1.5rem;">
+            <button class="primary-btn" type="submit">Analyser le produit</button>
+            <button class="secondary-btn" type="button" id="load-cereal">Charger un exemple de céréales sucrées</button>
+          </div>
+        </form>
+
+        <div class="result-card" aria-live="polite">
+          <div class="scan-box">
+            <div class="barcode" aria-hidden="true"></div>
+            <p class="footer-note">Mode démo : le prototype simule l’écran après scan et le moteur de recommandations à partir des valeurs nutritionnelles saisies ci-dessus.</p>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
+            <div class="score-ring" id="overallRing" style="--score:54;--ring-color:var(--color-warning);">
+              <span id="overallScore">54</span>
+            </div>
+            <div>
+              <h3 id="resultTitle" style="margin-bottom:.35rem;">À utiliser occasionnellement</h3>
+              <p id="resultSummary" style="margin-bottom:.5rem;">Cette soupe est acceptable pour le cholestérol, mais sa teneur en sodium est élevée pour les personnes qui gèrent leur tension artérielle.</p>
+            </div>
+          </div>
+
+          <div class="score-badges" id="badges"></div>
+
+          <div>
+            <div class="scores" id="conditionScores"></div>
+          </div>
+
+          <div>
+            <h3>Recommandations</h3>
+            <div class="recommendations" id="recommendations"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="architecture" class="container">
+      <h2>Architecture d’application recommandée</h2>
+      <div class="feature-grid">
+        <article class="card">
+          <h3>Client mobile</h3>
+          <p>Flutter ou React Native, scan de code-barres avec la caméra, interface des résultats nutritionnels, préférences enregistrées et support multilingue.</p>
+        </article>
+        <article class="card">
+          <h3>Couche de données nutritionnelles</h3>
+          <p>Commencez avec Open Food Facts pour une large couverture du catalogue, puis ajoutez une normalisation produit soignée et vos propres métadonnées de recommandation.</p>
+        </article>
+        <article class="card">
+          <h3>Personnalisation par règles</h3>
+          <p>Utilisez d’abord un moteur de règles transparent, puis ajoutez plus tard un classement basé sur l’apprentissage automatique pour que chaque recommandation reste explicable.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="container">
+      <h2>Prochaines étapes</h2>
+      <div class="panel">
+        <ul>
+          <li>Connecter un SDK de scan de code-barres et une API de base de données produits.</li>
+          <li>Normaliser les nutriments par portion et par 100 g pour mieux comparer les produits.</li>
+          <li>Créer une matrice de règles validée par des cliniciens pour chaque condition et chaque catégorie d’aliments.</li>
+          <li>Ajouter une logique de substitution qui compare uniquement les produits de la même catégorie.</li>
+          <li>Stocker l’historique des scans, les favoris et les profils du foyer, comme adulte avec diabète ou foyer pauvre en sodium.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p class="footer-note">Important : ce prototype sert uniquement à la conception du produit et à l’orientation éducative. Il ne pose pas de diagnostic et ne remplace pas un avis médical personnalisé.</p>
+    </div>
+  </footer>
+  <script src="/assets/js/app.js"></script>
+</body>
+</html>
