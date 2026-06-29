@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NutriClarte</title>
+  <link rel="preconnect" href="https://api.fontshare.com" />
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&f[]=cabinet-grotesk@500,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/css/style.css">
+    :root, [data-theme="light"] {
+      --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+      --text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+      --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+      --text-lg: clamp(1.125rem, 1rem + 0.75vw, 1.5rem);
+      --text-xl: clamp(1.5rem, 1.2rem + 1.25vw, 2.25rem);
+      --text-2xl: clamp(2rem, 1.2rem + 2.5vw, 3.5rem);
+      --space-1: .25rem; --space-2: .5rem; --space-3: .75rem; --space-4: 1rem; --space-5: 1.25rem; --space-6: 1.5rem; --space-8: 2rem; --space-10: 2.5rem; --space-12: 3rem; --space-16: 4rem;
+      --color-bg: #f7f6f2; --color-surface: #f9f8f5; --color-surface-2: #fbfbf9; --color-surface-offset: #edeae5; --color-border: #d4d1ca; --color-text: #28251d; --color-text-muted: #6f6d66; --color-text-faint: #9a9890; --color-text-inverse: #f9f8f4;
+      --color-primary: #01696f; --color-primary-hover: #0c4e54; --color-primary-highlight: #dce9e7;
+      --color-success: #437a22; --color-warning: #964219; --color-error: #a12c7b; --color-blue: #006494;
+      --radius-sm: .375rem; --radius-md: .5rem; --radius-lg: .75rem; --radius-xl: 1rem; --radius-full: 9999px;
+      --shadow-sm: 0 1px 2px rgba(40,37,29,.06); --shadow-md: 0 8px 24px rgba(40,37,29,.10);
+      --font-body: 'Satoshi', 'Inter', sans-serif; --font-display: 'Cabinet Grotesk', 'Inter', sans-serif;
+    }
+    [data-theme="dark"] {
+      --color-bg: #171614; --color-surface: #1c1b19; --color-surface-2: #201f1d; --color-surface-offset: #262421; --color-border: #393836; --color-text: #cdccca; --color-text-muted: #a6a39d; --color-text-faint: #7d7a74; --color-text-inverse: #171614;
+      --color-primary: #4f98a3; --color-primary-hover: #227f8b; --color-primary-highlight: #223235;
+      --color-success: #6daa45; --color-warning: #bb653b; --color-error: #d163a7; --color-blue: #5591c7;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,.2); --shadow-md: 0 8px 24px rgba(0,0,0,.32);
+    }
+    *,*::before,*::after{box-sizing:border-box} html{-webkit-text-size-adjust:none;text-size-adjust:none;scroll-behavior:smooth} body{margin:0;min-height:100dvh;font-family:var(--font-body);font-size:var(--text-base);line-height:1.6;background:var(--color-bg);color:var(--color-text)} img,svg{display:block;max-width:100%;height:auto} button,input,select{font:inherit} button{cursor:pointer}
+    a{color:inherit} .skip-link{position:absolute;left:-9999px;top:auto}.skip-link:focus{left:1rem;top:1rem;background:var(--color-primary);color:var(--color-text-inverse);padding:.5rem .75rem;border-radius:var(--radius-md)}
+    .container{max-width:1200px;margin-inline:auto;padding-inline:var(--space-4)}
+    header{position:sticky;top:0;z-index:20;background:color-mix(in srgb, var(--color-bg) 88%, transparent);backdrop-filter: blur(10px);border-bottom:1px solid color-mix(in srgb, var(--color-text) 12%, transparent)}
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);padding:var(--space-4) 0}
+    .brand{display:flex;align-items:center;gap:var(--space-3);font-weight:700;text-decoration:none}
+    .brand svg{width:2rem;height:2rem}
+    .nav-actions{display:flex;align-items:center;gap:var(--space-3)}
+    .theme-toggle,.ghost-btn,.primary-btn,.secondary-btn{min-width:44px;min-height:44px;border-radius:var(--radius-full);border:1px solid color-mix(in srgb, var(--color-text) 10%, transparent);background:var(--color-surface);color:var(--color-text)}
+    .primary-btn,.secondary-btn,.ghost-btn{padding:.8rem 1rem;border-radius:var(--radius-lg);text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:.5rem}
+    .primary-btn{background:var(--color-primary);border-color:var(--color-primary);color:var(--color-text-inverse);font-weight:700}
+    .secondary-btn{background:var(--color-surface-2)}
+    .theme-toggle{display:grid;place-items:center}
+    .hero{padding:clamp(3rem,6vw,6rem) 0}
+    .hero-grid{display:grid;gap:var(--space-8);align-items:center}
+    .eyebrow{display:inline-flex;align-items:center;gap:.5rem;padding:.4rem .75rem;border-radius:var(--radius-full);background:var(--color-primary-highlight);color:var(--color-primary);font-size:var(--text-sm);font-weight:700}
+    h1,h2,h3{font-family:var(--font-display);line-height:1.1;margin:0 0 var(--space-4)}
+    h1{font-size:var(--text-2xl);max-width:12ch}
+    h2{font-size:var(--text-xl)} h3{font-size:var(--text-lg)} p{margin:0 0 var(--space-4);max-width:68ch;color:var(--color-text-muted)}
+    .hero-card,.panel,.card,.result-card{background:var(--color-surface);border:1px solid color-mix(in srgb, var(--color-text) 10%, transparent);border-radius:var(--radius-xl);box-shadow:var(--shadow-sm)}
+    .hero-card{padding:var(--space-6)}
+    .grid-3,.feature-grid,.conditions,.scores,.recommendations{display:grid;gap:var(--space-4)}
+    .hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-3);margin-top:var(--space-6)}
+    .stat{padding:var(--space-4);background:var(--color-surface-2);border-radius:var(--radius-lg)}
+    .stat strong{display:block;font-size:var(--text-lg);color:var(--color-text)}
+    section{padding:var(--space-10) 0}
+    .feature-grid .card,.conditions .card,.scores .card,.recommendations .card{padding:var(--space-5)}
+    .scanner{display:grid;gap:var(--space-6);grid-template-columns:1.1fr .9fr}
+    .panel{padding:var(--space-6)}
+    label{display:block;font-size:var(--text-sm);font-weight:700;margin-bottom:.4rem;color:var(--color-text)}
+    input,select{width:100%;padding:.9rem 1rem;border-radius:var(--radius-lg);border:1px solid color-mix(in srgb, var(--color-text) 14%, transparent);background:var(--color-surface-2);color:var(--color-text)}
+    .form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-4)}
+    .checks{display:flex;flex-wrap:wrap;gap:.75rem}
+    .pill{display:inline-flex;align-items:center;gap:.5rem;padding:.65rem .9rem;border-radius:var(--radius-full);background:var(--color-surface-2);border:1px solid color-mix(in srgb, var(--color-text) 10%, transparent)}
+    .pill input{width:auto;margin:0}
+    .scan-box{display:grid;gap:var(--space-4);padding:var(--space-5);border-radius:var(--radius-lg);background:var(--color-surface-2)}
+    .barcode{display:grid;place-items:center;min-height:180px;border:1px dashed color-mix(in srgb, var(--color-text) 18%, transparent);border-radius:var(--radius-lg);background:repeating-linear-gradient(90deg,var(--color-text) 0 2px,transparent 2px 5px);opacity:.14}
+    .result-card{padding:var(--space-6);display:grid;gap:var(--space-5)}
+    .score-ring{width:120px;height:120px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--ring-color) calc(var(--score)*1%), color-mix(in srgb, var(--color-text) 10%, transparent) 0);padding:8px}
+    .score-ring span{width:100%;height:100%;border-radius:50%;display:grid;place-items:center;background:var(--color-surface);font-family:var(--font-display);font-size:var(--text-xl)}
+    .score-badges{display:flex;flex-wrap:wrap;gap:.75rem}
+    .badge{padding:.45rem .7rem;border-radius:var(--radius-full);font-size:var(--text-sm);font-weight:700}
+    .good{background:color-mix(in srgb, var(--color-success) 18%, var(--color-surface));color:var(--color-success)}
+    .warn{background:color-mix(in srgb, var(--color-warning) 18%, var(--color-surface));color:var(--color-warning)}
+    .alert{background:color-mix(in srgb, var(--color-error) 18%, var(--color-surface));color:var(--color-error)}
+    ul{margin:0;padding-left:1.2rem;color:var(--color-text-muted)}
+    .footer-note{font-size:var(--text-sm);color:var(--color-text-faint)}
+    footer{padding:var(--space-10) 0 var(--space-16);border-top:1px solid color-mix(in srgb, var(--color-text) 12%, transparent)}
+    @media (max-width: 920px){.hero-grid,.scanner{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.hero-stats{grid-template-columns:1fr}.nav{align-items:flex-start;flex-direction:column}.nav-actions{width:100%;justify-content:space-between}}
+    @media (min-width: 921px){.hero-grid{grid-template-columns:1.1fr .9fr}.feature-grid{grid-template-columns:repeat(3,1fr)}.conditions{grid-template-columns:repeat(3,1fr)}.scores{grid-template-columns:repeat(3,1fr)}.recommendations{grid-template-columns:repeat(2,1fr)}}
+    @media (prefers-reduced-motion: reduce){*{scroll-behavior:auto;transition:none!important}}
+  
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header>
+    <div class="container nav">
+      <a class="brand" href="#top" aria-label="NutriClarte home">
+        <svg viewBox="0 0 64 64" aria-hidden="true" fill="none">
+          <rect x="8" y="8" width="48" height="48" rx="16" stroke="currentColor" stroke-width="4"></rect>
+          <path d="M22 34c4 4 8 6 10 6 8 0 14-10 14-18-8 0-18 6-18 14 0 2 .5 4 2 6 2-10 10-13 16-14" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+        <span>NutriClarte</span>
+      </a>
+      <div class="nav-actions"><a class="ghost-btn" href="/en/">EN</a><a class="ghost-btn" href="/fr/">FR</a>
+        <a class="ghost-btn" href="#scanner">Prototype</a>
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark mode">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero container">
+      <div class="hero-grid">
+        <div>
+          <span class="eyebrow">Barcode scan + condition-aware nutrition guidance</span>
+          <h1>Créez une application inspirée de Yuka, centrée sur le diabète, le cholestérol et l’hypertension.</h1>
+          <p>This prototype shows the core product experience: scan a packaged food, analyze label nutrients, then return simple recommendations personalized to diabetes, LDL cholesterol, and hypertension risk.</p>
+          <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:1.5rem">
+            <a class="primary-btn" href="#scanner">Try the demo logic</a>
+            <a class="secondary-btn" href="#architecture">See app architecture</a>
+          </div>
+        </div>
+        <article class="hero-card" aria-label="Product summary">
+          <h2 style="margin-bottom:1rem">What the MVP does</h2>
+          <div class="hero-stats">
+            <div class="stat"><strong>Scan</strong><span>Barcode, OCR, or search product.</span></div>
+            <div class="stat"><strong>Score</strong><span>Condition-specific nutrition risk score.</span></div>
+            <div class="stat"><strong>Swap</strong><span>Safer alternatives in the same category.</span></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="container">
+      <h2>Core features</h2>
+      <div class="feature-grid">
+        <article class="card">
+          <h3>Smart scan intake</h3>
+          <p>Use barcode scan first, then fall back to text search and nutrition label OCR when the product is missing from the catalog.</p>
+        </article>
+        <article class="card">
+          <h3>Condition engine</h3>
+          <p>Score products across added sugar, fiber, saturated fat, sodium, and category context to generate tailored advice for each condition.</p>
+        </article>
+        <article class="card">
+          <h3>Actionable swaps</h3>
+          <p>Recommend lower-sugar, lower-sodium, or lower-saturated-fat alternatives from the same product family instead of generic advice.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="container">
+      <h2>Clinical lenses</h2>
+      <div class="conditions">
+        <article class="card">
+          <h3>Diabetes</h3>
+          <p>Prioritize added sugars, total carbs per serving, fiber, serving size inflation, and whether the food is beverage-like or dessert-like.</p>
+        </article>
+        <article class="card">
+          <h3>Cholesterol</h3>
+          <p>Prioritize saturated fat, trans fat if available, fiber, and whole-food composition instead of total fat alone.</p>
+        </article>
+        <article class="card">
+          <h3>High blood pressure</h3>
+          <p>Prioritize sodium density, serving size realism, and processed-food penalties because sodium often accumulates across servings.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="scanner" class="container">
+      <h2>MVP prototype</h2>
+      <div class="scanner">
+        <form class="panel" id="product-form">
+          <div class="form-grid">
+            <div>
+              <label for="productName">Product name</label>
+              <input id="productName" name="productName" value="Tomato soup" />
+            </div>
+            <div>
+              <label for="category">Category</label>
+              <select id="category" name="category">
+                <option>Soup</option>
+                <option>Breakfast cereal</option>
+                <option>Yogurt</option>
+                <option>Snack bar</option>
+                <option>Beverage</option>
+                <option>Frozen meal</option>
+              </select>
+            </div>
+            <div>
+              <label for="serving">Serving size</label>
+              <input id="serving" name="serving" value="250 g" />
+            </div>
+            <div>
+              <label for="servingsPerPack">Servings per package</label>
+              <input id="servingsPerPack" name="servingsPerPack" type="number" value="2" min="1" step="1" />
+            </div>
+            <div>
+              <label for="sodium">Sodium (mg)</label>
+              <input id="sodium" name="sodium" type="number" value="780" min="0" step="1" />
+            </div>
+            <div>
+              <label for="addedSugar">Added sugars (g)</label>
+              <input id="addedSugar" name="addedSugar" type="number" value="4" min="0" step="0.1" />
+            </div>
+            <div>
+              <label for="satFat">Saturated fat (g)</label>
+              <input id="satFat" name="satFat" type="number" value="1.5" min="0" step="0.1" />
+            </div>
+            <div>
+              <label for="fiber">Fiber (g)</label>
+              <input id="fiber" name="fiber" type="number" value="3" min="0" step="0.1" />
+            </div>
+            <div>
+              <label for="carbs">Total carbs (g)</label>
+              <input id="carbs" name="carbs" type="number" value="16" min="0" step="0.1" />
+            </div>
+            <div>
+              <label for="calories">Calories</label>
+              <input id="calories" name="calories" type="number" value="110" min="0" step="1" />
+            </div>
+          </div>
+          <div style="margin-top:1rem">
+            <label>Health profile</label>
+            <div class="checks">
+              <label class="pill"><input type="checkbox" name="profile" value="diabetes" checked /> Diabetes</label>
+              <label class="pill"><input type="checkbox" name="profile" value="cholesterol" checked /> Cholesterol</label>
+              <label class="pill"><input type="checkbox" name="profile" value="hypertension" checked /> High blood pressure</label>
+            </div>
+          </div>
+          <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:1.5rem">
+            <button class="primary-btn" type="submit">Analyze product</button>
+            <button class="secondary-btn" type="button" id="load-cereal">Load sugary cereal example</button>
+          </div>
+        </form>
+
+        <div class="result-card" aria-live="polite">
+          <div class="scan-box">
+            <div class="barcode" aria-hidden="true"></div>
+            <p class="footer-note">Demo mode: the prototype simulates the post-scan screen and recommendation engine using nutrition facts entered above.</p>
+          </div>
+          <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap">
+            <div class="score-ring" id="overallRing" style="--score:54;--ring-color:var(--color-warning)"><span id="overallScore">54</span></div>
+            <div>
+              <h3 id="resultTitle" style="margin-bottom:.35rem">Use occasionally</h3>
+              <p id="resultSummary" style="margin-bottom:.5rem">This soup is acceptable for cholesterol, but sodium is high for people managing blood pressure.</p>
+              <div class="score-badges" id="badges"></div>
+            </div>
+          </div>
+          <div class="scores" id="conditionScores"></div>
+          <div>
+            <h3>Recommendations</h3>
+            <div class="recommendations" id="recommendations"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="architecture" class="container">
+      <h2>Recommended app architecture</h2>
+      <div class="feature-grid">
+        <article class="card">
+          <h3>Mobile client</h3>
+          <p>Flutter or React Native, camera barcode scanning, nutrition result UI, saved preferences, and multilingual support.</p>
+        </article>
+        <article class="card">
+          <h3>Nutrition data layer</h3>
+          <p>Start with Open Food Facts for broad catalog coverage, then add curated product normalization and your own recommendation metadata.</p>
+        </article>
+        <article class="card">
+          <h3>Rules + personalization</h3>
+          <p>Use a transparent rules engine first, then add machine-learned ranking later so every recommendation remains explainable.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="container">
+      <h2>Next build steps</h2>
+      <div class="panel">
+        <ul>
+          <li>Connect a barcode SDK and a product database API.</li>
+          <li>Normalize nutrients to per serving and per 100 g for better cross-product comparisons.</li>
+          <li>Create a clinician-reviewed rule matrix for each condition and food category.</li>
+          <li>Add substitution logic that compares products only within the same category.</li>
+          <li>Store scan history, favorites, and household profiles such as adult with diabetes or low-sodium household.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p class="footer-note">Important: this prototype is for product design and educational guidance only. It does not diagnose disease or replace personalized medical advice.</p>
+    </div>
+  </footer>
+
+  <script src="/assets/js/app.js"></script></body></html>
