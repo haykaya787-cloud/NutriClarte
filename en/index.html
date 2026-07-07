@@ -29,23 +29,21 @@
     .footer-links a:hover {
       color: #1A365D;
     }
+    /* Store Badges Official Sizing */
     .store-badges-container {
       display: flex;
-      gap: 12px;
+      gap: 16px;
       margin-top: var(--space-6);
+      align-items: center;
       flex-wrap: wrap;
     }
-    .store-btn {
-      background: #111;
-      color: #fff;
-      padding: 10px 20px;
-      border-radius: 8px;
-      font-weight: bold;
-      text-decoration: none;
-      font-size: var(--text-sm);
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
+    .store-badge img {
+      height: 44px;
+      display: block;
+      transition: transform 0.2s ease;
+    }
+    .store-badge img:hover {
+      transform: scale(1.03);
     }
   </style>
 </head>
@@ -73,9 +71,14 @@
           <h1 style="color: #1A365D; margin-top: var(--space-2);">Nutritional analysis tailored to your medical profile.</h1>
           <p class="lead">Scan any food product and discover its standardized 100g clinical impact for <strong>diabetes</strong>, <strong>hypertension</strong>, and <strong>cholesterol</strong> management.</p>
           
+          <!-- Official Store Badges in English -->
           <div class="store-badges-container">
-            <span class="store-btn">🤖 Google Play Store</span>
-            <span class="store-btn">🍏 Apple App Store</span>
+            <a href="#" class="store-badge" aria-label="Get NutriClarté on Google Play">
+              <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play">
+            </a>
+            <a href="#" class="store-badge" aria-label="Download NutriClarté on the Apple App Store">
+              <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;format=png" alt="Download on the App Store">
+            </a>
           </div>
         </div>
 
