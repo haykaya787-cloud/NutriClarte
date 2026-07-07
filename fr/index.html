@@ -6,7 +6,6 @@
   <title>NutriClarté — L'Analyse Nutritionnelle Clinique</title>
   <link rel="stylesheet" href="/assets/css/style.css">
   <style>
-    /* Améliorations de style pour la refonte visuelle */
     .brand img {
       height: 48px;
       object-fit: contain;
@@ -30,23 +29,21 @@
     .footer-links a:hover {
       color: #1A365D;
     }
+    /* Conteneur des vrais badges des Stores */
     .store-badges-container {
       display: flex;
-      gap: 12px;
+      gap: 16px;
       margin-top: var(--space-6);
+      align-items: center;
       flex-wrap: wrap;
     }
-    .store-btn {
-      background: #111;
-      color: #fff;
-      padding: 10px 20px;
-      border-radius: 8px;
-      font-weight: bold;
-      text-decoration: none;
-      font-size: var(--text-sm);
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
+    .store-badge img {
+      height: 44px;
+      display: block;
+      transition: transform 0.2s ease;
+    }
+    .store-badge img:hover {
+      transform: scale(1.03);
     }
   </style>
 </head>
@@ -74,9 +71,14 @@
           <h1 style="color: #1A365D; margin-top: var(--space-2);">L'analyse nutritionnelle adaptée à vos pathologies.</h1>
           <p class="lead">Scannez n'importe quel produit et découvrez instantanément son impact clinique réel standardisé sur 100g pour le <strong>diabète</strong>, l'<strong>hypertension</strong> et le <strong>cholestérol</strong>.</p>
           
+          <!-- Badges Officiels des Stores en Français -->
           <div class="store-badges-container">
-            <span class="store-btn">🤖 Google Play Store</span>
-            <span class="store-btn">🍏 Apple App Store</span>
+            <a href="#" class="store-badge" aria-label="Télécharger NutriClarté sur Google Play">
+              <img src="https://play.google.com/intl/en_us/badges/static/images/badges/fr_badge_web_generic.png" alt="Disponible sur Google Play">
+            </a>
+            <a href="#" class="store-badge" aria-label="Télécharger NutriClarté sur l'App Store d'Apple">
+              <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/fr-fr?size=250x83&amp;format=png" alt="Télécharger dans l'App Store">
+            </a>
           </div>
         </div>
 
@@ -87,7 +89,7 @@
           </div>
 
           <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap; margin-top: 15px;">
-            <div class="score-ring" id=\"overallRing\" style="--score:54;--ring-color:var(--color-warning);">
+            <div class="score-ring" id="overallRing" style="--score:54;--ring-color:var(--color-warning);">
               <span id="overallScore">54</span>
             </div>
             <div>
