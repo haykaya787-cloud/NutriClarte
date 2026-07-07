@@ -6,14 +6,65 @@
   <title>NutriClarté — Clinical Nutritional Analysis</title>
   <link rel="stylesheet" href="/assets/css/style.css">
   <style>
+    /* NUTRICLARTÉ BRANDING REFRESH */
+    :root {
+      --color-primary: #1A365D; /* Deep Clinical Blue */
+      --color-brand-green: #548235; /* Natural Leaf Green */
+    }
+
+    /* HERO LOGO LOCKUP */
+    .brand {
+      display: flex;
+      align-items: center;
+      padding: 15px 0 !important;
+      height: auto !important;
+    }
     .brand img {
-      height: 48px;
+      height: 90px !important; /* Expanded and forced style rule overrides */
+      width: auto !important;
+      max-height: 90px !important;
       object-fit: contain;
     }
+
     .hero-section {
       padding: var(--space-12) 0;
-      background: radial-gradient(circle at top right, rgba(84, 130, 53, 0.05), transparent 50%);
+      background: radial-gradient(circle at top right, rgba(84, 130, 53, 0.08), transparent 60%);
     }
+
+    /* STORE BADGES PIXEL-PERFECT LAYOUT */
+    .store-badges-container {
+      display: flex;
+      gap: 10px;
+      margin-top: var(--space-8);
+      align-items: center;
+      flex-wrap: wrap;
+      height: 50px;
+    }
+    .store-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 45px;
+      overflow: visible;
+    }
+    .store-badge.google-play img {
+      height: 66px !important; /* Counters hidden Google layout margins */
+      max-height: 66px !important;
+      margin-left: -8px;
+    }
+    .store-badge.apple-store img {
+      height: 44px !important;
+      max-height: 44px !important;
+    }
+    .store-badge img {
+      object-fit: contain;
+      display: block;
+      transition: transform 0.2s ease;
+    }
+    .store-badge img:hover {
+      transform: scale(1.03);
+    }
+
     .footer-links {
       display: flex;
       gap: var(--space-6);
@@ -27,31 +78,7 @@
       transition: color 0.2s;
     }
     .footer-links a:hover {
-      color: #1A365D;
-    }
-    
-    /* Strict store logos geometric alignment */
-    .store-badges-container {
-      display: flex;
-      gap: 12px;
-      margin-top: var(--space-6);
-      align-items: center;
-      flex-wrap: wrap;
-    }
-    .store-badge {
-      display: inline-flex;
-      align-items: center;
-      height: 40px;
-    }
-    .store-badge img {
-      height: 100%;
-      max-height: 40px;
-      object-fit: contain;
-      display: block;
-      transition: transform 0.2s ease;
-    }
-    .store-badge img:hover {
-      transform: scale(1.03);
+      color: var(--color-primary);
     }
   </style>
 </head>
@@ -75,16 +102,16 @@
     <section class="hero-section">
       <div class="container hero-grid">
         <div>
-          <span class="badge visual-badge">Medical Mobile Application</span>
-          <h1 style="color: #1A365D; margin-top: var(--space-2);">Nutritional analysis tailored to your medical profile.</h1>
+          <span class="badge visual-badge" style="background-color: rgba(84, 130, 53, 0.1); color: var(--color-brand-green); font-weight: bold;">Medical Mobile Application</span>
+          <h1 style="color: var(--color-primary); margin-top: var(--space-2);">Nutritional analysis tailored to your medical profile.</h1>
           <p class="lead">Scan any food product and discover its standardized 100g clinical impact for <strong>diabetes</strong>, <strong>hypertension</strong>, and <strong>cholesterol</strong> management.</p>
           
-          <!-- Official Store Badges (Harmonized) -->
+          <!-- Balanced Badges Interface -->
           <div class="store-badges-container">
-            <a href="#" class="store-badge" aria-label="Get NutriClarté on Google Play">
+            <a href="#" class="store-badge google-play" aria-label="Get NutriClarté on Google Play">
               <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play">
             </a>
-            <a href="#" class="store-badge" aria-label="Download NutriClarté on the Apple App Store">
+            <a href="#" class="store-badge apple-store" aria-label="Download NutriClarté on the Apple App Store">
               <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;format=png" alt="Download on the App Store">
             </a>
           </div>
@@ -101,7 +128,7 @@
               <span id="overallScore">54</span>
             </div>
             <div>
-              <h3 id="resultTitle" style="margin-bottom:.35rem;">Use occasionally</h3>
+              <h3 id="resultTitle" style="margin-bottom:.35rem; color: var(--color-primary);">Use occasionally</h3>
               <p id="resultSummary" style="margin-bottom:.5rem;">This product is acceptable for cholesterol, but sodium or sugar amounts require close monitoring.</p>
             </div>
           </div>
@@ -110,7 +137,7 @@
           <div class="scores" id="conditionScores"></div>
 
           <div style="margin-top: 15px;">
-            <h3>Clinical Directives & Recommendations</h3>
+            <h3 style="color: var(--color-primary);">Clinical Directives & Recommendations</h3>
             <div class="recommendations" id="recommendations"></div>
           </div>
         </div>
@@ -119,7 +146,7 @@
 
     <section style="background: var(--color-surface); padding: var(--space-12) 0; border-top: 1px solid #eee;">
       <div class="container">
-        <h2>Simulate a product analysis</h2>
+        <h2 style="color: var(--color-primary);">Simulate a product analysis</h2>
         <p style="margin-bottom: var(--space-6);">Modify the clinical parameters to witness our validation engine adapt live.</p>
         
         <form id="matrixForm" class="form-grid">
@@ -149,7 +176,7 @@
             <label for="fiber">Fiber (g per 100g)</label>
             <input type="number" id="fiber" value="3" min="0" max="100">
             
-            <button type="submit" class="primary-btn" style="width:100%; margin-top:20px;">Rerun Evaluation</button>
+            <button type="submit" class="primary-btn" style="width:100%; margin-top:20px; background-color: var(--color-brand-green); border: none;">Rerun Evaluation</button>
           </div>
         </form>
       </div>
