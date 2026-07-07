@@ -29,16 +29,24 @@
     .footer-links a:hover {
       color: #1A365D;
     }
-    /* Store Badges Official Sizing */
+    
+    /* Strict store logos geometric alignment */
     .store-badges-container {
       display: flex;
-      gap: 16px;
+      gap: 12px;
       margin-top: var(--space-6);
       align-items: center;
       flex-wrap: wrap;
     }
+    .store-badge {
+      display: inline-flex;
+      align-items: center;
+      height: 40px;
+    }
     .store-badge img {
-      height: 44px;
+      height: 100%;
+      max-height: 40px;
+      object-fit: contain;
       display: block;
       transition: transform 0.2s ease;
     }
@@ -71,7 +79,7 @@
           <h1 style="color: #1A365D; margin-top: var(--space-2);">Nutritional analysis tailored to your medical profile.</h1>
           <p class="lead">Scan any food product and discover its standardized 100g clinical impact for <strong>diabetes</strong>, <strong>hypertension</strong>, and <strong>cholesterol</strong> management.</p>
           
-          <!-- Official Store Badges in English -->
+          <!-- Official Store Badges (Harmonized) -->
           <div class="store-badges-container">
             <a href="#" class="store-badge" aria-label="Get NutriClarté on Google Play">
               <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play">
