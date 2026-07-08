@@ -164,6 +164,7 @@
       align-items: center !important;
     }
 
+    /* CORRECTION DE L'ANNEAU */
     .score-ring {
       position: relative !important;
       width: 68px !important;
@@ -172,6 +173,7 @@
       min-height: 68px !important;
       max-width: 68px !important;
       max-height: 68px !important;
+      aspect-ratio: 1 / 1 !important;
       border-radius: 50% !important;
       display: flex !important;
       align-items: center !important;
@@ -179,6 +181,7 @@
       background: conic-gradient(var(--ring-color, #c2410c) calc(var(--score, 54) * 1%), #e2e8f0 0) !important;
       padding: 0 !important;
       box-sizing: border-box !important;
+      flex-shrink: 0 !important;
     }
     .score-ring::before {
       content: "" !important;
