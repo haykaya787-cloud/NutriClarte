@@ -3,22 +3,161 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NutriClarté — Análisis Nutricional Clínico</title>
+  <title>NutriClarté — Soporte Nutricional Personalizado</title>
   <link rel="stylesheet" href="/assets/css/style.css">
   <style>
-    :root { --color-primary: #1A365D; --color-brand-green: #548235; }
-    .brand { display: flex; align-items: center; padding: 15px 0 !important; height: auto !important; }
-    .brand img { height: 90px !important; width: auto !important; max-height: 90px !important; object-fit: contain; }
-    .hero-section { padding: var(--space-12) 0; background: radial-gradient(circle at top right, rgba(84, 130, 53, 0.08), transparent 60%); }
-    .store-badges-container { display: flex; gap: 10px; margin-top: var(--space-8); align-items: center; flex-wrap: wrap; height: 50px; }
-    .store-badge { display: inline-flex; align-items: center; justify-content: center; height: 45px; overflow: visible; }
-    .store-badge.google-play img { height: 66px !important; max-height: 66px !important; margin-left: -8px; }
-    .store-badge.apple-store img { height: 44px !important; max-height: 44px !important; }
-    .store-badge img { object-fit: contain; display: block; transition: transform 0.2s ease; }
-    .store-badge img:hover { transform: scale(1.03); }
-    .footer-links { display: flex; gap: var(--space-6); justify-content: center; margin-top: var(--space-4); }
-    .footer-links a { color: var(--color-text-muted); text-decoration: none; font-size: var(--text-sm); transition: color 0.2s; }
-    .footer-links a:hover { color: var(--color-primary); }
+    :root {
+      --color-primary: #1A365D;
+      --color-brand-green: #548235;
+      --color-surface-card: #ffffff;
+    }
+
+    /* BRAND DESIGN FIXED OVERRIDES */
+    .brand {
+      display: flex;
+      align-items: center;
+      padding: 15px 0 !important;
+      height: auto !important;
+    }
+    .brand img {
+      height: 90px !important;
+      width: auto !important;
+      max-height: 90px !important;
+      object-fit: contain;
+    }
+
+    /* PREMIUM HERO & LAYOUT ELEMENTS */
+    .hero-section {
+      padding: var(--space-16) 0 var(--space-12) 0;
+      background: radial-gradient(circle at top right, rgba(84, 130, 53, 0.08), transparent 60%);
+    }
+
+    /* STARTUP CTA ACTIONS BUTTONS */
+    .cta-group {
+      display: flex;
+      gap: 15px;
+      margin-top: var(--space-6);
+      margin-bottom: var(--space-4);
+      flex-wrap: wrap;
+    }
+    .btn-startup-primary {
+      background-color: var(--color-brand-green);
+      color: #ffffff;
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background-color 0.2s, transform 0.1s;
+      box-shadow: 0 4px 12px rgba(84, 130, 53, 0.2);
+    }
+    .btn-startup-primary:hover {
+      background-color: #43692a;
+      transform: translateY(-1px);
+    }
+    .btn-startup-secondary {
+      background-color: transparent;
+      color: var(--color-primary);
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      border: 2px solid var(--color-primary);
+      transition: background-color 0.2s, transform 0.1s;
+    }
+    .btn-startup-secondary:hover {
+      background-color: rgba(26, 54, 93, 0.05);
+      transform: translateY(-1px);
+    }
+
+    /* PREMIUM FEATURE CARDS GRID */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      margin: var(--space-12) 0;
+    }
+    .feature-premium-card {
+      background: var(--color-surface-card);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+      border: 1px solid rgba(0, 0, 0, 0.03);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .feature-premium-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
+    .feature-premium-card h3 {
+      color: var(--color-primary);
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 1.25rem;
+    }
+    .feature-premium-card p {
+      color: var(--color-text-muted);
+      font-size: 0.95rem;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    /* PIXEL-PERFECT BALANCED STORES BADGES */
+    .store-badges-container {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+      height: 50px;
+      margin-top: var(--space-4);
+    }
+    .store-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 45px;
+      overflow: visible;
+    }
+    .store-badge.google-play img {
+      height: 66px !important;
+      max-height: 66px !important;
+      margin-left: -8px;
+    }
+    .store-badge.apple-store img {
+      height: 44px !important;
+      max-height: 44px !important;
+    }
+    .store-badge img {
+      object-fit: contain;
+      display: block;
+    }
+
+    /* CLINICAL DISCLAIMER LAYOUT BOX */
+    .healthcare-disclaimer-box {
+      background-color: #f8fafc;
+      border-top: 1px solid #e2e8f0;
+      padding: 30px 20px;
+      margin-top: var(--space-12);
+    }
+    .healthcare-disclaimer-text {
+      max-width: 900px;
+      margin: 0 auto;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: #64748b;
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: var(--space-6);
+      justify-content: center;
+      margin-top: 25px;
+    }
+    .footer-links a {
+      color: var(--color-text-muted);
+      text-decoration: none;
+      font-size: var(--text-sm);
+    }
   </style>
 </head>
 <body>
@@ -31,19 +170,26 @@
         <a class="ghost-btn" href="/en/">EN</a>
         <a class="ghost-btn" href="/fr/">FR</a>
         <a class="ghost-btn" href="/es/">ES</a>
-        <button class="icon-btn" data-theme-toggle></button>
+        <button class="icon-btn" data-theme-toggle aria-label="Cambiar tema"></button>
       </div>
     </div>
   </header>
 
   <main id="main">
+    <!-- HERO PREMIUM -->
     <section class="hero-section">
       <div class="container hero-grid">
         <div>
-          <span class="badge visual-badge" style="background-color: rgba(84, 130, 53, 0.1); color: var(--color-brand-green); font-weight: bold;">Aplicación Móvil Médica</span>
-          <h1 style="color: var(--color-primary); margin-top: var(--space-2);">Análisis nutricional adaptado a sus patologías.</h1>
-          <p class="lead">Escanee cualquier producto y descubra instantáneamente su impacto clínico real estandarizado por cada 100g para el control de la <strong>diabetes</strong>, la <strong>hipertensión</strong> y el <strong>colesterol</strong>.</p>
+          <span class="badge visual-badge" style="background-color: rgba(84, 130, 53, 0.1); color: var(--color-brand-green); font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;">Soporte Nutricional Personalizado</span>
+          <h1 style="color: var(--color-primary); margin-top: var(--space-3); line-height: 1.2;">Escanee alimentos envasados y obtenga información nutricional clara y personalizada según sus prioridades de salud.</h1>
+          <p class="lead" style="color: var(--color-text-muted); font-size: 1.15rem; margin-top: var(--space-3);">Diseñado para apoyar elecciones alimentarias informadas, sin reemplazar el consejo médico.</p>
           
+          <!-- STARTUP CTA -->
+          <div class="cta-group">
+            <a href="#matrixForm" class="btn-startup-primary">Comenzar a escanear</a>
+            <a href="#features-section" class="btn-startup-secondary">Ver cómo funciona</a>
+          </div>
+
           <div class="store-badges-container">
             <a href="#" class="store-badge google-play">
               <img src="https://play.google.com/intl/en_us/badges/static/images/badges/es_badge_web_generic.png" alt="Disponible en Google Play">
@@ -56,16 +202,17 @@
 
         <div class="scanner-card" aria-live="polite">
           <div class="scan-box">
-            <div class="barcode"></div>
-            <p class="footer-note">Modo de demostración: ajuste los valores para probar el algoritmo.</p>
+            <div class="barcode" aria-hidden="true"></div>
+            <p class="footer-note">Modo de demostración: Motor de análisis en tiempo real</p>
           </div>
+
           <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap; margin-top: 15px;">
             <div class="score-ring" id="overallRing" style="--score:54;--ring-color:var(--color-warning);">
               <span id="overallScore">54</span>
             </div>
             <div>
               <h3 id="resultTitle" style="margin-bottom:.35rem; color: var(--color-primary);">Uso ocasional</h3>
-              <p id="resultSummary">Este producto es aceptable para el colesterol, pero requiere vigilancia en sodio o azúcares.</p>
+              <p id="resultSummary" style="margin-bottom:.5rem;">Este producto es aceptable para el colesterol, pero requiere vigilancia en sodio o azúcares.</p>
             </div>
           </div>
           <div class="score-badges" id="badges"></div>
@@ -73,18 +220,70 @@
         </div>
       </div>
     </section>
+
+    <!-- PREMIUM FEATURE CARDS -->
+    <section id="features-section" style="background: #fafafa; padding: var(--space-12) 0; border-top: 1px solid #f0f0f0;">
+      <div class="container">
+        <div class="features-grid">
+          <div class="feature-premium-card">
+            <h3>Puntuación nutricional clara</h3>
+            <p>Comprenda los principales indicadores nutricionales de un vistazo.</p>
+          </div>
+          <div class="feature-premium-card">
+            <h3>Orientación personalizada</h3>
+            <p>Obtenga información adaptada a sus prioridades de salud.</p>
+          </div>
+          <div class="feature-premium-card">
+            <h3>Mejores elecciones diarias</h3>
+            <p>Compare productos y elija con mayor confianza.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SIMULATION INTERFACE -->
+    <section id="matrixForm" style="background: var(--color-surface); padding: var(--space-12) 0; border-top: 1px solid #eee;">
+      <div class="container">
+        <h2 style="color: var(--color-primary);">Simular el análisis de un producto</h2>
+        <p style="margin-bottom: var(--space-6);">Modifique los valores para evaluar el algoritmo.</p>
+        <form class="form-grid">
+          <div>
+            <label for="productName">Nombre del producto</label>
+            <input type="text" id="productName" value="Crema de cacao para untar">
+            <label for="category">Categoría</label>
+            <input type="text" id="category" value="Producto azucarado">
+          </div>
+          <div>
+            <label for="addedSugar">Azúcares (g por 100g)</label>
+            <input type="number" id="addedSugar" value="55">
+            <label for="satFat">Grasas saturadas (g por 100g)</label>
+            <input type="number" id="satFat" value="11">
+            <button type="button" class="primary-btn" style="width:100%; margin-top:20px; background-color: var(--color-brand-green); border: none;">Relanzar evaluación</button>
+          </div>
+        </form>
+      </div>
+    </section>
   </main>
+
+  <!-- HEALTHCARE-PROFESSIONAL FOOTER DISCLAIMER -->
+  <div class="healthcare-disclaimer-box">
+    <div class="healthcare-disclaimer-text">
+      <strong>Aviso clínico:</strong> Esta herramienta proporciona información nutricional educativa derivada de los datos de etiquetado de los productos. No está destinada a diagnosticar, tratar, curar o prevenir ninguna enfermedad, y no constituye asesoramiento médico.
+    </div>
+  </div>
 
   <footer>
     <div class="container" style="text-align: center;">
-      <p class="footer-note">Importante: NutriClarté está destinado únicamente a la orientación educativa preventiva y no sustituye el consejo médico.</p>
       <div class="footer-links">
         <a href="/privacy/">Política de Privacidad</a>
         <a href="/support/">Soporte Técnico</a>
         <a href="/faq/">Preguntas Frecuentes (FAQ)</a>
+        <a href="mailto:contact@nutriclarte.ca">Contacto</a>
       </div>
+      <p class="footer-note" style="margin-top: 15px;">&copy; 2026 NutriClarté. Todos los derechos reservados.</p>
     </div>
   </footer>
+
   <script src="/assets/js/app.js"></script>
 </body>
 </html>
