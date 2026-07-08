@@ -1,443 +1,127 @@
 /* ==========================================================================
-   1. DESIGN SYSTEM VARIABLES & THEME SETUP
+   BADGES D'INGRÉDIENTS CRITIQUES (Sous le titre du produit)
    ========================================================================== */
-:root {
-  --color-primary: #1A365D;
-  --color-brand-green: #548235;
-  --color-surface-card: #ffffff;
-  --font-headings: 'Plus Jakarta Sans', -apple-system, sans-serif;
-  --font-body: 'Inter', -apple-system, sans-serif;
-}
-
-/* ==========================================================================
-   2. SYSTEM RESETS & CORE LAYOUT ELEMENTS
-   ========================================================================== */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  font-family: var(--font-body);
-  -webkit-font-smoothing: antialiased;
-  background-color: #f8fafc;
-  color: #334155;
-  line-height: 1.5;
-}
-
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
-/* ==========================================================================
-   3. NAVIGATION TOP-BAR (Resolves Giant Logo Issue)
-   ========================================================================== */
-.main-header {
-  background: #ffffff;
-  border-bottom: 1px solid #e2e8f0;
-  position: relative;
-  width: 100%;
-  z-index: 10;
-}
-
-.nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 0;
-}
-
-.brand {
-  display: flex;
-  align-items: center;
-}
-
-.brand img {
-  height: 45px; /* Keeps the logo bounded and compact */
-  width: auto;
-  object-fit: contain;
-}
-
-.nav-actions {
+.ingredient-badges-container {
   display: flex;
   gap: 8px;
-  align-items: center;
+  margin-top: 12px;
+  flex-wrap: wrap;
 }
 
-.ghost-btn {
-  color: #64748b;
-  text-decoration: none;
+.ing-badge {
+  font-size: 0.8rem;
   font-weight: 600;
-  padding: 6px 12px;
-  border-radius: 6px;
-  font-size: 0.9rem;
-  transition: all 0.2s ease;
+  padding: 6px 14px;
+  border-radius: 100px;
+  text-transform: capitalize;
 }
 
-.ghost-btn.active, .ghost-btn:hover {
-  background-color: #f1f5f9;
-  color: var(--color-primary);
+.ing-badge.danger {
+  background-color: #fce7f3;
+  color: #9d174d; /* Rose / Rouge pour les alertes majeures (ex: Sodium) */
+}
+
+.ing-badge.success {
+  background-color: #dcfce7;
+  color: #166534; /* Vert pour les nutriments maîtrisés */
 }
 
 /* ==========================================================================
-   4. HERO SECTIONS (Resolves Text/Header Clipping & Trapping)
+   GRILLE DES PATHOLOGIES / PRIORITÉS DE SANTÉ (3 Colonnes Flex/Grid)
    ========================================================================== */
-.hero-section {
-  padding: 60px 0;
-  background: radial-gradient(circle at top right, rgba(84, 130, 53, 0.05), transparent 60%);
-  height: auto;
-  min-height: auto;
-}
-
-.hero-grid {
+.condition-scores-grid {
   display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: 50px;
-  align-items: start; /* Prevents rows from stretching content elements destructively */
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 20px;
 }
 
-.hero-left-content {
+.condition-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
+  min-height: 110px;
 }
 
-.visual-badge {
-  display: inline-block;
-  align-self: flex-start;
-  background-color: rgba(84, 130, 53, 0.08);
-  color: var(--color-brand-green);
+.condition-card h4 {
+  font-family: var(--font-headings);
+  color: #1e293b;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.condition-score-value {
+  font-size: 0.95rem;
   font-weight: 600;
+  color: #475569;
+}
+
+.condition-status {
   font-size: 0.85rem;
-  letter-spacing: 0.05em;
-  padding: 6px 16px;
-  border-radius: 100px;
-  text-transform: uppercase;
+  font-weight: 500;
+  margin-top: 4px;
+}
+
+/* Couleurs de statuts dynamiques */
+.status-great { color: #166534; }
+.status-limit { color: #9d174d; }
+
+/* ==========================================================================
+   BLOC RECOMMANDATIONS ET ALTERNATIVES
+   ========================================================================== */
+.recommendations-wrapper {
+  margin-top: 24px;
+  border-top: 1px solid #f1f5f9;
+  padding-top: 20px;
+}
+
+.recommendations-wrapper h4 {
+  font-family: var(--font-headings);
+  color: var(--color-primary);
+  font-size: 1.1rem;
+  font-weight: 700;
   margin-bottom: 12px;
 }
 
-.hero-title {
-  font-family: var(--font-headings);
-  color: var(--color-primary);
-  font-size: 2.85rem;
-  font-weight: 800;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  margin: 15px 0;
-}
-
-.hero-subtitle {
-  color: #4b5563;
-  font-size: 1.15rem;
-  line-height: 1.6;
-  margin-bottom: 32px;
-}
-
-/* ==========================================================================
-   5. ACTION SYSTEM & STORE BADGES COHERENCE
-   ========================================================================== */
-.cta-group {
-  display: flex;
-  gap: 16px;
-  margin-bottom: 32px;
-  flex-wrap: wrap;
-}
-
-.btn-startup-primary {
-  background-color: var(--color-brand-green);
-  color: #ffffff;
-  padding: 16px 32px;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 1rem;
-  text-decoration: none;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 14px rgba(84, 130, 53, 0.2);
-  border: none;
-  cursor: pointer;
-  text-align: center;
-}
-
-.btn-startup-primary:hover {
-  background-color: #43692a;
-  transform: translateY(-1px);
-}
-
-.btn-startup-secondary {
-  background-color: transparent;
-  color: var(--color-primary);
-  padding: 16px 32px;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 1rem;
-  text-decoration: none;
-  border: 2px solid var(--color-primary);
-  transition: all 0.2s ease;
-  text-align: center;
-}
-
-.btn-startup-secondary:hover {
-  background-color: rgba(26, 54, 93, 0.04);
-  transform: translateY(-1px);
-}
-
-.store-badges-container {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  margin-top: 10px;
-  flex-wrap: wrap;
-}
-
-.store-badge {
-  display: inline-block;
-  height: 40px; /* Lock standard size to manage image rendering spaces */
-}
-
-.store-badge img {
-  height: 100%;
-  width: auto;
-  display: block;
-}
-
-/* ==========================================================================
-   6. DYNAMIC DIAGRAMS / SCANNER CARD / PERFECT ROUND DIAL ENFORCEMENT
-   ========================================================================== */
-.scanner-card {
-  background: var(--color-surface-card);
-  border-radius: 16px;
-  padding: 32px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.04);
-  border: 1px solid #e2e8f0;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-.scan-box {
-  background: #f8fafc;
-  border: 1px dashed #cbd5e1;
-  border-radius: 12px;
-  padding: 20px;
-  text-align: center;
-}
-
-.demo-tag {
-  font-size: 0.85rem;
-  color: #64748b;
-  font-weight: 500;
-  margin: 0;
-}
-
-.score-block-header {
-  display: flex; /* Flex handles linear data rows without unexpected layout stretching */
-  align-items: center;
-  gap: 20px;
-  width: 100%;
-}
-
-/* THE ABSOLUTE GEOMETRIC RING FIX (ANTI-ELLIPSE SYSTEM) */
-.score-ring {
-  position: relative;
-  width: 72px;  
-  height: 72px;
-  flex: 0 0 72px;       /* Absolute denial of horizontal contraction or expansion */
-  aspect-ratio: 1 / 1;  /* Strict rule-level validation of height-to-width proportions */
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: conic-gradient(var(--ring-color, #cbd5e1) calc(var(--score, 0) * 1%), #e2e8f0 0);
-}
-
-.score-ring::before {
-  content: "";
-  position: absolute;
-  inset: 6px;
-  background: #ffffff;
-  border-radius: 50%;
-  z-index: 1;
-}
-
-.score-ring span {
-  position: relative;
-  z-index: 2;
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: var(--color-primary);
-  font-family: var(--font-headings);
-  line-height: 1;
-}
-
-.score-block-header h3 {
-  font-family: var(--font-headings);
-  color: var(--color-primary);
-  font-size: 1.25rem;
-  margin: 0 0 4px 0;
-  font-weight: 700;
-}
-
-.score-block-header p {
-  font-size: 0.95rem;
-  line-height: 1.5;
-  color: #4b5563;
-  margin: 0;
-}
-
-/* ==========================================================================
-   7. FEATURES GRID STYLING
-   ========================================================================== */
-.features-section {
-  background: #ffffff;
-  padding: 60px 0;
-  border-top: 1px solid #e2e8f0;
-}
-
-.features-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 25px;
-}
-
-.feature-premium-card {
-  background: var(--color-surface-card);
-  padding: 30px;
-  border-radius: 12px;
-  border: 1px solid #e2e8f0;
-}
-
-.feature-premium-card h3 {
-  font-family: var(--font-headings);
-  color: var(--color-primary);
-  margin: 0 0 12px 0;
-  font-size: 1.25rem;
-}
-
-.feature-premium-card p {
-  color: #4b5563;
-  font-size: 0.95rem;
-  line-height: 1.5;
-  margin: 0;
-}
-
-/* ==========================================================================
-   8. INTERACTIVE ENGINE / FORM FIELDS
-   ========================================================================== */
-.simulation-section {
-  background: #fafafa;
-  padding: 60px 0;
-  border-top: 1px solid #e2e8f0;
-}
-
-.simulation-section h2 {
-  font-family: var(--font-headings);
-  color: var(--color-primary);
-  font-weight: 800;
-  font-size: 2rem;
-  margin: 0 0 6px 0;
-}
-
-.sim-subtitle {
-  color: #64748b;
-  margin-bottom: 30px;
-}
-
-.form-grid {
+.recommendations-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 30px;
+  gap: 12px;
 }
 
-label {
-  display: block;
-  font-weight: 500;
-  margin-bottom: 8px;
-  font-size: 0.9rem;
+.rec-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 16px;
 }
 
-input[type="text"], input[type="number"] {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #cbd5e1;
-  border-radius: 6px;
-  margin-bottom: 16px;
-  box-sizing: border-box;
+.rec-card h5 {
+  font-family: var(--font-headings);
+  color: #1e293b;
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 4px;
 }
 
-.full-width {
-  width: 100%;
-}
-
-/* ==========================================================================
-   9. REGULATORY DISCLAIMERS & FOOTER
-   ========================================================================== */
-.healthcare-disclaimer-box {
-  background-color: #f1f5f9;
-  border-top: 1px solid #e2e8f0;
-  padding: 30px 20px;
-}
-
-.healthcare-disclaimer-text {
-  max-width: 900px;
-  margin: 0 auto;
+.rec-card p {
   font-size: 0.85rem;
-  line-height: 1.6;
   color: #64748b;
-  text-align: center;
-}
-
-.main-footer {
-  background: white;
-  padding: 40px 0;
-  border-top: 1px solid #e2e8f0;
-}
-
-.text-center {
-  text-align: center;
-}
-
-.footer-links {
-  display: flex;
-  gap: 24px;
-  justify-content: center;
-  margin-bottom: 15px;
-  flex-wrap: wrap;
-}
-
-.footer-links a {
-  color: #64748b;
-  text-decoration: none;
-  font-size: 0.9rem;
-}
-
-.footer-links a:hover {
-  color: var(--color-primary);
-}
-
-.copyright {
-  font-size: 0.85rem;
-  color: #94a3b8;
+  line-height: 1.4;
   margin: 0;
 }
 
-/* ==========================================================================
-   10. MEDIA QUERIES & MULTI-DEVICE ACCESSIBILITY
-   ========================================================================== */
-@media (max-width: 960px) {
-  .hero-grid {
+/* Ajustement Mobile pour la carte d'analyse */
+@media (max-width: 480px) {
+  .condition-scores-grid {
     grid-template-columns: 1fr;
-    gap: 40px;
   }
-  
-  .hero-title {
-    font-size: 2.25rem;
-  }
-  
-  .form-grid {
+  .recommendations-grid {
     grid-template-columns: 1fr;
-    gap: 10px;
   }
 }
