@@ -1,63 +1,171 @@
-<div class="scanner-card" aria-live="polite">
-  <div class="scan-box">
-    <p class="demo-tag">Demo Module: Live Nutritional Testing Engine</p>
-  </div>
-  
-  <!-- En-tête principal de la note globale -->
-  <div class="score-block-header">
-    <div class="score-ring" id="overallRing" style="--score: 68; --ring-color: #c2410c;">
-      <span id="overallScore">68</span>
-    </div>
-    <div>
-      <h3 id="resultTitle">Use sometimes — Tomato soup</h3>
-      <p id="resultSummary" style="color: #64748b;">Sodium is the main concern.</p>
-      
-      <!-- Conteneur des Badges d'ingrédients -->
-      <div class="ingredient-badges-container" id="ingredientBadges">
-        <span class="ing-badge danger">Sodium</span>
-        <span class="ing-badge success">Added sugar</span>
-        <span class="ing-badge success">Sat fat</span>
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NutriClarté — Personalized Nutrition Support</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+  <header class="main-header">
+    <div class="container nav">
+      <a class="brand" href="/en/">
+        <img src="/assets/Logo.png" alt="NutriClarté Logo">
+      </a>
+      <div class="nav-actions">
+        <a class="ghost-btn active" href="/en/">EN</a>
+        <a class="ghost-btn" href="/fr/">FR</a>
+        <a class="ghost-btn" href="/es/">ES</a>
       </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero-section">
+      <div class="container hero-grid">
+        <div class="hero-left-content">
+          <span class="visual-badge">Personalized Nutrition Support</span>
+          <h1 class="hero-title">Scan packaged foods and get clear, personalized nutrition insights.</h1>
+          <p class="hero-subtitle">Designed to support informed food choices aligned with your health priorities, not to provide medical advice.</p>
+          <div class="cta-group">
+            <a href="#matrixForm" class="btn-startup-primary">Start scanning</a>
+            <a href="#features-section" class="btn-startup-secondary">See how it works</a>
+          </div>
+          <div class="store-badges-container">
+            <a href="#" class="store-badge">
+              <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;format=png" alt="Download on the App Store">
+            </a>
+            <a href="#" class="store-badge">
+              <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play">
+            </a>
+          </div>
+        </div>
+
+        <div class="scanner-card" aria-live="polite">
+          <div class="scan-box">
+            <p class="demo-tag">Demo Module: Live Nutritional Testing Engine</p>
+          </div>
+          
+          <div class="score-block-header">
+            <div class="score-ring" id="overallRing" style="--score: 68; --ring-color: #c2410c;">
+              <span id="overallScore">68</span>
+            </div>
+            <div class="score-text-area">
+              <h3 id="resultTitle">Use sometimes — Tomato soup</h3>
+              <p id="resultSummary">Sodium is the main concern.</p>
+              
+              <div class="ingredient-badges-container" id="ingredientBadges">
+                <span class="ing-badge danger">Sodium</span>
+                <span class="ing-badge success">Added sugar</span>
+                <span class="ing-badge success">Sat fat</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="condition-scores-grid" id="conditionScores">
+            <div class="condition-card">
+              <h4>Diabetes</h4>
+              <div>
+                <div class="condition-score-value">92/100</div>
+                <div class="condition-status status-great">Great fit</div>
+              </div>
+            </div>
+            <div class="condition-card">
+              <h4>Cholesterol</h4>
+              <div>
+                <div class="condition-score-value">94/100</div>
+                <div class="condition-status status-great">Great fit</div>
+              </div>
+            </div>
+            <div class="condition-card">
+              <h4>Blood pressure</h4>
+              <div>
+                <div class="condition-score-value">17/100</div>
+                <div class="condition-status status-limit">Limit</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="recommendations-wrapper">
+            <h4>Recommendations</h4>
+            <div class="recommendations-grid" id="recommendationsBlock">
+              <div class="rec-card">
+                <h5>Reduce sodium exposure</h5>
+                <p>This product exceeds optimal levels for your cardiorespiratory health indicators.</p>
+              </div>
+              <div class="rec-card">
+                <h5>Suggested alternatives</h5>
+                <p>Organic low-sodium vegetable soup or home-made options.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features-section" class="features-section">
+      <div class="container">
+        <div class="features-grid">
+          <div class="feature-premium-card">
+            <h3>Clear nutrition scoring</h3>
+            <p>Understand key nutrition signals at a glance.</p>
+          </div>
+          <div class="feature-premium-card">
+            <h3>Personalized guidance</h3>
+            <p>Get insights aligned with your health priorities.</p>
+          </div>
+          <div class="feature-premium-card">
+            <h3>Better everyday choices</h3>
+            <p>Compare products and choose with more confidence.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="matrixForm" class="simulation-section">
+      <div class="container">
+        <h2>Simulate a product analysis</h2>
+        <p class="sim-subtitle">Modify parameters to see validation parameters adapt.</p>
+        <form class="form-grid">
+          <div>
+            <label for="productName">Product Name</label>
+            <input type="text" id="productName" value="Tomato soup">
+            <label for="sodiumInput">Sodium level (mg per 100g)</label>
+            <input type="number" id="sodiumInput" value="640">
+          </div>
+          <div>
+            <label for="addedSugar">Sugars (g per 100g)</label>
+            <input type="number" id="addedSugar" value="4">
+            <label for="satFat">Saturated Fat (g per 100g)</label>
+            <input type="number" id="satFat" value="1">
+            <button type="button" id="btnEvaluate" class="btn-startup-primary full-width">Rerun Evaluation</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <div class="healthcare-disclaimer-box">
+    <div class="healthcare-disclaimer-text">
+      <strong>Clinical Notice:</strong> This tool provides educational nutrition information derived from product label data. It is not intended to diagnose, treat, cure, or prevent any disease, and it does not constitute medical advice.
     </div>
   </div>
 
-  <!-- Grille ergonomique par priorités de santé -->
-  <div class="condition-scores-grid" id="conditionScores">
-    <div class="condition-card">
-      <h4>Diabetes</h4>
-      <div>
-        <div class="condition-score-value">92/100</div>
-        <div class="condition-status status-great">Great fit</div>
+  <footer class="main-footer">
+    <div class="container text-center">
+      <div class="footer-links">
+        <a href="/privacy/">Privacy Policy</a>
+        <a href="/support/">Support & Assistance</a>
+        <a href="/faq/">FAQ</a>
+        <a href="mailto:contact@nutriclarte.ca">Contact</a>
       </div>
+      <p class="copyright">&copy; 2026 NutriClarté. All rights reserved.</p>
     </div>
-    <div class="condition-card">
-      <h4>Cholesterol</h4>
-      <div>
-        <div class="condition-score-value">94/100</div>
-        <div class="condition-status status-great">Great fit</div>
-      </div>
-    </div>
-    <div class="condition-card">
-      <h4>Blood pressure</h4>
-      <div>
-        <div class="condition-score-value">17/100</div>
-        <div class="condition-status status-limit">Limit</div>
-      </div>
-    </div>
-  </div>
+  </footer>
 
-  <!-- Section Recommandations / Alternatives -->
-  <div class="recommendations-wrapper">
-    <h4>Recommendations</h4>
-    <div class="recommendations-grid" id="recommendationsBlock">
-      <div class="rec-card">
-        <h5>Reduce sodium exposure</h5>
-        <p>This product exceeds optimal levels for your cardiovascular profile.</p>
-      </div>
-      <div class="rec-card">
-        <h5>Suggested alternatives</h5>
-        <p>Organic low-sodium vegetable broth (-80% sodium).</p>
-      </div>
-    </div>
-  </div>
-</div>
+  <script src="/assets/js/app.js"></script>
+</body>
+</html>
