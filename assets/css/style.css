@@ -1,5 +1,5 @@
 /* ==========================================================================
-   1. VARIABLES GLOBALES & THÈME
+   1. DESIGN SYSTEM VARIABLES & THEME SETUP
    ========================================================================== */
 :root {
   --color-primary: #1A365D;
@@ -10,7 +10,7 @@
 }
 
 /* ==========================================================================
-   2. RÉINITIALISATION ET BASE ACCESSIBLE
+   2. SYSTEM RESETS & CORE LAYOUT ELEMENTS
    ========================================================================== */
 * {
   box-sizing: border-box;
@@ -33,7 +33,7 @@ body {
 }
 
 /* ==========================================================================
-   3. BARRE DE NAVIGATION (HEADER) - Correction Dimension Logo
+   3. NAVIGATION TOP-BAR (Resolves Giant Logo Issue)
    ========================================================================== */
 .main-header {
   background: #ffffff;
@@ -56,7 +56,7 @@ body {
 }
 
 .brand img {
-  height: 45px; /* Empêche le logo de devenir géant */
+  height: 45px; /* Keeps the logo bounded and compact */
   width: auto;
   object-fit: contain;
 }
@@ -83,7 +83,7 @@ body {
 }
 
 /* ==========================================================================
-   4. SECTION HERO & GRILLE - Protection contre les coupures de texte
+   4. HERO SECTIONS (Resolves Text/Header Clipping & Trapping)
    ========================================================================== */
 .hero-section {
   padding: 60px 0;
@@ -96,7 +96,7 @@ body {
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
   gap: 50px;
-  align-items: start; /* Empêche l'alignement stretch d'étirer verticalement les blocs */
+  align-items: start; /* Prevents rows from stretching content elements destructively */
 }
 
 .hero-left-content {
@@ -137,7 +137,7 @@ body {
 }
 
 /* ==========================================================================
-   5. INTERFACES BOUTONS & COHÉRENCE DU RESPONSIVE DES BADGES
+   5. ACTION SYSTEM & STORE BADGES COHERENCE
    ========================================================================== */
 .cta-group {
   display: flex;
@@ -194,7 +194,7 @@ body {
 
 .store-badge {
   display: inline-block;
-  height: 40px; /* Taille unifiée stricte pour verrouiller le comportement des images */
+  height: 40px; /* Lock standard size to manage image rendering spaces */
 }
 
 .store-badge img {
@@ -204,7 +204,7 @@ body {
 }
 
 /* ==========================================================================
-   6. MODULE CARTE INTERACTIVE & CERCLE PARFAIT (ANTI-ELLIPSE)
+   6. DYNAMIC DIAGRAMS / SCANNER CARD / PERFECT ROUND DIAL ENFORCEMENT
    ========================================================================== */
 .scanner-card {
   background: var(--color-surface-card);
@@ -232,23 +232,21 @@ body {
   margin: 0;
 }
 
-/* En-tête de score interne à la carte */
 .score-block-header {
-  display: flex; /* Flexbox supprime les caprices d'étirement horizontal des grilles CSS */
+  display: flex; /* Flex handles linear data rows without unexpected layout stretching */
   align-items: center;
   gap: 20px;
   width: 100%;
 }
 
-/* VERROUILLAGE SÉCURISÉ DE L'ANNEAU DE SCORE */
+/* THE ABSOLUTE GEOMETRIC RING FIX (ANTI-ELLIPSE SYSTEM) */
 .score-ring {
   position: relative;
   width: 72px;  
   height: 72px;
-  flex: 0 0 72px;       /* Désactive l'autorisation de compression ou d'extension latérale */
-  aspect-ratio: 1 / 1;  /* Impose géométriquement un rapport hauteur/largeur inchanger à 1:1 */
+  flex: 0 0 72px;       /* Absolute denial of horizontal contraction or expansion */
+  aspect-ratio: 1 / 1;  /* Strict rule-level validation of height-to-width proportions */
   border-radius: 50%;
-  
   display: flex;
   align-items: center;
   justify-content: center;
@@ -290,7 +288,7 @@ body {
 }
 
 /* ==========================================================================
-   7. BLOC DES CARACTÉRISTIQUES (FEATURES)
+   7. FEATURES GRID STYLING
    ========================================================================== */
 .features-section {
   background: #ffffff;
@@ -326,7 +324,7 @@ body {
 }
 
 /* ==========================================================================
-   8. COMPOSANT SIMULATEUR / FORMULAIRES
+   8. INTERACTIVE ENGINE / FORM FIELDS
    ========================================================================== */
 .simulation-section {
   background: #fafafa;
@@ -374,7 +372,7 @@ input[type="text"], input[type="number"] {
 }
 
 /* ==========================================================================
-   9. LIENS DE BAS DE PAGE (FOOTER) & AVIS JURIDIQUE
+   9. REGULATORY DISCLAIMERS & FOOTER
    ========================================================================== */
 .healthcare-disclaimer-box {
   background-color: #f1f5f9;
@@ -426,7 +424,7 @@ input[type="text"], input[type="number"] {
 }
 
 /* ==========================================================================
-   10. RESPONSIVE MEDIA QUERIES (ADAPTATION MOBILE/TABLETTE)
+   10. MEDIA QUERIES & MULTI-DEVICE ACCESSIBILITY
    ========================================================================== */
 @media (max-width: 960px) {
   .hero-grid {
