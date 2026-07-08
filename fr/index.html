@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en" data-theme="light">
+<html lang="fr" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NutriClarté — Personalized Nutrition Support</title>
+  <title>NutriClarté — Accompagnement nutritionnel personnalisé</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -164,6 +164,7 @@
       align-items: center !important;
     }
 
+    /* CORRECTION DE L'ANNEAU */
     .score-ring {
       position: relative !important;
       width: 68px !important;
@@ -172,6 +173,7 @@
       min-height: 68px !important;
       max-width: 68px !important;
       max-height: 68px !important;
+      aspect-ratio: 1 / 1 !important;
       border-radius: 50% !important;
       display: flex !important;
       align-items: center !important;
@@ -179,6 +181,7 @@
       background: conic-gradient(var(--ring-color, #c2410c) calc(var(--score, 54) * 1%), #e2e8f0 0) !important;
       padding: 0 !important;
       box-sizing: border-box !important;
+      flex-shrink: 0 !important;
     }
     .score-ring::before {
       content: "" !important;
@@ -271,7 +274,7 @@
 <body>
   <header style="background: white; border-bottom: 1px solid #e2e8f0;">
     <div class="container nav">
-      <a class="brand" href="/en/">
+      <a class="brand" href="/fr/">
         <img src="/assets/Logo.png" alt="NutriClarté Logo">
       </a>
       <div class="nav-actions">
@@ -287,21 +290,21 @@
       <div class="container hero-grid">
         
         <div class="hero-left-content">
-          <span class="visual-badge">Personalized Nutrition Support</span>
-          <h1 class="hero-title">Scan packaged foods and get clear, personalized nutrition insights.</h1>
-          <p class="hero-subtitle">Designed to support informed food choices aligned with your health priorities, not to provide medical advice.</p>
+          <span class="visual-badge">Accompagnement nutritionnel personnalisé</span>
+          <h1 class="hero-title">Scannez les aliments emballés et obtenez des repères nutritionnels clairs.</h1>
+          <p class="hero-subtitle">Conçu pour soutenir des choix alimentaires éclairés selon vos priorités de santé, sans remplacer un avis médical.</p>
           
           <div class="cta-group">
-            <a href="#matrixForm" class="btn-startup-primary">Start scanning</a>
-            <a href="#features-section" class="btn-startup-secondary">See how it works</a>
+            <a href="#matrixForm" class="btn-startup-primary">Commencer à scanner</a>
+            <a href="#features-section" class="btn-startup-secondary">Voir le fonctionnement</a>
           </div>
 
           <div class="store-badges-container">
             <a href="#" class="store-badge">
-              <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;format=png" alt="Download on the App Store">
+              <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/fr-fr?size=250x83&amp;format=png" alt="Télécharger dans l'App Store">
             </a>
             <a href="#" class="store-badge">
-              <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" style="height: 58px; margin-left: -10px;" alt="Get it on Google Play">
+              <img src="https://play.google.com/intl/en_us/badges/static/images/badges/fr_badge_web_generic.png" style="height: 58px; margin-left: -10px;" alt="Disponible sur Google Play">
             </a>
           </div>
         </div>
@@ -309,7 +312,7 @@
         <div class="scanner-card" aria-live="polite">
           <div class="scan-box" style="background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 12px; padding: 24px; text-align: center;">
             <div class="barcode" style="opacity: 0.75; margin: 0 auto 12px auto;" aria-hidden="true"></div>
-            <p style="font-size: 0.85rem; color: #64748b; font-weight: 500; margin: 0;">Demo Module: Live Nutritional Testing Engine</p>
+            <p style="font-size: 0.85rem; color: #64748b; font-weight: 500; margin: 0;">Module démo : Moteur d'analyse en temps réel</p>
           </div>
 
           <div class="score-block-header">
@@ -317,8 +320,8 @@
               <span id="overallScore">54</span>
             </div>
             <div>
-              <h3 id="resultTitle">Use occasionally</h3>
-              <p id="resultSummary">This product is acceptable for cholesterol, but sodium or sugar amounts require close monitoring.</p>
+              <h3 id="resultTitle">À utiliser occasionnellement</h3>
+              <p id="resultSummary">Ce produit est acceptable pour le cholestérol, mais sa teneur en sodium ou sucres nécessite de la vigilance.</p>
             </div>
           </div>
           
@@ -334,16 +337,16 @@
       <div class="container">
         <div class="features-grid">
           <div class="feature-premium-card">
-            <h3>Clear nutrition scoring</h3>
-            <p>Understand key nutrition signals at a glance.</p>
+            <h3>Repères nutritionnels clairs</h3>
+            <p>Comprenez rapidement les principaux signaux nutritionnels.</p>
           </div>
           <div class="feature-premium-card">
-            <h3>Personalized guidance</h3>
-            <p>Get insights aligned with your health priorities.</p>
+            <h3>Repères personnalisés</h3>
+            <p>Obtenez des indications adaptées à vos priorités de santé.</p>
           </div>
           <div class="feature-premium-card">
-            <h3>Better everyday choices</h3>
-            <p>Compare products and choose with more confidence.</p>
+            <h3>De meilleurs choix au quotidien</h3>
+            <p>Comparez les produits et choisissez avec plus d’assurance.</p>
           </div>
         </div>
       </div>
@@ -351,21 +354,21 @@
 
     <section id="matrixForm" style="background: #fafafa; padding: 60px 0; border-top: 1px solid #e2e8f0;">
       <div class="container">
-        <h2 style="font-family: var(--font-headings); color: var(--color-primary); font-weight: 800; font-size: 2rem; margin-bottom: 8px;">Simulate a product analysis</h2>
-        <p style="color: #64748b; margin-bottom: 30px;">Modify parameters to see validation parameters adapt.</p>
+        <h2 style="font-family: var(--font-headings); color: var(--color-primary); font-weight: 800; font-size: 2rem; margin-bottom: 8px;">Simuler l'analyse d'un produit</h2>
+        <p style="color: #64748b; margin-bottom: 30px;">Modifiez les valeurs pour évaluer l'algorithme.</p>
         <form class="form-grid">
           <div>
-            <label for="productName">Product Name</label>
-            <input type="text" id="productName" value="Sweet Chocolate Spread">
-            <label for="category">Category</label>
-            <input type="text" id="category" value="Sugary Spread">
+            <label for="productName">Nom du produit</label>
+            <input type="text" id="productName" value="Pâte à Tartiner Choco">
+            <label for="category">Catégorie</label>
+            <input type="text" id="category" value="Produit sucré">
           </div>
           <div>
-            <label for="addedSugar">Sugars (g per 100g)</label>
+            <label for="addedSugar">Sucres (g pour 100g)</label>
             <input type="number" id="addedSugar" value="55">
-            <label for="satFat">Saturated Fat (g per 100g)</label>
+            <label for="satFat">Gras Saturés (g pour 100g)</label>
             <input type="number" id="satFat" value="11">
-            <button type="button" class="primary-btn" style="width:100%; margin-top:20px; background-color: var(--color-brand-green); border: none;">Rerun Evaluation</button>
+            <button type="button" class="primary-btn" style="width:100%; margin-top:20px; background-color: var(--color-brand-green); border: none;">Relancer l'évaluation</button>
           </div>
         </form>
       </div>
@@ -374,19 +377,19 @@
 
   <div class="healthcare-disclaimer-box">
     <div class="healthcare-disclaimer-text">
-      <strong>Clinical Notice:</strong> This tool provides educational nutrition information derived from product label data. It is not intended to diagnose, treat, cure, or prevent any disease, and it does not constitute medical advice.
+      <strong>Avis clinique :</strong> Cet outil fournit de l’information nutritionnelle éducative dérivée des données d’étiquetage des produits. Il n’est pas destiné à diagnostiquer, traiter, guérir ou prévenir une maladie et ne constitue pas un avis médical.
     </div>
   </div>
 
   <footer style="background: white; padding: 40px 0;">
     <div class="container" style="text-align: center;">
       <div class="footer-links">
-        <a href="/privacy/">Privacy Policy</a>
+        <a href="/privacy/">Politique de Confidentialité</a>
         <a href="/support/">Support & Assistance</a>
         <a href="/faq/">FAQ</a>
         <a href="mailto:contact@nutriclarte.ca">Contact</a>
       </div>
-      <p style="margin-top: 15px; font-size: 0.85rem; color: #64748b;">&copy; 2026 NutriClarté. All rights reserved.</p>
+      <p style="margin-top: 15px; font-size: 0.85rem; color: #64748b;">&copy; 2026 NutriClarté. Tous droits réservés.</p>
     </div>
   </footer>
 
