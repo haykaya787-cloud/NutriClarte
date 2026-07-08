@@ -144,6 +144,34 @@
       transform: scale(1.02);
     }
 
+    /* FIX & OPTIMIZATION FOR THE SCORE RING */
+    .score-ring {
+      position: relative;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: conic-gradient(var(--ring-color) calc(var(--score) * 1%), #e2e8f0 0);
+      padding: 5px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    .score-ring::before {
+      content: "";
+      position: absolute;
+      inset: 5px;
+      background: #ffffff;
+      border-radius: 50%;
+      z-index: 1;
+    }
+    .score-ring span {
+      position: relative;
+      z-index: 2;
+      font-size: 1.35rem;
+      color: var(--color-primary);
+    }
+
     /* PREMIUM FEATURE CARDS GRID */
     .features-grid {
       display: grid;
@@ -244,14 +272,14 @@
           </div>
         </div>
 
-        <div class="scanner-card" aria-live="polite">
+        <div class="scanner-card" aria-live="polite" style="background: white; padding: 30px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
           <div class="scan-box" style="background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 12px; padding: 24px; text-align: center;">
             <div class="barcode" style="opacity: 0.75; margin: 0 auto 12px auto;" aria-hidden="true"></div>
             <p style="font-size: 0.85rem; color: #64748b; margin: 0; font-weight: 500;">Demo Module: Live Nutritional Testing Engine</p>
           </div>
 
           <div style="display: flex; align-items: center; gap: 20px; margin-top: 24px;">
-            <div class="score-ring" id="overallRing" style="--score: 54; --ring-color: #c2410c; min-width: 64px;">
+            <div class="score-ring" id="overallRing" style="--score: 54; --ring-color: #c2410c;">
               <span id="overallScore" style="font-family: var(--font-headings); font-weight: 700;">54</span>
             </div>
             <div>
