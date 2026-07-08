@@ -4,15 +4,29 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NutriClarté — Soporte Nutricional Personalizado</title>
+  
+  <!-- Premium Font Imports -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+  
   <link rel="stylesheet" href="/assets/css/style.css">
   <style>
     :root {
       --color-primary: #1A365D;
       --color-brand-green: #548235;
       --color-surface-card: #ffffff;
+      --font-headings: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      --font-body: 'Inter', -apple-system, sans-serif;
     }
 
-    /* BRAND DESIGN FIXED OVERRIDES */
+    body {
+      font-family: var(--font-body);
+      -webkit-font-smoothing: antialiased;
+      margin: 0;
+      padding: 0;
+    }
+
     .brand {
       display: flex;
       align-items: center;
@@ -20,53 +34,114 @@
       height: auto !important;
     }
     .brand img {
-      height: 90px !important;
+      height: 75px !important;
       width: auto !important;
-      max-height: 90px !important;
       object-fit: contain;
     }
 
-    /* PREMIUM HERO & LAYOUT ELEMENTS */
+    /* PREMIUM HERO LAYOUT OPTIMIZATION */
     .hero-section {
-      padding: var(--space-16) 0 var(--space-12) 0;
-      background: radial-gradient(circle at top right, rgba(84, 130, 53, 0.08), transparent 60%);
+      padding: 80px 0;
+      background: radial-gradient(circle at top right, rgba(84, 130, 53, 0.06), transparent 60%);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .hero-left-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .hero-title {
+      font-family: var(--font-headings);
+      color: var(--color-primary);
+      font-size: 3.25rem;
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-top: 20px;
+      margin-bottom: 24px;
+    }
+
+    .hero-subtitle {
+      color: #4a5568;
+      font-size: 1.15rem;
+      line-height: 1.6;
+      margin-bottom: 32px;
+      max-width: 540px;
+    }
+
+    .visual-badge {
+      display: inline-block;
+      align-self: flex-start;
+      background-color: rgba(84, 130, 53, 0.08);
+      color: var(--color-brand-green);
+      font-weight: 600;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      padding: 6px 16px;
+      border-radius: 100px;
+      text-transform: uppercase;
     }
 
     /* STARTUP CTA ACTIONS BUTTONS */
     .cta-group {
       display: flex;
-      gap: 15px;
-      margin-top: var(--space-6);
-      margin-bottom: var(--space-4);
+      gap: 16px;
+      margin-bottom: 32px;
       flex-wrap: wrap;
     }
     .btn-startup-primary {
       background-color: var(--color-brand-green);
       color: #ffffff;
-      padding: 14px 28px;
+      padding: 16px 32px;
       border-radius: 8px;
       font-weight: 600;
+      font-size: 1rem;
       text-decoration: none;
-      transition: background-color 0.2s, transform 0.1s;
-      box-shadow: 0 4px 12px rgba(84, 130, 53, 0.2);
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 14px rgba(84, 130, 53, 0.25);
     }
     .btn-startup-primary:hover {
       background-color: #43692a;
-      transform: translateY(-1px);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(84, 130, 53, 0.3);
     }
     .btn-startup-secondary {
       background-color: transparent;
       color: var(--color-primary);
-      padding: 14px 28px;
+      padding: 16px 32px;
       border-radius: 8px;
       font-weight: 600;
+      font-size: 1rem;
       text-decoration: none;
       border: 2px solid var(--color-primary);
-      transition: background-color 0.2s, transform 0.1s;
+      transition: all 0.2s ease;
     }
     .btn-startup-secondary:hover {
-      background-color: rgba(26, 54, 93, 0.05);
-      transform: translateY(-1px);
+      background-color: rgba(26, 54, 93, 0.04);
+      transform: translateY(-2px);
+    }
+
+    .store-badges-container {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-top: 12px;
+    }
+    .store-badge img {
+      height: 40px;
+      width: auto;
+      transition: transform 0.2s ease;
+    }
+    .store-badge:hover img {
+      transform: scale(1.02);
     }
 
     /* PREMIUM FEATURE CARDS GRID */
@@ -74,7 +149,7 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 25px;
-      margin: var(--space-12) 0;
+      margin: 60px 0;
     }
     .feature-premium-card {
       background: var(--color-surface-card);
@@ -89,6 +164,7 @@
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
     }
     .feature-premium-card h3 {
+      font-family: var(--font-headings);
       color: var(--color-primary);
       margin-top: 0;
       margin-bottom: 12px;
@@ -101,42 +177,12 @@
       margin: 0;
     }
 
-    /* PIXEL-PERFECT BALANCED STORES BADGES */
-    .store-badges-container {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      flex-wrap: wrap;
-      height: 50px;
-      margin-top: var(--space-4);
-    }
-    .store-badge {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      height: 45px;
-      overflow: visible;
-    }
-    .store-badge.google-play img {
-      height: 66px !important;
-      max-height: 66px !important;
-      margin-left: -8px;
-    }
-    .store-badge.apple-store img {
-      height: 44px !important;
-      max-height: 44px !important;
-    }
-    .store-badge img {
-      object-fit: contain;
-      display: block;
-    }
-
     /* CLINICAL DISCLAIMER LAYOUT BOX */
     .healthcare-disclaimer-box {
       background-color: #f8fafc;
       border-top: 1px solid #e2e8f0;
       padding: 30px 20px;
-      margin-top: var(--space-12);
+      margin-top: 60px;
     }
     .healthcare-disclaimer-text {
       max-width: 900px;
@@ -176,43 +222,41 @@
   </header>
 
   <main id="main">
-    <!-- HERO PREMIUM -->
     <section class="hero-section">
       <div class="container hero-grid">
-        <div>
-          <span class="badge visual-badge" style="background-color: rgba(84, 130, 53, 0.1); color: var(--color-brand-green); font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;">Soporte Nutricional Personalizado</span>
-          <h1 style="color: var(--color-primary); margin-top: var(--space-3); line-height: 1.2;">Escanee alimentos envasados y obtenga información nutricional clara y personalizada según sus prioridades de salud.</h1>
-          <p class="lead" style="color: var(--color-text-muted); font-size: 1.15rem; margin-top: var(--space-3);">Diseñado para apoyar elecciones alimentarias informadas, sin reemplazar el consejo médico.</p>
+        <div class="hero-left-content">
+          <span class="visual-badge">Soporte Nutricional Personalizado</span>
+          <h1 class="hero-title">Escanee alimentos envasados y obtenga información nutricional clara.</h1>
+          <p class="hero-subtitle">Diseñado para apoyar elecciones alimentarias informadas según sus prioridades de salud, sin reemplazar el consejo médico.</p>
           
-          <!-- STARTUP CTA -->
           <div class="cta-group">
             <a href="#matrixForm" class="btn-startup-primary">Comenzar a escanear</a>
             <a href="#features-section" class="btn-startup-secondary">Ver cómo funciona</a>
           </div>
 
           <div class="store-badges-container">
-            <a href="#" class="store-badge google-play">
-              <img src="https://play.google.com/intl/en_us/badges/static/images/badges/es_badge_web_generic.png" alt="Disponible en Google Play">
-            </a>
-            <a href="#" class="store-badge apple-store">
+            <a href="#" class="store-badge">
               <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/es-es?size=250x83&amp;format=png" alt="Consíguelo en el App Store">
+            </a>
+            <a href="#" class="store-badge">
+              <img src="https://play.google.com/intl/en_us/badges/static/images/badges/es_badge_web_generic.png" style="height: 58px; margin-left: -10px;" alt="Disponible en Google Play">
             </a>
           </div>
         </div>
 
         <div class="scanner-card" aria-live="polite">
-          <div class="scan-box">
-            <div class="barcode" aria-hidden="true"></div>
-            <p class="footer-note">Modo de demostración: Motor de análisis en tiempo real</p>
+          <div class="scan-box" style="background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 12px; padding: 24px; text-align: center;">
+            <div class="barcode" style="opacity: 0.75; margin: 0 auto 12px auto;" aria-hidden="true"></div>
+            <p style="font-size: 0.85rem; color: #64748b; margin: 0; font-weight: 500;">Modo de demostración: Motor de análisis en tiempo real</p>
           </div>
 
-          <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap; margin-top: 15px;">
-            <div class="score-ring" id="overallRing" style="--score:54;--ring-color:var(--color-warning);">
-              <span id="overallScore">54</span>
+          <div style="display: flex; align-items: center; gap: 20px; margin-top: 24px;">
+            <div class="score-ring" id="overallRing" style="--score: 54; --ring-color: #c2410c; min-width: 64px;">
+              <span id="overallScore" style="font-family: var(--font-headings); font-weight: 700;">54</span>
             </div>
             <div>
-              <h3 id="resultTitle" style="margin-bottom:.35rem; color: var(--color-primary);">Uso ocasional</h3>
-              <p id="resultSummary" style="margin-bottom:.5rem;">Este producto es aceptable para el colesterol, pero requiere vigilancia en sodio o azúcares.</p>
+              <h3 id="resultTitle" style="font-family: var(--font-headings); margin: 0 0 4px 0; color: var(--color-primary); font-size: 1.25rem;">Uso ocasional</h3>
+              <p id="resultSummary" style="margin: 0; color: #64748b; font-size: 0.9rem; line-height: 1.4;">Este producto es aceptable para el colesterol, pero requiere vigilancia en sodio o azúcares.</p>
             </div>
           </div>
           <div class="score-badges" id="badges"></div>
@@ -221,8 +265,7 @@
       </div>
     </section>
 
-    <!-- PREMIUM FEATURE CARDS -->
-    <section id="features-section" style="background: #fafafa; padding: var(--space-12) 0; border-top: 1px solid #f0f0f0;">
+    <section id="features-section" style="background: #fafafa; padding: 60px 0; border-top: 1px solid #f0f0f0;">
       <div class="container">
         <div class="features-grid">
           <div class="feature-premium-card">
@@ -241,10 +284,9 @@
       </div>
     </section>
 
-    <!-- SIMULATION INTERFACE -->
-    <section id="matrixForm" style="background: var(--color-surface); padding: var(--space-12) 0; border-top: 1px solid #eee;">
+    <section id="matrixForm" style="background: var(--color-surface); padding: 60px 0; border-top: 1px solid #eee;">
       <div class="container">
-        <h2 style="color: var(--color-primary);">Simular el análisis de un producto</h2>
+        <h2 style="font-family: var(--font-headings); color: var(--color-primary);">Simular el análisis de un producto</h2>
         <p style="margin-bottom: var(--space-6);">Modifique los valores para evaluar el algoritmo.</p>
         <form class="form-grid">
           <div>
@@ -265,7 +307,6 @@
     </section>
   </main>
 
-  <!-- HEALTHCARE-PROFESSIONAL FOOTER DISCLAIMER -->
   <div class="healthcare-disclaimer-box">
     <div class="healthcare-disclaimer-text">
       <strong>Aviso clínico:</strong> Esta herramienta proporciona información nutricional educativa derivada de los datos de etiquetado de los productos. No está destinada a diagnosticar, tratar, curar o prevenir ninguna enfermedad, y no constituye asesoramiento médico.
