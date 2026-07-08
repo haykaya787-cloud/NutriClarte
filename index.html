@@ -1,17 +1,61 @@
 <!doctype html>
-<html>
+<html lang="fr" data-theme="light">
 <head>
-  <meta charset="utf-8"><!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="refresh" content="0; url=/en/">
-  <title>NutriClarté</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQ — NutriClarté</title>
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <style>
+    :root { --color-primary: #1A365D; --color-brand-green: #548235; }
+    .brand img { height: 75px; width: auto; object-fit: contain; }
+    .faq-container { max-width: 800px; margin: 40px auto; padding: 0 20px; }
+    .faq-item { background: var(--color-surface); padding: 20px; border-radius: 8px; margin-bottom: 15px; border-left: 4px solid var(--color-brand-green); box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+    .faq-item h3 { color: var(--color-primary); margin-top: 0; margin-bottom: 10px; }
+    .footer-links { display: flex; gap: var(--space-6); justify-content: center; margin-top: var(--space-4); }
+    .footer-links a { color: var(--color-text-muted); text-decoration: none; font-size: var(--text-sm); }
+  </style>
 </head>
-<body></body>
-</html>
-  <meta http-equiv="refresh" content="0; url=/en/">
-  <title>NutriClarte</title>
-</head>
-<body></body>
+<body>
+  <header>
+    <div class="container nav">
+      <a class="brand" href="/fr/">
+        <img src="/assets/Logo.png" alt="NutriClarté Logo">
+      </a>
+      <div class="nav-actions">
+        <a class="ghost-btn" href="/en/">EN</a>
+        <a class="ghost-btn" href="/fr/">FR</a>
+        <a class="ghost-btn" href="/es/">ES</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="faq-container">
+    <h1 style="color: var(--color-primary); margin-bottom: 30px;">Foire Aux Questions (FAQ)</h1>
+    
+    <div class="faq-item">
+      <h3>Comment NutriClarté évalue-t-elle les produits ?</h3>
+      <p>Notre algorithme standardise les valeurs nutritionnelles pour 100g et croise ces données avec les directives cliniques internationales pour le diabète, l'hypertension et le cholestérol.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>L'application remplace-t-elle un médecin ?</h3>
+      <p>Non. NutriClarté est un outil d'orientation préventive et éducative. Il ne remplace en aucun cas les prescriptions ou les conseils de votre médecin ou nutritionniste.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Mes données de santé sont-elles partagées ?</h3>
+      <p>Absolument pas. Vos scans et profils restent stockés localement sur votre appareil. Consultez notre politique de confidentialité pour plus de détails.</p>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container" style="text-align: center; margin-top: 50px;">
+      <div class="footer-links">
+        <a href="/privacy/">Politique de Confidentialité</a>
+        <a href="/support/">Support</a>
+        <a href="/faq/">FAQ</a>
+      </div>
+    </div>
+  </footer>
+</body>
 </html>
