@@ -108,18 +108,41 @@
 
     <section id="features-section" class="features-section">
       <div class="container">
-        <div class="features-grid">
-          <div class="feature-premium-card">
-            <h3>Clear nutrition scoring</h3>
-            <p>Understand key nutrition signals at a glance.</p>
+        <!-- Section 1: Core Features -->
+        <div class="features-container-block">
+          <h2>Core features</h2>
+          <div class="features-grid">
+            <div class="feature-premium-card">
+              <h3>Smart scan intake</h3>
+              <p>Use barcode scan first, then fall back to text search and nutrition label OCR when the product is missing from the catalog.</p>
+            </div>
+            <div class="feature-premium-card">
+              <h3>Condition engine</h3>
+              <p>Score products across added sugar, fiber, saturated fat, sodium, and category context to generate tailored advice for each condition.</p>
+            </div>
+            <div class="feature-premium-card">
+              <h3>Actionable swaps</h3>
+              <p>Recommend lower-sugar, lower-sodium, or lower-saturated-fat alternatives from the same product family instead of generic advice.</p>
+            </div>
           </div>
-          <div class="feature-premium-card">
-            <h3>Personalized guidance</h3>
-            <p>Get insights aligned with your health priorities.</p>
-          </div>
-          <div class="feature-premium-card">
-            <h3>Better everyday choices</h3>
-            <p>Compare products and choose with more confidence.</p>
+        </div>
+
+        <!-- Section 2: Clinical Lenses -->
+        <div class="features-container-block" style="margin-bottom: 0;">
+          <h2>Clinical lenses</h2>
+          <div class="features-grid">
+            <div class="feature-premium-card">
+              <h3>Diabetes</h3>
+              <p>Prioritize added sugars, total carbs per serving, fiber, serving size inflation, and whether the food is beverage-like or dessert-like.</p>
+            </div>
+            <div class="feature-premium-card">
+              <h3>Cholesterol</h3>
+              <p>Prioritize saturated fat, trans fat if available, fiber, and whole-food composition instead of total fat alone.</p>
+            </div>
+            <div class="feature-premium-card">
+              <h3>High blood pressure</h3>
+              <p>Prioritize sodium density, serving size realism, and processed-food penalties because sodium often accumulates across servings.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -133,7 +156,7 @@
           <div>
             <label for="productName">Product Name</label>
             <input type="text" id="productName" value="Tomato soup">
-            <label for="sodiumInput">Sodium level (mg per 100g)</label>
+            <label pour="sodiumInput">Sodium level (mg per 100g)</label>
             <input type="number" id="sodiumInput" value="640">
           </div>
           <div>
