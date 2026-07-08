@@ -6,94 +6,32 @@
   <title>NutriClarté — Clinical Nutritional Analysis</title>
   <link rel="stylesheet" href="/assets/css/style.css">
   <style>
-    /* NUTRICLARTÉ BRANDING REFRESH */
-    :root {
-      --color-primary: #1A365D; /* Deep Clinical Blue */
-      --color-brand-green: #548235; /* Natural Leaf Green */
-    }
-
-    /* HERO LOGO LOCKUP */
-    .brand {
-      display: flex;
-      align-items: center;
-      padding: 15px 0 !important;
-      height: auto !important;
-    }
-    .brand img {
-      height: 90px !important; /* Expanded and forced style rule overrides */
-      width: auto !important;
-      max-height: 90px !important;
-      object-fit: contain;
-    }
-
-    .hero-section {
-      padding: var(--space-12) 0;
-      background: radial-gradient(circle at top right, rgba(84, 130, 53, 0.08), transparent 60%);
-    }
-
-    /* STORE BADGES PIXEL-PERFECT LAYOUT */
-    .store-badges-container {
-      display: flex;
-      gap: 10px;
-      margin-top: var(--space-8);
-      align-items: center;
-      flex-wrap: wrap;
-      height: 50px;
-    }
-    .store-badge {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      height: 45px;
-      overflow: visible;
-    }
-    .store-badge.google-play img {
-      height: 66px !important; /* Counters hidden Google layout margins */
-      max-height: 66px !important;
-      margin-left: -8px;
-    }
-    .store-badge.apple-store img {
-      height: 44px !important;
-      max-height: 44px !important;
-    }
-    .store-badge img {
-      object-fit: contain;
-      display: block;
-      transition: transform 0.2s ease;
-    }
-    .store-badge img:hover {
-      transform: scale(1.03);
-    }
-
-    .footer-links {
-      display: flex;
-      gap: var(--space-6);
-      justify-content: center;
-      margin-top: var(--space-4);
-    }
-    .footer-links a {
-      color: var(--color-text-muted);
-      text-decoration: none;
-      font-size: var(--text-sm);
-      transition: color 0.2s;
-    }
-    .footer-links a:hover {
-      color: var(--color-primary);
-    }
+    :root { --color-primary: #1A365D; --color-brand-green: #548235; }
+    .brand { display: flex; align-items: center; padding: 15px 0 !important; height: auto !important; }
+    .brand img { height: 90px !important; width: auto !important; max-height: 90px !important; object-fit: contain; }
+    .hero-section { padding: var(--space-12) 0; background: radial-gradient(circle at top right, rgba(84, 130, 53, 0.08), transparent 60%); }
+    .store-badges-container { display: flex; gap: 10px; margin-top: var(--space-8); align-items: center; flex-wrap: wrap; height: 50px; }
+    .store-badge { display: inline-flex; align-items: center; justify-content: center; height: 45px; overflow: visible; }
+    .store-badge.google-play img { height: 66px !important; max-height: 66px !important; margin-left: -8px; }
+    .store-badge.apple-store img { height: 44px !important; max-height: 44px !important; }
+    .store-badge img { object-fit: contain; display: block; transition: transform 0.2s ease; }
+    .store-badge img:hover { transform: scale(1.03); }
+    .footer-links { display: flex; gap: var(--space-6); justify-content: center; margin-top: var(--space-4); }
+    .footer-links a { color: var(--color-text-muted); text-decoration: none; font-size: var(--text-sm); transition: color 0.2s; }
+    .footer-links a:hover { color: var(--color-primary); }
   </style>
 </head>
 <body>
-  <a class="skip-link" href="#main">Skip to content</a>
-  
   <header>
     <div class="container nav">
-      <a class="brand" href="/en/" aria-label="NutriClarté Home">
+      <a class="brand" href="/en/">
         <img src="/assets/Logo.png" alt="NutriClarté Logo">
       </a>
       <div class="nav-actions">
         <a class="ghost-btn" href="/en/">EN</a>
         <a class="ghost-btn" href="/fr/">FR</a>
-        <button class="icon-btn" data-theme-toggle aria-label="Toggle theme"></button>
+        <a class="ghost-btn" href="/es/">ES</a>
+        <button class="icon-btn" data-theme-toggle></button>
       </div>
     </div>
   </header>
@@ -106,12 +44,11 @@
           <h1 style="color: var(--color-primary); margin-top: var(--space-2);">Nutritional analysis tailored to your medical profile.</h1>
           <p class="lead">Scan any food product and discover its standardized 100g clinical impact for <strong>diabetes</strong>, <strong>hypertension</strong>, and <strong>cholesterol</strong> management.</p>
           
-          <!-- Balanced Badges Interface -->
           <div class="store-badges-container">
-            <a href="#" class="store-badge google-play" aria-label="Get NutriClarté on Google Play">
+            <a href="#" class="store-badge google-play">
               <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play">
             </a>
-            <a href="#" class="store-badge apple-store" aria-label="Download NutriClarté on the Apple App Store">
+            <a href="#" class="store-badge apple-store">
               <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;format=png" alt="Download on the App Store">
             </a>
           </div>
@@ -119,66 +56,21 @@
 
         <div class="scanner-card" aria-live="polite">
           <div class="scan-box">
-            <div class="barcode" aria-hidden="true"></div>
+            <div class="barcode"></div>
             <p class="footer-note">Demo mode: Adjust values below to test our medical grading algorithm.</p>
           </div>
-
           <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap; margin-top: 15px;">
             <div class="score-ring" id="overallRing" style="--score:54;--ring-color:var(--color-warning);">
               <span id="overallScore">54</span>
             </div>
             <div>
               <h3 id="resultTitle" style="margin-bottom:.35rem; color: var(--color-primary);">Use occasionally</h3>
-              <p id="resultSummary" style="margin-bottom:.5rem;">This product is acceptable for cholesterol, but sodium or sugar amounts require close monitoring.</p>
+              <p id="resultSummary">This product is acceptable for cholesterol, but sodium or sugar amounts require close monitoring.</p>
             </div>
           </div>
-
           <div class="score-badges" id="badges"></div>
           <div class="scores" id="conditionScores"></div>
-
-          <div style="margin-top: 15px;">
-            <h3 style="color: var(--color-primary);">Clinical Directives & Recommendations</h3>
-            <div class="recommendations" id="recommendations"></div>
-          </div>
         </div>
-      </div>
-    </section>
-
-    <section style="background: var(--color-surface); padding: var(--space-12) 0; border-top: 1px solid #eee;">
-      <div class="container">
-        <h2 style="color: var(--color-primary);">Simulate a product analysis</h2>
-        <p style="margin-bottom: var(--space-6);">Modify the clinical parameters to witness our validation engine adapt live.</p>
-        
-        <form id="matrixForm" class="form-grid">
-          <div>
-            <label for="productName">Product Name</label>
-            <input type="text" id="productName" value="Sweet Chocolate Spread">
-            
-            <label for="category">Category</label>
-            <input type="text" id="category" value="Sugary Spread">
-
-            <div style="margin-top: 15px; display: flex; gap: 10px;">
-              <button type="button" id="cerealButton" class="ghost-btn">Example: Cereal</button>
-              <button type="button" id="soupButton" class="ghost-btn">Example: Soup</button>
-            </div>
-          </div>
-
-          <div>
-            <label for="addedSugar">Sugars (g per 100g)</label>
-            <input type="number" id="addedSugar" value="55" min="0" max="100">
-
-            <label for="satFat">Saturated Fat (g per 100g)</label>
-            <input type="number" id="satFat" value="11" min="0" max="100">
-
-            <label for="sodium">Sodium (mg per 100g)</label>
-            <input type="number" id="sodium" value="30" min="0" max="5000">
-
-            <label for="fiber">Fiber (g per 100g)</label>
-            <input type="number" id="fiber" value="3" min="0" max="100">
-            
-            <button type="submit" class="primary-btn" style="width:100%; margin-top:20px; background-color: var(--color-brand-green); border: none;">Rerun Evaluation</button>
-          </div>
-        </form>
       </div>
     </section>
   </main>
@@ -186,16 +78,14 @@
   <footer>
     <div class="container" style="text-align: center;">
       <p class="footer-note">Important: NutriClarté is intended for preventive educational guidance only and does not replace personalized medical advice.</p>
-      
       <div class="footer-links">
         <a href="/privacy/">Privacy Policy</a>
         <a href="/support/">Support & Assistance</a>
+        <a href="/faq/">FAQ</a>
         <a href="mailto:contact@nutriclarte.ca">Contact</a>
       </div>
-      <p class="footer-note" style="margin-top: 15px;">&copy; 2026 NutriClarté. All rights reserved.</p>
     </div>
   </footer>
-
   <script src="/assets/js/app.js"></script>
 </body>
 </html>
