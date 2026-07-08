@@ -49,21 +49,20 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       // Dynamic adjustments based on worst scoring metric
-      let ringColor = "#c2410c"; // Orange/Amber
+      let ringColor = "#c2410c"; 
       if (overallScore >= 75) {
-        ringColor = "#166534"; // Green
+        ringColor = "#166534"; 
         if (lang === "en") titleText = "Excellent choice";
         if (lang === "fr") titleText = "Excellent choix";
         if (lang === "es") titleText = "Excelente opción";
         summaryText = lang === "fr" ? "Parfaitement équilibré." : (lang === "es" ? "Perfectamente equilibrado." : "Perfectly balanced.");
       } else if (overallScore < 45) {
-        ringColor = "#b91c1c"; // Red
+        ringColor = "#b91c1c"; 
         if (lang === "en") titleText = "Limit consumption";
         if (lang === "fr") titleText = "À limiter fortement";
         if (lang === "es") titleText = "Limitar consumo";
       }
 
-      // Adjust dynamic concern messages based on simulated thresholds
       if (sodiumVal > 500 && sodiumScore < sugarScore && sodiumScore < fatScore) {
         summaryText = lang === "fr" ? "Le sodium est le problème majeur." : (lang === "es" ? "El sodio es el problema principal." : "Sodium is the main concern.");
       } else if (addedSugar > 15 && sugarScore < fatScore) {
@@ -72,7 +71,6 @@ document.addEventListener("DOMContentLoaded", function () {
         summaryText = lang === "fr" ? "Les graisses saturées sont élevées." : (lang === "es" ? "Las grasas saturadas son elevadas." : "Saturated fat is the main concern.");
       }
 
-      // 1. Update main score badge elements
       const overallRing = document.getElementById("overallRing");
       const overallScoreSpan = document.getElementById("overallScore");
       if (overallRing) {
@@ -83,7 +81,6 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById("resultTitle").textContent = `${titleText} — ${productName}`;
       document.getElementById("resultSummary").textContent = summaryText;
 
-      // 2. Render horizontal ingredient pills dynamically
       const badgesContainer = document.getElementById("ingredientBadges");
       if (badgesContainer) {
         badgesContainer.innerHTML = `
@@ -93,7 +90,6 @@ document.addEventListener("DOMContentLoaded", function () {
         `;
       }
 
-      // 3. Update personalized clinical categories
       const gridContainer = document.getElementById("conditionScores");
       if (gridContainer) {
         gridContainer.innerHTML = `
@@ -121,7 +117,6 @@ document.addEventListener("DOMContentLoaded", function () {
         `;
       }
 
-      // 4. Update recommendations blocks dynamically
       const recBlock = document.getElementById("recommendationsBlock");
       if (recBlock) {
         recBlock.innerHTML = `
