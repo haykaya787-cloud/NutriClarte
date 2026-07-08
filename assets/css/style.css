@@ -136,12 +136,12 @@ body {
 }
 
 /* ==========================================================================
-   5. ACTION SYSTEM & STORE BADGES (Identical Sizing)
+   5. ACTION SYSTEM & STORE BADGES (Strict Uniform Sizing Fix)
    ========================================================================== */
 .cta-group {
   display: flex;
   gap: 16px;
-  margin-bottom: 32px;
+  margin-bottom: 24px;
   flex-wrap: wrap;
 }
 
@@ -185,7 +185,7 @@ body {
 
 .store-badges-container {
   display: flex;
-  gap: 14px;
+  gap: 12px;
   align-items: center;
   margin-top: 10px;
   flex-wrap: wrap;
@@ -194,17 +194,20 @@ body {
 .store-badge {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  height: 44px; 
-  overflow: hidden;
-  border-radius: 7px;
+  height: 40px; /* Normalizes the visual container height */
 }
 
 .store-badge img {
-  height: 100%; 
+  height: 100%;
   width: auto;
   object-fit: contain;
   display: block;
+}
+
+/* Specific trim for Google Play asset built-in whitespace padding */
+.store-badge.google-play img {
+  transform: scale(1.35); 
+  transform-origin: center;
 }
 
 /* ==========================================================================
@@ -397,7 +400,55 @@ body {
 }
 
 /* ==========================================================================
-   7. FEATURES & CLINICAL LENSES STYLING (Ergonomic Grids)
+   7. INTERACTIVE ENGINE / FORM FIELDS
+   ========================================================================== */
+.simulation-section {
+  background: #fafafa;
+  padding: 60px 0;
+  border-top: 1px solid #e2e8f0;
+}
+
+.simulation-section h2 {
+  font-family: var(--font-headings);
+  color: var(--color-primary);
+  font-weight: 800;
+  font-size: 2rem;
+  margin: 0 0 6px 0;
+}
+
+.sim-subtitle {
+  color: #64748b;
+  margin-bottom: 30px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+
+input[type="text"], input[type="number"] {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  box-sizing: border-box;
+}
+
+.full-width {
+  width: 100%;
+}
+
+/* ==========================================================================
+   8. FEATURES & CLINICAL LENSES STYLING (Ergonomic Bottom Grids)
    ========================================================================== */
 .features-section {
   background: #ffffff;
@@ -450,54 +501,6 @@ body {
   font-size: 0.95rem;
   line-height: 1.6;
   margin: 0;
-}
-
-/* ==========================================================================
-   8. INTERACTIVE ENGINE / FORM FIELDS
-   ========================================================================== */
-.simulation-section {
-  background: #fafafa;
-  padding: 60px 0;
-  border-top: 1px solid #e2e8f0;
-}
-
-.simulation-section h2 {
-  font-family: var(--font-headings);
-  color: var(--color-primary);
-  font-weight: 800;
-  font-size: 2rem;
-  margin: 0 0 6px 0;
-}
-
-.sim-subtitle {
-  color: #64748b;
-  margin-bottom: 30px;
-}
-
-.form-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 30px;
-}
-
-label {
-  display: block;
-  font-weight: 500;
-  margin-bottom: 8px;
-  font-size: 0.9rem;
-}
-
-input[type="text"], input[type="number"] {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #cbd5e1;
-  border-radius: 6px;
-  margin-bottom: 16px;
-  box-sizing: border-box;
-}
-
-.full-width {
-  width: 100%;
 }
 
 /* ==========================================================================
