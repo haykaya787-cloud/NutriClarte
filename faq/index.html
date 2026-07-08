@@ -6,12 +6,43 @@
   <title>FAQ — NutriClarté</title>
   <link rel="stylesheet" href="/assets/css/style.css">
   <style>
-    :root { --color-primary: #1A365D; --color-brand-green: #548235; }
+    :root {
+      --color-primary: #1A365D;
+      --color-brand-green: #548235;
+      --color-surface-card: #ffffff;
+    }
     .brand img { height: 75px; width: auto; object-fit: contain; }
-    .faq-container { max-width: 800px; margin: 40px auto; padding: 0 20px; }
-    .faq-item { background: var(--color-surface); padding: 20px; border-radius: 8px; margin-bottom: 15px; border-left: 4px solid var(--color-brand-green); box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-    .faq-item h3 { color: var(--color-primary); margin-top: 0; margin-bottom: 10px; }
-    .footer-links { display: flex; gap: var(--space-6); justify-content: center; margin-top: var(--space-4); }
+    
+    .faq-container { max-width: 800px; margin: 60px auto; padding: 0 20px; }
+    
+    .faq-item { 
+      background: var(--color-surface-card); 
+      padding: 25px; 
+      border-radius: 12px; 
+      margin-bottom: 20px; 
+      border-left: 4px solid var(--color-brand-green); 
+      box-shadow: 0 4px 20px rgba(0,0,0,0.03); 
+    }
+    .faq-item h3 { color: var(--color-primary); margin-top: 0; margin-bottom: 12px; font-size: 1.2rem; }
+    .faq-item p { color: var(--color-text-muted); line-height: 1.6; margin: 0; font-size: 0.98rem; }
+
+    /* CLINICAL DISCLAIMER LAYOUT BOX */
+    .healthcare-disclaimer-box {
+      background-color: #f8fafc;
+      border-top: 1px solid #e2e8f0;
+      padding: 30px 20px;
+      margin-top: 60px;
+    }
+    .healthcare-disclaimer-text {
+      max-width: 900px;
+      margin: 0 auto;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: #64748b;
+      text-align: center;
+    }
+
+    .footer-links { display: flex; gap: var(--space-6); justify-content: center; margin-top: 25px; }
     .footer-links a { color: var(--color-text-muted); text-decoration: none; font-size: var(--text-sm); }
   </style>
 </head>
@@ -30,31 +61,41 @@
   </header>
 
   <main class="faq-container">
-    <h1 style="color: var(--color-primary); margin-bottom: 30px;">Foire Aux Questions (FAQ)</h1>
+    <h1 style="color: var(--color-primary); margin-bottom: 10px; font-size: 2.2rem;">Foire Aux Questions (FAQ)</h1>
+    <p style="color: var(--color-text-muted); margin-bottom: 40px; font-size: 1.1rem;">Trouvez des réponses claires sur le fonctionnement de l'application et nos protocoles d'analyse.</p>
     
     <div class="faq-item">
       <h3>Comment NutriClarté évalue-t-elle les produits ?</h3>
-      <p>Notre algorithme standardise les valeurs nutritionnelles pour 100g et croise ces données avec les directives cliniques internationales pour le diabète, l'hypertension et le cholestérol.</p>
+      <p>Notre algorithme standardise les valeurs nutritionnelles pour 100g et croise automatiquement ces données avec les directives cliniques internationales pour l'évaluation préventive du diabète, de l'hypertension et du cholestérol.</p>
     </div>
 
     <div class="faq-item">
-      <h3>L'application remplace-t-elle un médecin ?</h3>
-      <p>Non. NutriClarté est un outil d'orientation préventive et éducative. Il ne remplace en aucun cas les prescriptions ou les conseils de votre médecin ou nutritionniste.</p>
+      <h3>L'application remplace-t-elle un suivi médical ?</h3>
+      <p>Non, absolument pas. NutriClarté est un guide d'accompagnement et de soutien pour vous aider à effectuer des choix éclairés au quotidien. Il ne formule aucun diagnostic et ne remplace pas les conseils personnalisés de votre médecin.</p>
     </div>
 
     <div class="faq-item">
       <h3>Mes données de santé sont-elles partagées ?</h3>
-      <p>Absolument pas. Vos scans et profils restent stockés localement sur votre appareil. Consultez notre politique de confidentialité pour plus de détails.</p>
+      <p>Non, votre vie privée est entièrement préservée. Vos scans de codes-barres ainsi que vos profils de personnalisation restent stockés localement sur votre téléphone ou appareil mobile.</p>
     </div>
   </main>
 
+  <!-- HEALTHCARE-PROFESSIONAL FOOTER DISCLAIMER -->
+  <div class="healthcare-disclaimer-box">
+    <div class="healthcare-disclaimer-text">
+      <strong>Avis clinique :</strong> Cet outil fournit de l’information nutritionnelle éducative dérivée des données d’étiquetage des produits. Il n’est pas destiné à diagnostiquer, traiter, guérir ou prévenir une maladie et ne constitue pas un avis médical.
+    </div>
+  </div>
+
   <footer>
-    <div class="container" style="text-align: center; margin-top: 50px;">
+    <div class="container" style="text-align: center;">
       <div class="footer-links">
         <a href="/privacy/">Politique de Confidentialité</a>
-        <a href="/support/">Support</a>
+        <a href="/support/">Support & Assistance</a>
         <a href="/faq/">FAQ</a>
+        <a href="mailto:contact@nutriclarte.ca">Contact</a>
       </div>
+      <p class="footer-note" style="margin-top: 15px;">&copy; 2026 NutriClarté. Tous droits réservés.</p>
     </div>
   </footer>
 </body>
