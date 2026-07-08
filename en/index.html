@@ -144,44 +144,58 @@
       width: auto;
     }
 
-    /* RIGHT SIDE INTERACTIVE CARD FIXES */
+    /* RIGHT SIDE INTERACTIVE CARD FIXED LAYOUT */
     .scanner-card {
       background: var(--color-surface-card) !important;
       border-radius: 16px !important;
       padding: 32px !important;
       box-shadow: 0 10px 30px rgba(0,0,0,0.05) !important;
       border: 1px solid #e2e8f0 !important;
-      box-sizing: border-box;
+      box-sizing: border-box !important;
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 24px !important;
+    }
+
+    .score-block-header {
+      display: grid !important;
+      grid-template-columns: auto 1fr !important;
+      gap: 20px !important;
+      align-items: center !important;
     }
 
     .score-ring {
-      position: relative;
-      width: 64px !important;
-      height: 64px !important;
-      min-width: 64px !important;
-      min-height: 64px !important;
+      position: relative !important;
+      width: 68px !important;
+      height: 68px !important;
+      min-width: 68px !important;
+      min-height: 68px !important;
+      max-width: 68px !important;
+      max-height: 68px !important;
       border-radius: 50% !important;
       display: flex !important;
       align-items: center !important;
       justify-content: center !important;
       background: conic-gradient(var(--ring-color, #c2410c) calc(var(--score, 54) * 1%), #e2e8f0 0) !important;
       padding: 0 !important;
+      box-sizing: border-box !important;
     }
     .score-ring::before {
-      content: "";
-      position: absolute;
-      inset: 6px;
-      background: #ffffff;
-      border-radius: 50%;
-      z-index: 1;
+      content: "" !important;
+      position: absolute !important;
+      inset: 6px !important;
+      background: #ffffff !important;
+      border-radius: 50% !important;
+      z-index: 1 !important;
     }
     .score-ring span {
-      position: relative;
-      z-index: 2;
-      font-size: 1.3rem !important;
+      position: relative !important;
+      z-index: 2 !important;
+      font-size: 1.35rem !important;
       font-weight: 700 !important;
       color: var(--color-primary) !important;
-      font-family: var(--font-headings);
+      font-family: var(--font-headings) !important;
+      line-height: 1 !important;
     }
 
     /* CARD INTERNAL CONTENT TYPOGRAPHY */
@@ -293,22 +307,24 @@
         </div>
 
         <div class="scanner-card" aria-live="polite">
-          <div class="scan-box" style="background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 12px; padding: 24px; text-align: center; margin-bottom: 24px;">
+          <div class="scan-box" style="background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 12px; padding: 24px; text-align: center;">
             <div class="barcode" style="opacity: 0.75; margin: 0 auto 12px auto;" aria-hidden="true"></div>
-            <p style="font-size: 0.85rem; color: #64748b; font-weight: 500;">Demo Module: Live Nutritional Testing Engine</p>
+            <p style="font-size: 0.85rem; color: #64748b; font-weight: 500; margin: 0;">Demo Module: Live Nutritional Testing Engine</p>
           </div>
 
-          <div style="display: flex; align-items: center; gap: 20px;">
+          <div class="score-block-header">
             <div class="score-ring" id="overallRing" style="--score: 54; --ring-color: #c2410c;">
               <span id="overallScore">54</span>
             </div>
             <div>
-              <h3>Use occasionally</h3>
-              <p>This product is acceptable for cholesterol, but sodium or sugar amounts require close monitoring.</p>
+              <h3 id="resultTitle">Use occasionally</h3>
+              <p id="resultSummary">This product is acceptable for cholesterol, but sodium or sugar amounts require close monitoring.</p>
             </div>
           </div>
-          <div class="score-badges" id="badges" style="margin-top: 20px;"></div>
-          <div class="scores" id="conditionScores" style="margin-top: 20px;"></div>
+          
+          <div class="score-badges" id="badges"></div>
+          <div class="scores" id="conditionScores"></div>
+          <div class="recommendations" id="recommendations"></div>
         </div>
 
       </div>
