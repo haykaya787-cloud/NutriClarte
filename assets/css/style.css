@@ -1,5 +1,5 @@
 /* ==========================================================================
-   VARIABLES GLOBALES & THÈME
+   1. VARIABLES GLOBALES & THÈME
    ========================================================================== */
 :root {
   --color-primary: #1A365D;
@@ -10,7 +10,7 @@
 }
 
 /* ==========================================================================
-   RÈGLES DE BASE & RÉINITIALISATION
+   2. RÉINITIALISATION ET BASE ACCESSIBLE
    ========================================================================== */
 * {
   box-sizing: border-box;
@@ -33,7 +33,7 @@ body {
 }
 
 /* ==========================================================================
-   BARRE DE NAVIGATION (HEADER) - Correction Logo & Alignement
+   3. BARRE DE NAVIGATION (HEADER) - Correction Dimension Logo
    ========================================================================== */
 .main-header {
   background: #ffffff;
@@ -47,7 +47,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 0;
+  padding: 12px 0;
 }
 
 .brand {
@@ -56,7 +56,7 @@ body {
 }
 
 .brand img {
-  height: 45px; /* Empêche le logo d'être géant */
+  height: 45px; /* Empêche le logo de devenir géant */
   width: auto;
   object-fit: contain;
 }
@@ -83,7 +83,7 @@ body {
 }
 
 /* ==========================================================================
-   SECTION HERO & GRILLE PRINCIPALE - Protection contre l'écrasement vertical
+   4. SECTION HERO & GRILLE - Protection contre les coupures de texte
    ========================================================================== */
 .hero-section {
   padding: 60px 0;
@@ -96,7 +96,7 @@ body {
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
   gap: 50px;
-  align-items: start; /* Empêche l'étirement destructeur des éléments de la grille */
+  align-items: start; /* Empêche l'alignement stretch d'étirer verticalement les blocs */
 }
 
 .hero-left-content {
@@ -116,7 +116,7 @@ body {
   padding: 6px 16px;
   border-radius: 100px;
   text-transform: uppercase;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 .hero-title {
@@ -137,7 +137,7 @@ body {
 }
 
 /* ==========================================================================
-   BOUTONS DE L'INTERFACE & BADGES STORES
+   5. INTERFACES BOUTONS & COHÉRENCE DU RESPONSIVE DES BADGES
    ========================================================================== */
 .cta-group {
   display: flex;
@@ -189,11 +189,12 @@ body {
   gap: 12px;
   align-items: center;
   margin-top: 10px;
+  flex-wrap: wrap;
 }
 
 .store-badge {
   display: inline-block;
-  height: 40px; /* Taille unifiée et verrouillée pour les badges d'application */
+  height: 40px; /* Taille unifiée stricte pour verrouiller le comportement des images */
 }
 
 .store-badge img {
@@ -203,7 +204,7 @@ body {
 }
 
 /* ==========================================================================
-   MODULE INTERACTIF (CARTE SCANNER) & FIXATION DE L'ANNEAU PERFECT ROUND
+   6. MODULE CARTE INTERACTIVE & CERCLE PARFAIT (ANTI-ELLIPSE)
    ========================================================================== */
 .scanner-card {
   background: var(--color-surface-card);
@@ -231,21 +232,21 @@ body {
   margin: 0;
 }
 
-/* Bloc d'en-tête de score */
+/* En-tête de score interne à la carte */
 .score-block-header {
-  display: flex; /* Flexbox évite les calculs d'étirement bizarres des grilles */
+  display: flex; /* Flexbox supprime les caprices d'étirement horizontal des grilles CSS */
   align-items: center;
   gap: 20px;
   width: 100%;
 }
 
-/* L'ANNEAU MAGIQUE INDÉFORMABLE */
+/* VERROUILLAGE SÉCURISÉ DE L'ANNEAU DE SCORE */
 .score-ring {
   position: relative;
   width: 72px;  
   height: 72px;
-  flex: 0 0 72px;       /* Interdit au navigateur de réduire ou d'élargir la largeur */
-  aspect-ratio: 1 / 1;  /* Force un ratio parfait carré (Cercle parfait assuré) */
+  flex: 0 0 72px;       /* Désactive l'autorisation de compression ou d'extension latérale */
+  aspect-ratio: 1 / 1;  /* Impose géométriquement un rapport hauteur/largeur inchanger à 1:1 */
   border-radius: 50%;
   
   display: flex;
@@ -289,7 +290,7 @@ body {
 }
 
 /* ==========================================================================
-   GRILLE DES CARACTÉRISTIQUES (FEATURES)
+   7. BLOC DES CARACTÉRISTIQUES (FEATURES)
    ========================================================================== */
 .features-section {
   background: #ffffff;
@@ -325,7 +326,7 @@ body {
 }
 
 /* ==========================================================================
-   SECTION SIMULATION / LABELS ET FORMULAIRES
+   8. COMPOSANT SIMULATEUR / FORMULAIRES
    ========================================================================== */
 .simulation-section {
   background: #fafafa;
@@ -373,7 +374,7 @@ input[type="text"], input[type="number"] {
 }
 
 /* ==========================================================================
-   CLAUSE MEDICALE DE RESPONSABILITÉ & FOOTER
+   9. LIENS DE BAS DE PAGE (FOOTER) & AVIS JURIDIQUE
    ========================================================================== */
 .healthcare-disclaimer-box {
   background-color: #f1f5f9;
@@ -425,7 +426,7 @@ input[type="text"], input[type="number"] {
 }
 
 /* ==========================================================================
-   RESPONSIVE DESIGN (MEDIA QUERIES SMARTPHONES / TABLETTES)
+   10. RESPONSIVE MEDIA QUERIES (ADAPTATION MOBILE/TABLETTE)
    ========================================================================== */
 @media (max-width: 960px) {
   .hero-grid {
