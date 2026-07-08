@@ -38,7 +38,7 @@
             <a href="#" class="store-badge">
               <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;format=png" alt="Download on the App Store">
             </a>
-            <a href="#" class="store-badge">
+            <a href="#" class="store-badge google-play">
               <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play">
             </a>
           </div>
@@ -93,7 +93,7 @@
             <h4>Recommendations</h4>
             <div class="recommendations-grid" id="recommendationsBlock">
               <div class="rec-card">
-                <h5>Reduce sodium exposure</h5>
+                <h2>Reduce sodium exposure</h2>
                 <p>This product exceeds optimal levels for your cardiorespiratory health indicators.</p>
               </div>
               <div class="rec-card">
@@ -103,6 +103,28 @@
             </div>
           </div>
         </div>
+      </div>
+    </section>
+
+    <section id="matrixForm" class="simulation-section">
+      <div class="container">
+        <h2>Simulate a product analysis</h2>
+        <p class="sim-subtitle">Modify parameters to see validation parameters adapt.</p>
+        <form class="form-grid">
+          <div>
+            <label for="productName">Product Name</label>
+            <input type="text" id="productName" value="Tomato soup">
+            <label for="sodiumInput">Sodium level (mg per 100g)</label>
+            <input type="number" id="sodiumInput" value="640">
+          </div>
+          <div>
+            <label for="addedSugar">Sugars (g per 100g)</label>
+            <input type="number" id="addedSugar" value="4">
+            <label for="satFat">Saturated Fat (g per 100g)</label>
+            <input type="number" id="satFat" value="1">
+            <button type="button" id="btnEvaluate" class="btn-startup-primary full-width">Rerun Evaluation</button>
+          </div>
+        </form>
       </div>
     </section>
 
@@ -145,28 +167,6 @@
             </div>
           </div>
         </div>
-      </div>
-    </section>
-
-    <section id="matrixForm" class="simulation-section">
-      <div class="container">
-        <h2>Simulate a product analysis</h2>
-        <p class="sim-subtitle">Modify parameters to see validation parameters adapt.</p>
-        <form class="form-grid">
-          <div>
-            <label for="productName">Product Name</label>
-            <input type="text" id="productName" value="Tomato soup">
-            <label pour="sodiumInput">Sodium level (mg per 100g)</label>
-            <input type="number" id="sodiumInput" value="640">
-          </div>
-          <div>
-            <label for="addedSugar">Sugars (g per 100g)</label>
-            <input type="number" id="addedSugar" value="4">
-            <label for="satFat">Saturated Fat (g per 100g)</label>
-            <input type="number" id="satFat" value="1">
-            <button type="button" id="btnEvaluate" class="btn-startup-primary full-width">Rerun Evaluation</button>
-          </div>
-        </form>
       </div>
     </section>
   </main>
