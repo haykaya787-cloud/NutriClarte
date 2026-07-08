@@ -1,72 +1,259 @@
-/* 1. CORRECTION LOGO (Évite l'effet géant de l'image_ca52e7.jpg) */
-.brand {
+/* ==========================================================================
+   VARIABLES GLOBALES & THÈME
+   ========================================================================== */
+:root {
+  --color-primary: #1A365D;
+  --color-brand-green: #548235;
+  --color-surface-card: #ffffff;
+  --font-headings: 'Plus Jakarta Sans', -apple-system, sans-serif;
+  --font-body: 'Inter', -apple-system, sans-serif;
+}
+
+/* ==========================================================================
+   RÈGLES DE BASE & RÉINITIALISATION
+   ========================================================================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  background-color: #f8fafc;
+  color: #334155;
+  line-height: 1.5;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* ==========================================================================
+   BARRE DE NAVIGATION (HEADER) - Correction Logo & Alignement
+   ========================================================================== */
+.main-header {
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  position: relative;
+  width: 100%;
+  z-index: 10;
+}
+
+.nav {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   padding: 10px 0;
 }
+
+.brand {
+  display: flex;
+  align-items: center;
+}
+
 .brand img {
-  height: auto;
-  max-height: 50px; /* Limite stricte de la hauteur du logo */
+  height: 45px; /* Empêche le logo d'être géant */
   width: auto;
   object-fit: contain;
 }
 
-/* 2. CORRECTION HERO GRID & TRONCATURES (Évite les coupures de l'image_b14ae1.png) */
+.nav-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.ghost-btn {
+  color: #64748b;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.ghost-btn.active, .ghost-btn:hover {
+  background-color: #f1f5f9;
+  color: var(--color-primary);
+}
+
+/* ==========================================================================
+   SECTION HERO & GRILLE PRINCIPALE - Protection contre l'écrasement vertical
+   ========================================================================== */
 .hero-section {
   padding: 60px 0;
   background: radial-gradient(circle at top right, rgba(84, 130, 53, 0.05), transparent 60%);
-  min-height: auto; /* Supprime toute contrainte de hauteur fixe qui couperait le texte */
+  height: auto;
+  min-height: auto;
 }
+
 .hero-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px;
-  align-items: center; /* Aligne verticalement le contenu sans l'écraser */
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 50px;
+  align-items: start; /* Empêche l'étirement destructeur des éléments de la grille */
 }
 
-@media (max-width: 992px) {
-  .hero-grid {
-    grid-template-columns: 1fr; /* Bascule en une seule colonne sur tablette/mobile */
-    gap: 30px;
-  }
+.hero-left-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-/* 3. CORRECTION DES BADGES DES STORES (Évite l'affichage géant de l'image_b14b5a.png) */
+.visual-badge {
+  display: inline-block;
+  align-self: flex-start;
+  background-color: rgba(84, 130, 53, 0.08);
+  color: var(--color-brand-green);
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  padding: 6px 16px;
+  border-radius: 100px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.hero-title {
+  font-family: var(--font-headings);
+  color: var(--color-primary);
+  font-size: 2.85rem;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin: 15px 0;
+}
+
+.hero-subtitle {
+  color: #4b5563;
+  font-size: 1.15rem;
+  line-height: 1.6;
+  margin-bottom: 32px;
+}
+
+/* ==========================================================================
+   BOUTONS DE L'INTERFACE & BADGES STORES
+   ========================================================================== */
+.cta-group {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+
+.btn-startup-primary {
+  background-color: var(--color-brand-green);
+  color: #ffffff;
+  padding: 16px 32px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(84, 130, 53, 0.2);
+  border: none;
+  cursor: pointer;
+  text-align: center;
+}
+
+.btn-startup-primary:hover {
+  background-color: #43692a;
+  transform: translateY(-1px);
+}
+
+.btn-startup-secondary {
+  background-color: transparent;
+  color: var(--color-primary);
+  padding: 16px 32px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  border: 2px solid var(--color-primary);
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.btn-startup-secondary:hover {
+  background-color: rgba(26, 54, 93, 0.04);
+  transform: translateY(-1px);
+}
+
 .store-badges-container {
   display: flex;
   gap: 12px;
   align-items: center;
-  margin-top: 20px;
-  flex-wrap: wrap; /* Permet d'aller à la ligne si l'écran est trop petit */
+  margin-top: 10px;
 }
+
 .store-badge {
   display: inline-block;
-  height: 40px; /* Force une hauteur standard uniforme pour les deux conteneurs */
+  height: 40px; /* Taille unifiée et verrouillée pour les badges d'application */
 }
+
 .store-badge img {
-  height: 100%; /* S'adapte parfaitement à la hauteur du parent */
-  width: auto;   /* Conserve les proportions d'origine sans déformer */
+  height: 100%;
+  width: auto;
   display: block;
 }
 
-/* 4. FIXATION ABSOLUE DE L'ANNEAU DE SCORE (Évite l'ellipse de l'image_be1826.png) */
-.score-block-header {
-  display: flex; /* Flexbox est plus prévisible ici qu'une grille pour isoler l'anneau */
-  align-items: center;
-  gap: 20px;
+/* ==========================================================================
+   MODULE INTERACTIF (CARTE SCANNER) & FIXATION DE L'ANNEAU PERFECT ROUND
+   ========================================================================== */
+.scanner-card {
+  background: var(--color-surface-card);
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+  border: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
+.scan-box {
+  background: #f8fafc;
+  border: 1px dashed #cbd5e1;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+}
+
+.demo-tag {
+  font-size: 0.85rem;
+  color: #64748b;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* Bloc d'en-tête de score */
+.score-block-header {
+  display: flex; /* Flexbox évite les calculs d'étirement bizarres des grilles */
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+/* L'ANNEAU MAGIQUE INDÉFORMABLE */
 .score-ring {
   position: relative;
-  width: 72px;  /* Redimensionnement légèrement plus grand et lisible */
+  width: 72px;  
   height: 72px;
-  flex: 0 0 72px; /* Empeche TOTALEMENT le flexbox de compresser ou d'étirer l'anneau (Reste 1:1) */
+  flex: 0 0 72px;       /* Interdit au navigateur de réduire ou d'élargir la largeur */
+  aspect-ratio: 1 / 1;  /* Force un ratio parfait carré (Cercle parfait assuré) */
   border-radius: 50%;
+  
   display: flex;
   align-items: center;
   justify-content: center;
   background: conic-gradient(var(--ring-color, #cbd5e1) calc(var(--score, 0) * 1%), #e2e8f0 0);
 }
+
 .score-ring::before {
   content: "";
   position: absolute;
@@ -75,6 +262,7 @@
   border-radius: 50%;
   z-index: 1;
 }
+
 .score-ring span {
   position: relative;
   z-index: 2;
@@ -83,4 +271,174 @@
   color: var(--color-primary);
   font-family: var(--font-headings);
   line-height: 1;
+}
+
+.score-block-header h3 {
+  font-family: var(--font-headings);
+  color: var(--color-primary);
+  font-size: 1.25rem;
+  margin: 0 0 4px 0;
+  font-weight: 700;
+}
+
+.score-block-header p {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #4b5563;
+  margin: 0;
+}
+
+/* ==========================================================================
+   GRILLE DES CARACTÉRISTIQUES (FEATURES)
+   ========================================================================== */
+.features-section {
+  background: #ffffff;
+  padding: 60px 0;
+  border-top: 1px solid #e2e8f0;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+}
+
+.feature-premium-card {
+  background: var(--color-surface-card);
+  padding: 30px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+}
+
+.feature-premium-card h3 {
+  font-family: var(--font-headings);
+  color: var(--color-primary);
+  margin: 0 0 12px 0;
+  font-size: 1.25rem;
+}
+
+.feature-premium-card p {
+  color: #4b5563;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ==========================================================================
+   SECTION SIMULATION / LABELS ET FORMULAIRES
+   ========================================================================== */
+.simulation-section {
+  background: #fafafa;
+  padding: 60px 0;
+  border-top: 1px solid #e2e8f0;
+}
+
+.simulation-section h2 {
+  font-family: var(--font-headings);
+  color: var(--color-primary);
+  font-weight: 800;
+  font-size: 2rem;
+  margin: 0 0 6px 0;
+}
+
+.sim-subtitle {
+  color: #64748b;
+  margin-bottom: 30px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+
+input[type="text"], input[type="number"] {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  box-sizing: border-box;
+}
+
+.full-width {
+  width: 100%;
+}
+
+/* ==========================================================================
+   CLAUSE MEDICALE DE RESPONSABILITÉ & FOOTER
+   ========================================================================== */
+.healthcare-disclaimer-box {
+  background-color: #f1f5f9;
+  border-top: 1px solid #e2e8f0;
+  padding: 30px 20px;
+}
+
+.healthcare-disclaimer-text {
+  max-width: 900px;
+  margin: 0 auto;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: #64748b;
+  text-align: center;
+}
+
+.main-footer {
+  background: white;
+  padding: 40px 0;
+  border-top: 1px solid #e2e8f0;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.footer-links {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+}
+
+.footer-links a {
+  color: #64748b;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.footer-links a:hover {
+  color: var(--color-primary);
+}
+
+.copyright {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  margin: 0;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN (MEDIA QUERIES SMARTPHONES / TABLETTES)
+   ========================================================================== */
+@media (max-width: 960px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  
+  .hero-title {
+    font-size: 2.25rem;
+  }
+  
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
 }
