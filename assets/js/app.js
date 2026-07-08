@@ -8,17 +8,14 @@ document.addEventListener("DOMContentLoaded", function () {
       const addedSugar = parseFloat(document.getElementById("addedSugar").value) || 0;
       const satFat = parseFloat(document.getElementById("satFat").value) || 0;
       
-      // Calculate dynamic scores based on parameters
       let sugarScore = Math.max(0, Math.min(100, Math.round(100 - (addedSugar * 2.5))));
       let fatScore = Math.max(0, Math.min(100, Math.round(100 - (satFat * 6.5))));
       let sodiumScore = Math.max(0, Math.min(100, Math.round(100 - (sodiumVal / 8))));
       
-      // Calculate generalized main score
       let overallScore = Math.round((sugarScore * 0.35) + (fatScore * 0.35) + (sodiumScore * 0.30));
       
       const lang = document.documentElement.lang || "en";
       
-      // Default English strings
       let titleText = "Use sometimes";
       let summaryText = "Sodium is the main concern.";
       let fitText = "Great fit";
@@ -48,7 +45,6 @@ document.addEventListener("DOMContentLoaded", function () {
         rec2Desc = "Variantes bajas en sal o preparaciones frescas.";
       }
 
-      // Dynamic adjustments based on worst scoring metric
       let ringColor = "#c2410c"; 
       if (overallScore >= 75) {
         ringColor = "#166534"; 
