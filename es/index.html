@@ -48,18 +48,60 @@
           <div class="scan-box">
             <p class="demo-tag">Modo de demostración: Motor de análisis en tiempo real</p>
           </div>
+          
           <div class="score-block-header">
-            <div class="score-ring" id="overallRing" style="--score: 54; --ring-color: #c2410c;">
-              <span id="overallScore">54</span>
+            <div class="score-ring" id="overallRing" style="--score: 68; --ring-color: #c2410c;">
+              <span id="overallScore">68</span>
             </div>
-            <div>
-              <h3 id="resultTitle">Uso ocasional</h3>
-              <p id="resultSummary">Este producto es aceptable para el colesterol, pero requiere vigilancia en sodio o azúcares.</p>
+            <div class="score-text-area">
+              <h3 id="resultTitle">Uso ocasional — Sopa de tomate</h3>
+              <p id="resultSummary">El sodio es el problema principal.</p>
+              
+              <div class="ingredient-badges-container" id="ingredientBadges">
+                <span class="ing-badge danger">Sodio</span>
+                <span class="ing-badge success">Azúcar</span>
+                <span class="ing-badge success">Grasa sat.</span>
+              </div>
             </div>
           </div>
-          <div class="score-badges" id="badges"></div>
-          <div class="scores" id="conditionScores"></div>
-          <div class="recommendations" id="recommendations"></div>
+
+          <div class="condition-scores-grid" id="conditionScores">
+            <div class="condition-card">
+              <h4>Diabetes</h4>
+              <div>
+                <div class="condition-score-value">92/100</div>
+                <div class="condition-status status-great">Ideal</div>
+              </div>
+            </div>
+            <div class="condition-card">
+              <h4>Colesterol</h4>
+              <div>
+                <div class="condition-score-value">94/100</div>
+                <div class="condition-status status-great">Ideal</div>
+              </div>
+            </div>
+            <div class="condition-card">
+              <h4>Presión arterial</h4>
+              <div>
+                <div class="condition-score-value">17/100</div>
+                <div class="condition-status status-limit">Limitar</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="recommendations-wrapper">
+            <h4>Recomendaciones</h4>
+            <div class="recommendations-grid" id="recommendationsBlock">
+              <div class="rec-card">
+                <h5>Reducir ingesta de sodio</h5>
+                <p>Este producto supera los niveles óptimos para su perfil de salud cardiovascular.</p>
+              </div>
+              <div class="rec-card">
+                <h5>Alternativas sugeridas</h5>
+                <p>Variantes de sopas bajas en sal o preparaciones caseras.</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -90,15 +132,15 @@
         <form class="form-grid">
           <div>
             <label for="productName">Nombre del producto</label>
-            <input type="text" id="productName" value="Crema de cacao para untar">
-            <label for="category">Categoría</label>
-            <input type="text" id="category" value="Producto azucarado">
+            <input type="text" id="productName" value="Sopa de tomate">
+            <label for="sodiumInput">Tasa de Sodio (mg por 100g)</label>
+            <input type="number" id="sodiumInput" value="640">
           </div>
           <div>
             <label for="addedSugar">Azúcares (g por 100g)</label>
-            <input type="number" id="addedSugar" value="55">
+            <input type="number" id="addedSugar" value="4">
             <label for="satFat">Grasas saturadas (g por 100g)</label>
-            <input type="number" id="satFat" value="11">
+            <input type="number" id="satFat" value="1">
             <button type="button" id="btnEvaluate" class="btn-startup-primary full-width">Relanzar evaluación</button>
           </div>
         </form>
