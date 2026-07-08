@@ -4,282 +4,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NutriClarté — Accompagnement nutritionnel personnalisé</title>
-  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
-  
   <link rel="stylesheet" href="/assets/css/style.css">
-  <style>
-    :root {
-      --color-primary: #1A365D;
-      --color-brand-green: #548235;
-      --color-surface-card: #ffffff;
-      --font-headings: 'Plus Jakarta Sans', -apple-system, sans-serif;
-      --font-body: 'Inter', -apple-system, sans-serif;
-    }
-
-    body {
-      font-family: var(--font-body);
-      -webkit-font-smoothing: antialiased;
-      background-color: #f8fafc;
-      margin: 0;
-      padding: 0;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      padding: 15px 0 !important;
-      height: auto !important;
-    }
-    .brand img {
-      height: 75px !important;
-      width: auto !important;
-      object-fit: contain;
-    }
-
-    /* PREMIUM HERO LAYOUT */
-    .hero-section {
-      padding: 80px 0;
-      background: radial-gradient(circle at top right, rgba(84, 130, 53, 0.06), transparent 60%);
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 50px;
-      align-items: start;
-    }
-
-    @media (max-width: 960px) {
-      .hero-grid {
-        grid-template-columns: 1fr;
-        gap: 40px;
-      }
-    }
-
-    .hero-left-content {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .hero-title {
-      font-family: var(--font-headings);
-      color: var(--color-primary);
-      font-size: 3.25rem;
-      font-weight: 800;
-      line-height: 1.15;
-      letter-spacing: -0.03em;
-      margin: 20px 0 24px 0;
-    }
-
-    .hero-subtitle {
-      color: #4a5568;
-      font-size: 1.15rem;
-      line-height: 1.6;
-      margin-bottom: 32px;
-      max-width: 540px;
-    }
-
-    .visual-badge {
-      display: inline-block;
-      align-self: flex-start;
-      background-color: rgba(84, 130, 53, 0.08);
-      color: var(--color-brand-green);
-      font-weight: 600;
-      font-size: 0.85rem;
-      letter-spacing: 0.05em;
-      padding: 6px 16px;
-      border-radius: 100px;
-      text-transform: uppercase;
-    }
-
-    .cta-group {
-      display: flex;
-      gap: 16px;
-      margin-bottom: 32px;
-      flex-wrap: wrap;
-    }
-    .btn-startup-primary {
-      background-color: var(--color-brand-green);
-      color: #ffffff;
-      padding: 16px 32px;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 1rem;
-      text-decoration: none;
-      transition: all 0.2s ease;
-      box-shadow: 0 4px 14px rgba(84, 130, 53, 0.25);
-    }
-    .btn-startup-primary:hover {
-      background-color: #43692a;
-      transform: translateY(-2px);
-    }
-    .btn-startup-secondary {
-      background-color: transparent;
-      color: var(--color-primary);
-      padding: 16px 32px;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 1rem;
-      text-decoration: none;
-      border: 2px solid var(--color-primary);
-      transition: all 0.2s ease;
-    }
-    .btn-startup-secondary:hover {
-      background-color: rgba(26, 54, 93, 0.04);
-      transform: translateY(-2px);
-    }
-
-    .store-badges-container {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-      margin-top: 12px;
-    }
-    .store-badge img {
-      height: 40px;
-      width: auto;
-    }
-
-    /* RIGHT SIDE INTERACTIVE CARD FIXED LAYOUT */
-    .scanner-card {
-      background: var(--color-surface-card) !important;
-      border-radius: 16px !important;
-      padding: 32px !important;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.05) !important;
-      border: 1px solid #e2e8f0 !important;
-      box-sizing: border-box !important;
-      display: flex !important;
-      flex-direction: column !important;
-      gap: 24px !important;
-    }
-
-    .score-block-header {
-      display: grid !important;
-      grid-template-columns: auto 1fr !important;
-      gap: 20px !important;
-      align-items: center !important;
-    }
-
-    /* CORRECTION DE L'ANNEAU */
-    .score-ring {
-      position: relative !important;
-      width: 68px !important;
-      height: 68px !important;
-      min-width: 68px !important;
-      min-height: 68px !important;
-      max-width: 68px !important;
-      max-height: 68px !important;
-      aspect-ratio: 1 / 1 !important;
-      border-radius: 50% !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      background: conic-gradient(var(--ring-color, #c2410c) calc(var(--score, 54) * 1%), #e2e8f0 0) !important;
-      padding: 0 !important;
-      box-sizing: border-box !important;
-      flex-shrink: 0 !important;
-    }
-    .score-ring::before {
-      content: "" !important;
-      position: absolute !important;
-      inset: 6px !important;
-      background: #ffffff !important;
-      border-radius: 50% !important;
-      z-index: 1 !important;
-    }
-    .score-ring span {
-      position: relative !important;
-      z-index: 2 !important;
-      font-size: 1.35rem !important;
-      font-weight: 700 !important;
-      color: var(--color-primary) !important;
-      font-family: var(--font-headings) !important;
-      line-height: 1 !important;
-    }
-
-    /* CARD INTERNAL CONTENT TYPOGRAPHY */
-    .scanner-card h3 {
-      font-family: var(--font-headings) !important;
-      color: var(--color-primary) !important;
-      font-size: 1.25rem !important;
-      margin: 0 0 6px 0 !important;
-      font-weight: 700 !important;
-    }
-    .scanner-card p {
-      font-family: var(--font-body) !important;
-      font-size: 0.95rem !important;
-      line-height: 1.5 !important;
-      color: #4a5568 !important;
-      margin: 0 !important;
-    }
-
-    /* PREMIUM FEATURE CARDS GRID */
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 25px;
-      margin: 60px 0;
-    }
-    .feature-premium-card {
-      background: var(--color-surface-card);
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
-      border: 1px solid #e2e8f0;
-    }
-    .feature-premium-card h3 {
-      font-family: var(--font-headings);
-      color: var(--color-primary);
-      margin: 0 0 12px 0;
-      font-size: 1.25rem;
-    }
-    .feature-premium-card p {
-      color: #4a5568;
-      font-size: 0.95rem;
-      line-height: 1.5;
-      margin: 0;
-    }
-
-    .healthcare-disclaimer-box {
-      background-color: #f1f5f9;
-      border-top: 1px solid #e2e8f0;
-      padding: 30px 20px;
-      margin-top: 60px;
-    }
-    .healthcare-disclaimer-text {
-      max-width: 900px;
-      margin: 0 auto;
-      font-size: 0.85rem;
-      line-height: 1.6;
-      color: #64748b;
-      text-align: center;
-    }
-    .footer-links {
-      display: flex;
-      gap: 24px;
-      justify-content: center;
-      margin-top: 25px;
-    }
-    .footer-links a {
-      color: #64748b;
-      text-decoration: none;
-      font-size: 0.9rem;
-    }
-  </style>
 </head>
 <body>
-  <header style="background: white; border-bottom: 1px solid #e2e8f0;">
+  <header class="main-header">
     <div class="container nav">
       <a class="brand" href="/fr/">
         <img src="/assets/Logo.png" alt="NutriClarté Logo">
       </a>
       <div class="nav-actions">
         <a class="ghost-btn" href="/en/">EN</a>
-        <a class="ghost-btn" href="/fr/">FR</a>
+        <a class="ghost-btn active" href="/fr/">FR</a>
         <a class="ghost-btn" href="/es/">ES</a>
       </div>
     </div>
@@ -288,33 +26,28 @@
   <main id="main">
     <section class="hero-section">
       <div class="container hero-grid">
-        
         <div class="hero-left-content">
           <span class="visual-badge">Accompagnement nutritionnel personnalisé</span>
           <h1 class="hero-title">Scannez les aliments emballés et obtenez des repères nutritionnels clairs.</h1>
           <p class="hero-subtitle">Conçu pour soutenir des choix alimentaires éclairés selon vos priorités de santé, sans remplacer un avis médical.</p>
-          
           <div class="cta-group">
             <a href="#matrixForm" class="btn-startup-primary">Commencer à scanner</a>
             <a href="#features-section" class="btn-startup-secondary">Voir le fonctionnement</a>
           </div>
-
           <div class="store-badges-container">
             <a href="#" class="store-badge">
               <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/fr-fr?size=250x83&amp;format=png" alt="Télécharger dans l'App Store">
             </a>
             <a href="#" class="store-badge">
-              <img src="https://play.google.com/intl/en_us/badges/static/images/badges/fr_badge_web_generic.png" style="height: 58px; margin-left: -10px;" alt="Disponible sur Google Play">
+              <img src="https://play.google.com/intl/en_us/badges/static/images/badges/fr_badge_web_generic.png" class="google-badge" alt="Disponible sur Google Play">
             </a>
           </div>
         </div>
 
         <div class="scanner-card" aria-live="polite">
-          <div class="scan-box" style="background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 12px; padding: 24px; text-align: center;">
-            <div class="barcode" style="opacity: 0.75; margin: 0 auto 12px auto;" aria-hidden="true"></div>
-            <p style="font-size: 0.85rem; color: #64748b; font-weight: 500; margin: 0;">Module démo : Moteur d'analyse en temps réel</p>
+          <div class="scan-box">
+            <p class="demo-tag">Module démo : Moteur d'analyse en temps réel</p>
           </div>
-
           <div class="score-block-header">
             <div class="score-ring" id="overallRing" style="--score: 54; --ring-color: #c2410c;">
               <span id="overallScore">54</span>
@@ -324,16 +57,14 @@
               <p id="resultSummary">Ce produit est acceptable pour le cholestérol, mais sa teneur en sodium ou sucres nécessite de la vigilance.</p>
             </div>
           </div>
-          
           <div class="score-badges" id="badges"></div>
           <div class="scores" id="conditionScores"></div>
           <div class="recommendations" id="recommendations"></div>
         </div>
-
       </div>
     </section>
 
-    <section id="features-section" style="background: #ffffff; padding: 60px 0; border-top: 1px solid #e2e8f0;">
+    <section id="features-section" class="features-section">
       <div class="container">
         <div class="features-grid">
           <div class="feature-premium-card">
@@ -352,10 +83,10 @@
       </div>
     </section>
 
-    <section id="matrixForm" style="background: #fafafa; padding: 60px 0; border-top: 1px solid #e2e8f0;">
+    <section id="matrixForm" class="simulation-section">
       <div class="container">
-        <h2 style="font-family: var(--font-headings); color: var(--color-primary); font-weight: 800; font-size: 2rem; margin-bottom: 8px;">Simuler l'analyse d'un produit</h2>
-        <p style="color: #64748b; margin-bottom: 30px;">Modifiez les valeurs pour évaluer l'algorithme.</p>
+        <h2>Simuler l'analyse d'un produit</h2>
+        <p class="sim-subtitle">Modifiez les valeurs pour évaluer l'algorithme.</p>
         <form class="form-grid">
           <div>
             <label for="productName">Nom du produit</label>
@@ -368,7 +99,7 @@
             <input type="number" id="addedSugar" value="55">
             <label for="satFat">Gras Saturés (g pour 100g)</label>
             <input type="number" id="satFat" value="11">
-            <button type="button" class="primary-btn" style="width:100%; margin-top:20px; background-color: var(--color-brand-green); border: none;">Relancer l'évaluation</button>
+            <button type="button" id="btnEvaluate" class="btn-startup-primary full-width">Relancer l'évaluation</button>
           </div>
         </form>
       </div>
@@ -381,15 +112,15 @@
     </div>
   </div>
 
-  <footer style="background: white; padding: 40px 0;">
-    <div class="container" style="text-align: center;">
+  <footer class="main-footer">
+    <div class="container text-center">
       <div class="footer-links">
         <a href="/privacy/">Politique de Confidentialité</a>
         <a href="/support/">Support & Assistance</a>
         <a href="/faq/">FAQ</a>
         <a href="mailto:contact@nutriclarte.ca">Contact</a>
       </div>
-      <p style="margin-top: 15px; font-size: 0.85rem; color: #64748b;">&copy; 2026 NutriClarté. Tous droits réservés.</p>
+      <p class="copyright">&copy; 2026 NutriClarté. Tous droits réservés.</p>
     </div>
   </footer>
 
