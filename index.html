@@ -1,9 +1,906 @@
 <!doctype html>
-<html lang="en">
+<html lang="fr-CA">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="refresh" content="0; url=/en/">
-  <title>NutriClarté</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-TqAdHb87tggobNVcoYLOB+upODQO8K/ssJWIVBiwGew='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; base-uri 'none'; object-src 'none'; frame-src 'none'; manifest-src 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="icon" href="logo.png">
+<title>NutriClarté</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="NutriClarté — scan a product, get a clear nutrition score and healthier alternatives.">
+<style>
+body{margin:0}img{max-width:100%}[hidden]{display:none!important}
+/* Layout: one centred app column (phone-first like the prototype), sticky brand bar with the FR/EN/ES toggle top-right, scrollable tab rail below. */
+:root{
+  --bg:#f4f7f6; --surface:#ffffff; --surface-2:#e9eff0; --line:#d8e1e2;
+  --fg:#16263a; --muted:#5b6b7a;
+  --navy:#17365d; --navy-fg:#ffffff; --leaf:#3f8f35; --water:#1f6fb2;
+  --bad:#c0392b; --bad-bg:#fdecea; --warn:#b26a00; --good:#2e7d32; --good-bg:#e8f5e9; --ok:#1f6fb2;
+  --shadow:0 1px 2px rgba(23,54,93,.06),0 4px 14px rgba(23,54,93,.06);
+  /* System fonts only: no third-party font requests (privacy) */
+  --display:"Avenir Next","Segoe UI Variable Display","Segoe UI",system-ui,-apple-system,Roboto,"Helvetica Neue",Arial,sans-serif;
+  --body:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --r:14px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f1720; --surface:#17222e; --surface-2:#1f2d3b; --line:#2a3a4a;
+  --fg:#e7eef4; --muted:#9aaaba; --navy:#3b6ea8; --navy-fg:#ffffff; --leaf:#6cbf5f; --water:#5aa6e6;
+  --bad:#ff7b6b; --bad-bg:#3a1f1d; --warn:#f0b04a; --good:#7fd283; --good-bg:#1d3324; --ok:#5aa6e6;
+  --shadow:0 1px 2px rgba(0,0,0,.3); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1720; --surface:#17222e; --surface-2:#1f2d3b; --line:#2a3a4a;
+  --fg:#e7eef4; --muted:#9aaaba; --navy:#3b6ea8; --navy-fg:#ffffff; --leaf:#6cbf5f; --water:#5aa6e6;
+  --bad:#ff7b6b; --bad-bg:#3a1f1d; --warn:#f0b04a; --good:#7fd283; --good-bg:#1d3324; --ok:#5aa6e6;
+  --shadow:0 1px 2px rgba(0,0,0,.3); color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.5}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--surface)}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.2;margin:0}
+p{margin:0}
+a{color:var(--water)}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--water);outline-offset:2px}
+.gut{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.col{max-width:760px;margin:0 auto}
+
+/* Header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--surface);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:10px}
+.brand{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--fg);min-width:0}
+.brand img{width:34px;height:34px;object-fit:contain;border-radius:8px;background:#fff}
+.brand b{font-family:var(--display);font-size:1.15rem;font-weight:600;letter-spacing:-.01em}
+.brand b span{color:var(--navy);font-weight:700}
+.lang{display:flex;gap:4px;background:var(--surface-2);padding:3px;border-radius:999px;flex-shrink:0}
+.lang button{border:0;background:transparent;padding:5px 11px;border-radius:999px;font-size:.82rem;font-weight:700;letter-spacing:.04em;cursor:pointer;color:var(--muted)}
+.lang button[aria-pressed="true"]{background:var(--navy);color:var(--navy-fg)}
+.tabs{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs a{flex:0 0 auto;padding:10px 12px;text-decoration:none;color:var(--muted);font-weight:600;font-size:.95rem;border-bottom:3px solid transparent;white-space:nowrap}
+.tabs a[aria-current="page"]{color:var(--fg);border-bottom-color:var(--navy)}
+
+main{padding-block:20px 40px}
+.view{display:flex;flex-direction:column;gap:18px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;box-shadow:var(--shadow)}
+.label{font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.muted{color:var(--muted)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:12px;padding:12px 18px;font-weight:700;cursor:pointer;background:var(--navy);color:var(--navy-fg);text-decoration:none}
+.btn.ghost{background:transparent;color:var(--fg);border:2px solid var(--navy)}
+.btn.block{width:100%}
+.btn.red{background:var(--bad);color:#fff}
+.card.danger{display:flex;flex-direction:column;gap:10px;border-color:var(--bad)}
+
+/* Home */
+.hero{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding-top:6px}
+.hero img{width:110px;height:auto;border-radius:16px;background:#fff}
+.hero h1{font-size:2.1rem;font-weight:500;letter-spacing:-.02em}
+.hero h1 span{font-weight:700;color:var(--navy)}
+.hero p{font-style:italic;color:var(--muted)}
+.goals h2{font-size:1.05rem;font-weight:600;display:flex;gap:6px;align-items:center}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:10px 2px 6px;scrollbar-width:thin}
+.chip{flex:0 0 auto;border:1px solid var(--line);background:var(--surface-2);border-radius:999px;padding:8px 14px;font-weight:600;cursor:pointer;white-space:nowrap}
+.chip[aria-pressed="true"]{background:var(--navy);color:var(--navy-fg);border-color:var(--navy)}
+.goals .sub{text-align:center;font-style:italic;color:var(--muted);font-size:.92rem}
+.scanwrap{display:flex;justify-content:center;padding-block:12px}
+.scanbtn{width:168px;height:168px;border-radius:50%;border:0;background:var(--navy);color:var(--navy-fg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;font-weight:700;cursor:pointer;box-shadow:0 10px 30px rgba(23,54,93,.28);transition:transform .15s}
+.scanbtn:hover{transform:scale(1.03)}
+.scanbtn svg{width:46px;height:46px}
+.center{display:flex;justify-content:center}
+.trust{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.trust div{text-align:center;font-size:.85rem;color:var(--muted)}
+.trust b{display:block;color:var(--fg);font-family:var(--display);font-size:1rem}
+@media (max-width:480px){.trust{grid-template-columns:1fr}}
+
+/* Scanner overlay */
+.scanner{position:fixed;inset:0;z-index:50;background:rgba(10,16,24,.92);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;color:#fff;padding:24px}
+.frame{width:min(260px,70vw);aspect-ratio:1.1;border:3px solid #fff;border-radius:18px;position:relative;overflow:hidden;max-width:100%}
+.frame::after{content:"";position:absolute;left:8%;right:8%;height:2px;background:#6cbf5f;box-shadow:0 0 12px #6cbf5f;top:10%;animation:sweep 1.8s ease-in-out infinite alternate}
+.frame .bars{position:absolute;inset:30% 18%;background:repeating-linear-gradient(90deg,rgba(255,255,255,.55) 0 2px,transparent 2px 5px,rgba(255,255,255,.55) 5px 6px,transparent 6px 10px);opacity:.5}
+@keyframes sweep{to{top:88%}}
+@media (prefers-reduced-motion:reduce){.frame::after{animation:none;top:50%}}
+.scanner .sim{background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.4);border-radius:999px;padding:10px 22px;font-weight:700;cursor:pointer}
+.scanner .cancel{background:none;border:0;color:#cfd8e0;cursor:pointer}
+
+/* Result */
+.filters{background:var(--surface-2);border-radius:10px;padding:10px 12px;font-size:.92rem;text-align:center}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:var(--surface-2);padding:4px;border-radius:999px}
+.seg button{border:0;background:transparent;border-radius:999px;padding:10px;font-weight:700;cursor:pointer;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--navy);color:var(--navy-fg)}
+.slider label{font-weight:600;font-size:.95rem;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.slider input{width:100%;accent-color:var(--water);margin-top:10px}
+.score{display:flex;gap:16px;align-items:center}
+.ring{width:76px;height:76px;flex-shrink:0;border-radius:50%;border:4px solid var(--rc);display:grid;place-items:center;font-family:var(--display);font-size:1.8rem;font-weight:700;color:var(--rc)}
+.score .pname{font-size:.8rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.score .rating{font-family:var(--display);font-size:1.5rem;font-weight:600;color:var(--rc)}
+.alerts{display:flex;flex-direction:column;gap:6px;margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.alert{display:flex;gap:8px;align-items:flex-start;font-weight:600;font-size:.95rem}
+.alert.bad{color:var(--bad)} .alert.warn{color:var(--warn)} .alert.good{color:var(--good)}
+.alert i{font-style:normal;flex-shrink:0;width:20px;height:20px;border-radius:5px;display:grid;place-items:center;font-size:.75rem;color:#fff}
+.alert.bad i{background:var(--bad)} .alert.warn i{background:var(--warn)} .alert.good i{background:var(--good)}
+.nutr{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center}
+.nutr b{display:block;font-family:var(--display);font-size:1.35rem;font-weight:600;font-variant-numeric:tabular-nums}
+.nutr span{font-size:.82rem;color:var(--muted)}
+.nutr .over b{color:var(--bad)}
+@media (max-width:420px){.nutr{grid-template-columns:repeat(2,1fr)}}
+.alt{display:flex;flex-direction:column;gap:6px}
+.alt .head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.alt h3{font-family:var(--body);font-size:1.02rem;font-weight:700}
+.pill{background:var(--good-bg);color:var(--good);font-weight:700;font-size:.82rem;padding:3px 9px;border-radius:999px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.alt .why{font-style:italic;color:var(--leaf);font-size:.92rem;font-weight:600}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tags span{background:var(--surface-2);border-radius:6px;padding:2px 8px;font-size:.8rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.match{font-size:.78rem;font-weight:700;color:var(--water)}
+
+/* History */
+.hist{display:flex;flex-direction:column;gap:10px}
+.hrow{display:flex;align-items:center;gap:12px;cursor:pointer;text-align:left;width:100%;font:inherit}
+.hrow .ring{width:48px;height:48px;font-size:1.1rem;border-width:3px}
+.hrow div{min-width:0;flex:1}
+.hrow small{color:var(--muted)}
+.ex{font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:var(--surface-2);color:var(--muted);padding:2px 6px;border-radius:4px;margin-left:6px}
+
+/* FAQ / prose */
+details{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 16px}
+details+details{margin-top:8px}
+summary{font-weight:700;cursor:pointer}
+details p{margin-top:8px;color:var(--muted)}
+.prose{display:flex;flex-direction:column;gap:14px;max-width:68ch}
+.prose h1{font-size:1.9rem;font-weight:600}
+.prose h2{font-size:1.25rem;font-weight:600;margin-top:10px}
+.prose ul,.prose ol{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px}
+.prose .lede{font-size:1.12rem;color:var(--muted)}
+.eyebrow{font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--leaf)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:560px){.grid2{grid-template-columns:1fr}}
+.grid2 h3{font-size:1.02rem;margin-bottom:4px}
+.quote{border-left:4px solid var(--leaf);padding:4px 0 4px 14px;font-size:1.1rem;font-style:italic}
+.updated{font-size:.88rem;color:var(--muted)}
+
+/* Contact */
+.contact{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:16px;align-items:start}
+@media (max-width:640px){.contact{grid-template-columns:1fr}}
+form{display:flex;flex-direction:column;gap:12px}
+.field{display:flex;flex-direction:column;gap:4px}
+.field label{font-weight:600;font-size:.93rem}
+.field input,.field select,.field textarea{border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:10px 12px;width:100%}
+.field textarea{min-height:130px;resize:vertical}
+.field .err{color:var(--bad);font-size:.85rem;min-height:0}
+.check{display:flex;gap:8px;align-items:flex-start;font-size:.9rem}
+.check input{margin-top:4px}
+.phone{font-family:var(--display);font-size:1.5rem;font-weight:600;user-select:all;font-variant-numeric:tabular-nums}
+.side{display:flex;flex-direction:column;gap:12px}
+.side .card{display:flex;flex-direction:column;gap:6px}
+.copy{align-self:flex-start;border:1px solid var(--line);background:var(--surface-2);border-radius:8px;padding:5px 10px;font-size:.85rem;font-weight:600;cursor:pointer}
+.success{display:flex;flex-direction:column;gap:8px;background:var(--good-bg);border:1px solid var(--good);border-radius:var(--r);padding:16px}
+.success h3{color:var(--good)}
+
+/* Modal + toast */
+.modal{position:fixed;inset:0;z-index:60;background:rgba(10,16,24,.55);display:flex;align-items:flex-end;justify-content:center;padding:16px}
+.sheet{background:var(--surface);border-radius:18px;padding:20px;width:100%;max-width:520px;max-height:90vh;overflow:auto;display:flex;flex-direction:column;gap:14px}
+.sheet .row{display:flex;gap:10px;justify-content:flex-end}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+@media (min-width:640px){.modal{align-items:center}}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:10px;font-weight:600;z-index:70;max-width:calc(100% - 32px)}
+
+footer{border-top:1px solid var(--line);padding-block:20px;font-size:.88rem;color:var(--muted)}
+footer .col{display:flex;flex-wrap:wrap;gap:8px 16px;justify-content:space-between}
+footer nav{display:flex;flex-wrap:wrap;gap:12px}
+footer a{color:var(--muted)}
+.demo-tag{background:var(--surface-2);border-radius:6px;padding:2px 8px;font-weight:600}
+</style>
+
 </head>
-<body></body>
+<body>
+<header class="top">
+  <div class="gut"><div class="col bar">
+    <a class="brand" href="#analyze"><img src="data:image/png;base64,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" alt=""><b>Nutri<span>Clarté</span></b></a>
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" data-lang="fr" aria-pressed="false" title="Français">FR</button>
+      <button type="button" data-lang="en" aria-pressed="false" title="English">EN</button>
+      <button type="button" data-lang="es" aria-pressed="false" title="Español">ES</button>
+    </div>
+  </div></div>
+  <div class="gut"><nav class="col tabs" id="tabs" aria-label="Main">
+    <a href="#analyze" data-i18n="tab.analyze"></a>
+    <a href="#history" data-i18n="tab.history"></a>
+    <a href="#faq" data-i18n="tab.faq"></a>
+    <a href="#about" data-i18n="tab.about"></a>
+    <a href="#support" data-i18n="tab.support"></a>
+    <a href="#privacy" data-i18n="tab.privacy"></a>
+    <a href="#contact" data-i18n="tab.contact"></a>
+  </nav></div>
+</header>
+
+<main class="gut"><div class="col" id="app"></div></main>
+
+<footer class="gut"><div class="col">
+  <span>© 2026 NutriClarté · <span data-i18n="footer.tag"></span> <span class="demo-tag" data-i18n="footer.demo"></span></span>
+  <nav><a href="#about" data-i18n="tab.about"></a><a href="#support" data-i18n="tab.support"></a><a href="#privacy" data-i18n="tab.privacy"></a><a href="#contact" data-i18n="tab.contact"></a></nav>
+</div></footer>
+
+<div id="layer"></div>
+
+<script>
+const T = {
+en: {
+  "data.title":"Delete all my data","data.desc":"Erase everything NutriClarté saved in this browser: scan history, profile (age group and allergies) and language choice. This cannot be undone.","data.delete":"Delete all my data","data.confirm":"Delete your history, profile and settings from this device?","data.yes":"Yes, delete everything","data.no":"Keep my data","data.deleted":"All your data was deleted from this device.",
+  "tab.analyze":"Analyze","tab.history":"History","tab.faq":"FAQ","tab.about":"About us","tab.support":"Support","tab.privacy":"Privacy","tab.contact":"Contact",
+  "footer.tag":"Wellness made simple.","footer.demo":"Clickable demo",
+  "tagline":"Transparent analysis",
+  "goals.title":"Nutritional Goals (max 3):",
+  "goal.standard":"Standard ⚖️","goal.lowsodium":"Low-Sodium 🛡️","goal.lowsugar":"Low-Sugar 🩸","goal.highprotein":"High-Protein 💪","goal.cardio":"Cardio / Anti-Cholesterol ❤️",
+  "goals.std":"Standard baseline analysis.","goals.active":"{n} active profile(s) simultaneously.","goals.max":"You can combine up to 3 goals.",
+  "scan.btn":"Scan a product","profile.btn":"Advanced Profile Settings",
+  "trust.1a":"Made in Canada","trust.1b":"Built in Québec, for Canadian shelves",
+  "trust.2a":"No ads","trust.2b":"No brand pays for a recommendation",
+  "trust.3a":"Private","trust.3b":"Your scans stay on your device",
+  "scanner.hint":"Place the barcode inside the frame","scanner.sim":"Simulate a scan","scanner.cancel":"Cancel","scanner.reading":"Reading barcode…",
+  "res.back":"Back to Home","res.filters":"Combined filters:","res.base":"Rigid Base (100g)","res.portion":"Real Portion",
+  "res.adjust":"Adjust your real portion: x{m}","res.grams":"≈ {g} g",
+  "res.matches":"The product matches your selected criteria.",
+  "alert.sugar":"Glycemic Alert: Too much sugar.","alert.satfat":"Cardio: High saturated fats.","alert.sodium":"Sodium Alert: Too much salt for your goal.","alert.protein":"Protein: Too little protein for your goal.","alert.allergen":"Allergen: contains {a}.",
+  "res.bio":"Biological Analysis","res.alts":"Best Alternatives For You","res.fits":"Fits your goals",
+  "nut.sugars":"Sugars","nut.satfat":"Sat. Fat","nut.sodium":"Sodium","nut.protein":"Protein",
+  "rating.poor":"Poor","rating.fair":"Fair","rating.good":"Good","rating.excellent":"Excellent",
+  "hist.title":"Your scan history","hist.lede":"Tap a scan to reopen its analysis.","hist.empty":"No scans yet. Scan a product from the Analyze tab.","hist.clear":"Clear history","hist.example":"Example","hist.cleared":"History cleared.",
+  "faq.title":"Frequently asked questions",
+  "faq":[
+    ["How is the score calculated?","Each product gets a score out of 100 based on its sugars, saturated fats, sodium, fibre and protein per 100 g, compared with Health Canada's daily values. Your goals then add specific alerts on top of the score."],
+    ["What is the difference between Rigid Base and Real Portion?","Rigid Base shows the label values per 100 g so you can compare products fairly. Real Portion multiplies them by what you actually eat, for example x0.3 for a 30 g serving of spread."],
+    ["Why can I only pick 3 goals?","Combining more than three goals makes the alerts contradictory and hard to read. Three covers the most common combinations, like Low-Sugar plus Cardio."],
+    ["Are the alternatives sponsored?","No. Alternatives are ranked only by how well they fit your goals and their score. No brand can pay to appear."],
+    ["Is NutriClarté medical advice?","No. NutriClarté helps you read labels. For a diagnosis or a diet plan, talk to your doctor or a registered dietitian."],
+    ["Which languages are available?","French, English and Spanish. Use the FR / EN / ES switch at the top right of every page."]
+  ],
+  "profile.title":"Advanced Profile Settings","profile.desc":"These settings add personal alerts to every analysis. They are saved on this device only.",
+  "profile.age":"Age group","age.1":"18–34","age.2":"35–54","age.3":"55+","profile.allergies":"Allergies and intolerances",
+  "allergen.nuts":"Tree nuts","allergen.milk":"Milk","allergen.gluten":"Gluten","allergen.soy":"Soy","allergen.peanuts":"Peanuts",
+  "profile.save":"Save","profile.cancel":"Cancel","profile.saved":"Profile saved.",
+  "contact.eyebrow":"Contact","contact.title":"Talk to the NutriClarté team","contact.lede":"Questions about a score, a bug, or your data? Send us a message and a real person will answer within 2 business days.",
+  "f.name":"Full name","f.email":"Email address","f.topic":"Topic","f.message":"Message","f.consent":"I agree that NutriClarté uses this information only to answer my request.","f.send":"Send message",
+  "topic.general":"General question","topic.support":"Technical support","topic.privacy":"Privacy or data request","topic.partner":"Partnerships and media",
+  "err.name":"Please enter your name.","err.email":"Please enter a valid email address, like name@example.com.","err.message":"Please write at least 10 characters.","err.consent":"Please check this box so we can reply.",
+  "ok.title":"Thank you, {name}!","ok.body":"Your message about “{topic}” has been received. We reply within 2 business days to {email}.","ok.demo":"Demo: in this prototype the form is not connected to a server yet, so nothing was actually sent.","ok.again":"Send another message",
+  "c.call":"Call us","c.hours":"Monday to Friday, 9 a.m. to 5 p.m. (Eastern Time)","c.copy":"Copy number","c.copied":"Number copied.","c.where":"Where we are","c.place":"Québec, Canada","c.reply":"Response time","c.replyv":"Within 2 business days, in French, English or Spanish.",
+  "page.about":`
+<span class="eyebrow">About us</span>
+<h1>Why we built NutriClarté</h1>
+<p class="lede">NutriClarté started with a simple frustration: standing in a grocery aisle, holding two jars, and not being able to tell which one was actually better for the person you are shopping for.</p>
+<h2>The story behind the app</h2>
+<p>Nutrition labels are full of numbers, but they rarely answer the real question: <em>is this good for me?</em> A label says 55 g of sugar per 100 g. Is that a lot for someone managing diabetes? What if you only eat one spoonful? What if you also watch your cholesterol?</p>
+<p>We watched people we love struggle with exactly these questions after a diagnosis. They were told to "eat better" and then left alone with tiny print, two languages on every package, and marketing claims like "light" or "natural" that mean very little.</p>
+<p class="quote">We wanted a tool that turns a label into a clear answer in under five seconds, in the language you think in.</p>
+<p>That became NutriClarté: scan a barcode, pick up to three goals, and see a score, plain-language alerts, and better alternatives from the same shelf.</p>
+<h2>Who we are</h2>
+<p>We are a small, independent team based in Québec, combining software development with a deep interest in nutrition and public health. We are not owned by a food company or a grocery chain, and we intend to keep it that way.</p>
+<h2>Why you can trust us</h2>
+<div class="grid2">
+  <div class="card"><h3>Independent recommendations</h3><p class="muted">No brand can pay to improve its score or to appear as an alternative.</p></div>
+  <div class="card"><h3>Public data sources</h3><p class="muted">Scores use the nutrition facts printed on the package and Health Canada daily values.</p></div>
+  <div class="card"><h3>Privacy first</h3><p class="muted">Your goals, profile and history stay on your device. We do not sell data. Ever.</p></div>
+  <div class="card"><h3>Reachable humans</h3><p class="muted">Call us or write to us. A person from the team answers, in French, English or Spanish.</p></div>
+</div>
+<h2>Our mission</h2>
+<p><strong>La santé sans confusion. Wellness made simple.</strong> We want every shopper, whatever their health condition or language, to make a confident choice in the aisle.</p>
+<p><a class="btn" href="#contact">Contact the team</a></p>`,
+  "page.support":`
+<span class="eyebrow">Support</span>
+<h1>How can we help?</h1>
+<p class="lede">Quick answers to the most common questions. If you are still stuck, our team is one message away.</p>
+<h2>Getting started</h2>
+<ol>
+  <li>Choose up to 3 nutritional goals on the Analyze tab (for example Low-Sugar and Cardio).</li>
+  <li>Tap <strong>Scan a product</strong> and place the barcode inside the frame.</li>
+  <li>Read the score and alerts, then switch between <strong>Rigid Base (100g)</strong> and <strong>Real Portion</strong>.</li>
+  <li>Move the slider to match how much you actually eat.</li>
+  <li>Browse the <strong>Best Alternatives For You</strong> to find a better option.</li>
+</ol>
+<h2>Troubleshooting</h2>
+<div class="grid2">
+  <div class="card"><h3>The camera does not open</h3><p class="muted">Allow camera access for NutriClarté in your phone settings, then reopen the app.</p></div>
+  <div class="card"><h3>Product not found</h3><p class="muted">Some local or new products are not in our database yet. Send us the barcode through the contact form and we will add it.</p></div>
+  <div class="card"><h3>The score seems wrong</h3><p class="muted">Check whether you are in Real Portion mode. Then tell us the product name so we can review it.</p></div>
+  <div class="card"><h3>Change the language</h3><p class="muted">Use the FR / EN / ES switch at the top right of any page. Your choice is remembered.</p></div>
+</div>
+<h2>Accounts and data</h2>
+<p>NutriClarté works without an account. Your history and profile stay on your device. To erase all of it, use <strong>Delete all my data</strong> on the History tab. <strong>Clear history</strong> removes only your past scans.</p>
+<h2>Still need help?</h2>
+<p>Use our contact form or call us during business hours. We answer within 2 business days.</p>
+<p><a class="btn" href="#contact">Contact support</a></p>`,
+  "page.privacy":`
+<span class="eyebrow">Privacy</span>
+<h1>Privacy policy</h1>
+<p class="updated">Last updated: November 1, 2026</p>
+<p class="lede">Short version: your health goals are personal. We collect as little as possible, we keep it on your device whenever we can, and we never sell it.</p>
+<h2>1. What we collect</h2>
+<ul>
+  <li><strong>On your device only:</strong> the goals you select, your advanced profile (age group, allergies) and your scan history.</li>
+  <li><strong>When you scan:</strong> the barcode number, sent to our product database to fetch nutrition facts. It is not linked to your identity.</li>
+  <li><strong>When you contact us:</strong> your name, email address and message, used only to answer you.</li>
+</ul>
+<h2>2. What we never do</h2>
+<ul>
+  <li>We do not sell, rent or trade personal information.</li>
+  <li>We do not show advertising or share data with food brands.</li>
+  <li>We do not collect your precise location or your contacts.</li>
+  <li>We do not load third-party trackers, analytics or web fonts. The site only loads its own files.</li>
+</ul>
+<h2>3. Your rights</h2>
+<p>Under Québec's Law 25 and Canada's PIPEDA, you can access, correct or delete the personal information we hold about you, and withdraw your consent. Send your request through the contact form and choose "Privacy or data request". We answer within 30 days.</p>
+<h2>4. Retention and security</h2>
+<p>Contact messages are kept for up to 24 months, then deleted. Data in transit is encrypted (HTTPS). Everything stored on your device (history, profile and settings) can be erased at any time with <strong>Delete all my data</strong> on the History tab.</p>
+<h2>5. Person in charge of privacy</h2>
+<p>Our privacy officer is responsible for protecting personal information at NutriClarté. Reach them through the <a href="#contact">contact form</a>.</p>
+<h2>6. Changes</h2>
+<p>If we change this policy, we will update the date above and show a notice in the app.</p>`
+},
+fr: {
+  "data.title":"Supprimer toutes mes données","data.desc":"Effacez tout ce que NutriClarté a enregistré dans ce navigateur : historique de scans, profil (groupe d'âge et allergies) et choix de langue. Cette action est irréversible.","data.delete":"Supprimer toutes mes données","data.confirm":"Supprimer votre historique, votre profil et vos réglages de cet appareil ?","data.yes":"Oui, tout supprimer","data.no":"Garder mes données","data.deleted":"Toutes vos données ont été supprimées de cet appareil.",
+  "tab.analyze":"Analyse","tab.history":"Historique","tab.faq":"FAQ","tab.about":"À propos","tab.support":"Soutien","tab.privacy":"Confidentialité","tab.contact":"Contact",
+  "footer.tag":"La santé sans confusion.","footer.demo":"Démo cliquable",
+  "tagline":"L'analyse transparente",
+  "goals.title":"Objectifs nutritionnels (max 3) :",
+  "goal.standard":"Standard ⚖️","goal.lowsodium":"Faible en sodium 🛡️","goal.lowsugar":"Faible en sucre 🩸","goal.highprotein":"Riche en protéines 💪","goal.cardio":"Cardio / Anti-cholestérol ❤️",
+  "goals.std":"Analyse standardisée de base.","goals.active":"{n} profil(s) actif(s) simultanément.","goals.max":"Vous pouvez combiner jusqu'à 3 objectifs.",
+  "scan.btn":"Scanner un produit","profile.btn":"Paramètres avancés du profil",
+  "trust.1a":"Fait au Canada","trust.1b":"Conçu au Québec, pour nos épiceries",
+  "trust.2a":"Sans publicité","trust.2b":"Aucune marque ne paie pour être recommandée",
+  "trust.3a":"Privé","trust.3b":"Vos scans restent sur votre appareil",
+  "scanner.hint":"Placez le code-barres dans le cadre","scanner.sim":"Simuler un scan","scanner.cancel":"Annuler","scanner.reading":"Lecture du code-barres…",
+  "res.back":"Retour à l'accueil","res.filters":"Filtres combinés :","res.base":"Base fixe (100 g)","res.portion":"Portion réelle",
+  "res.adjust":"Ajustez votre portion réelle : x{m}","res.grams":"≈ {g} g",
+  "res.matches":"Le produit respecte vos critères sélectionnés.",
+  "alert.sugar":"Alerte glycémique : trop de sucre.","alert.satfat":"Cardio : gras saturés élevés.","alert.sodium":"Alerte sodium : trop de sel pour votre objectif.","alert.protein":"Protéines : trop peu pour votre objectif.","alert.allergen":"Allergène : contient {a}.",
+  "res.bio":"Analyse biologique","res.alts":"Meilleures alternatives pour vous","res.fits":"Adapté à vos objectifs",
+  "nut.sugars":"Sucres","nut.satfat":"Gras sat.","nut.sodium":"Sodium","nut.protein":"Protéines",
+  "rating.poor":"Médiocre","rating.fair":"Passable","rating.good":"Bon","rating.excellent":"Excellent",
+  "hist.title":"Votre historique de scans","hist.lede":"Touchez un scan pour rouvrir son analyse.","hist.empty":"Aucun scan pour l'instant. Scannez un produit dans l'onglet Analyse.","hist.clear":"Effacer l'historique","hist.example":"Exemple","hist.cleared":"Historique effacé.",
+  "faq.title":"Foire aux questions",
+  "faq":[
+    ["Comment le score est-il calculé ?","Chaque produit reçoit un score sur 100 selon ses sucres, gras saturés, sodium, fibres et protéines par 100 g, comparés aux valeurs quotidiennes de Santé Canada. Vos objectifs ajoutent ensuite des alertes précises."],
+    ["Quelle différence entre Base fixe et Portion réelle ?","La Base fixe affiche les valeurs pour 100 g afin de comparer équitablement. La Portion réelle les multiplie par ce que vous mangez vraiment, par exemple x0,3 pour 30 g de tartinade."],
+    ["Pourquoi seulement 3 objectifs ?","Au-delà de trois, les alertes deviennent contradictoires et difficiles à lire. Trois couvrent les combinaisons les plus courantes, comme Faible en sucre et Cardio."],
+    ["Les alternatives sont-elles commanditées ?","Non. Elles sont classées uniquement selon vos objectifs et leur score. Aucune marque ne peut payer pour y apparaître."],
+    ["NutriClarté remplace-t-il un avis médical ?","Non. NutriClarté vous aide à lire les étiquettes. Pour un diagnostic ou un plan alimentaire, consultez votre médecin ou une nutritionniste."],
+    ["Quelles langues sont offertes ?","Le français, l'anglais et l'espagnol. Utilisez le sélecteur FR / EN / ES en haut à droite de chaque page."]
+  ],
+  "profile.title":"Paramètres avancés du profil","profile.desc":"Ces paramètres ajoutent des alertes personnelles à chaque analyse. Ils sont enregistrés sur cet appareil seulement.",
+  "profile.age":"Groupe d'âge","age.1":"18–34 ans","age.2":"35–54 ans","age.3":"55 ans et plus","profile.allergies":"Allergies et intolérances",
+  "allergen.nuts":"Noix","allergen.milk":"Lait","allergen.gluten":"Gluten","allergen.soy":"Soya","allergen.peanuts":"Arachides",
+  "profile.save":"Enregistrer","profile.cancel":"Annuler","profile.saved":"Profil enregistré.",
+  "contact.eyebrow":"Contact","contact.title":"Parlez à l'équipe NutriClarté","contact.lede":"Une question sur un score, un bogue ou vos données ? Écrivez-nous : une vraie personne vous répondra d'ici 2 jours ouvrables.",
+  "f.name":"Nom complet","f.email":"Adresse courriel","f.topic":"Sujet","f.message":"Message","f.consent":"J'accepte que NutriClarté utilise ces renseignements uniquement pour répondre à ma demande.","f.send":"Envoyer le message",
+  "topic.general":"Question générale","topic.support":"Soutien technique","topic.privacy":"Confidentialité ou demande de données","topic.partner":"Partenariats et médias",
+  "err.name":"Veuillez entrer votre nom.","err.email":"Veuillez entrer une adresse courriel valide, comme nom@exemple.com.","err.message":"Veuillez écrire au moins 10 caractères.","err.consent":"Veuillez cocher cette case pour que nous puissions répondre.",
+  "ok.title":"Merci, {name} !","ok.body":"Votre message au sujet de « {topic} » a été reçu. Nous répondrons d'ici 2 jours ouvrables à {email}.","ok.demo":"Démo : dans ce prototype, le formulaire n'est pas encore relié à un serveur, donc rien n'a réellement été envoyé.","ok.again":"Envoyer un autre message",
+  "c.call":"Appelez-nous","c.hours":"Du lundi au vendredi, de 9 h à 17 h (heure de l'Est)","c.copy":"Copier le numéro","c.copied":"Numéro copié.","c.where":"Où nous trouver","c.place":"Québec, Canada","c.reply":"Délai de réponse","c.replyv":"D'ici 2 jours ouvrables, en français, en anglais ou en espagnol.",
+  "page.about":`
+<span class="eyebrow">À propos</span>
+<h1>Pourquoi nous avons créé NutriClarté</h1>
+<p class="lede">NutriClarté est née d'une frustration toute simple : être dans une allée d'épicerie, deux pots à la main, sans pouvoir dire lequel est vraiment meilleur pour la personne pour qui on magasine.</p>
+<h2>L'histoire derrière l'application</h2>
+<p>Les étiquettes nutritionnelles sont remplies de chiffres, mais elles répondent rarement à la vraie question : <em>est-ce bon pour moi ?</em> L'étiquette indique 55 g de sucre par 100 g. Est-ce beaucoup pour une personne diabétique ? Et si on n'en mange qu'une cuillère ? Et si on surveille aussi son cholestérol ?</p>
+<p>Nous avons vu des proches se débattre avec ces questions après un diagnostic. On leur a dit de « mieux manger », puis on les a laissés seuls devant des petits caractères, deux langues sur chaque emballage et des allégations comme « léger » ou « naturel » qui veulent dire bien peu.</p>
+<p class="quote">Nous voulions un outil qui transforme une étiquette en réponse claire en moins de cinq secondes, dans la langue dans laquelle vous pensez.</p>
+<p>C'est devenu NutriClarté : scannez un code-barres, choisissez jusqu'à trois objectifs, et obtenez un score, des alertes en langage clair et de meilleures alternatives sur la même tablette.</p>
+<h2>Qui nous sommes</h2>
+<p>Nous sommes une petite équipe indépendante établie au Québec, qui allie le développement logiciel à une passion pour la nutrition et la santé publique. Nous n'appartenons à aucune entreprise alimentaire ni à aucune chaîne d'épiceries, et nous comptons rester ainsi.</p>
+<h2>Pourquoi nous faire confiance</h2>
+<div class="grid2">
+  <div class="card"><h3>Recommandations indépendantes</h3><p class="muted">Aucune marque ne peut payer pour améliorer son score ou apparaître comme alternative.</p></div>
+  <div class="card"><h3>Sources de données publiques</h3><p class="muted">Les scores utilisent le tableau de la valeur nutritive de l'emballage et les valeurs quotidiennes de Santé Canada.</p></div>
+  <div class="card"><h3>La confidentialité d'abord</h3><p class="muted">Vos objectifs, votre profil et votre historique restent sur votre appareil. Nous ne vendons jamais de données.</p></div>
+  <div class="card"><h3>Des humains joignables</h3><p class="muted">Appelez-nous ou écrivez-nous. Une personne de l'équipe vous répond, en français, en anglais ou en espagnol.</p></div>
+</div>
+<h2>Notre mission</h2>
+<p><strong>La santé sans confusion. Wellness made simple.</strong> Nous voulons que chaque personne, quels que soient son état de santé ou sa langue, puisse faire un choix éclairé en épicerie.</p>
+<p><a class="btn" href="#contact">Contacter l'équipe</a></p>`,
+  "page.support":`
+<span class="eyebrow">Soutien</span>
+<h1>Comment pouvons-nous vous aider ?</h1>
+<p class="lede">Des réponses rapides aux questions les plus courantes. Si vous êtes encore bloqué, notre équipe est à un message de vous.</p>
+<h2>Pour commencer</h2>
+<ol>
+  <li>Choisissez jusqu'à 3 objectifs nutritionnels dans l'onglet Analyse (par exemple Faible en sucre et Cardio).</li>
+  <li>Touchez <strong>Scanner un produit</strong> et placez le code-barres dans le cadre.</li>
+  <li>Lisez le score et les alertes, puis alternez entre <strong>Base fixe (100 g)</strong> et <strong>Portion réelle</strong>.</li>
+  <li>Déplacez le curseur selon la quantité que vous mangez vraiment.</li>
+  <li>Parcourez les <strong>Meilleures alternatives pour vous</strong> pour trouver une meilleure option.</li>
+</ol>
+<h2>Dépannage</h2>
+<div class="grid2">
+  <div class="card"><h3>La caméra ne s'ouvre pas</h3><p class="muted">Autorisez l'accès à la caméra pour NutriClarté dans les réglages de votre téléphone, puis rouvrez l'application.</p></div>
+  <div class="card"><h3>Produit introuvable</h3><p class="muted">Certains produits locaux ou nouveaux ne sont pas encore dans notre base. Envoyez-nous le code-barres par le formulaire de contact et nous l'ajouterons.</p></div>
+  <div class="card"><h3>Le score semble erroné</h3><p class="muted">Vérifiez si vous êtes en mode Portion réelle. Puis indiquez-nous le nom du produit pour que nous le vérifiions.</p></div>
+  <div class="card"><h3>Changer la langue</h3><p class="muted">Utilisez le sélecteur FR / EN / ES en haut à droite de n'importe quelle page. Votre choix est mémorisé.</p></div>
+</div>
+<h2>Compte et données</h2>
+<p>NutriClarté fonctionne sans compte. Votre historique et votre profil restent sur votre appareil. Pour tout effacer, utilisez <strong>Supprimer toutes mes données</strong> dans l'onglet Historique. <strong>Effacer l'historique</strong> retire seulement vos scans passés.</p>
+<h2>Besoin d'aide supplémentaire ?</h2>
+<p>Utilisez notre formulaire de contact ou appelez-nous pendant les heures d'ouverture. Nous répondons d'ici 2 jours ouvrables.</p>
+<p><a class="btn" href="#contact">Contacter le soutien</a></p>`,
+  "page.privacy":`
+<span class="eyebrow">Confidentialité</span>
+<h1>Politique de confidentialité</h1>
+<p class="updated">Dernière mise à jour : 1er novembre 2026</p>
+<p class="lede">En bref : vos objectifs de santé sont personnels. Nous recueillons le minimum, nous le gardons sur votre appareil autant que possible, et nous ne le vendons jamais.</p>
+<h2>1. Ce que nous recueillons</h2>
+<ul>
+  <li><strong>Sur votre appareil seulement :</strong> les objectifs choisis, votre profil avancé (groupe d'âge, allergies) et votre historique de scans.</li>
+  <li><strong>Lors d'un scan :</strong> le numéro du code-barres, envoyé à notre base de produits pour obtenir la valeur nutritive. Il n'est pas lié à votre identité.</li>
+  <li><strong>Lorsque vous nous écrivez :</strong> votre nom, votre courriel et votre message, utilisés uniquement pour vous répondre.</li>
+</ul>
+<h2>2. Ce que nous ne faisons jamais</h2>
+<ul>
+  <li>Nous ne vendons, ne louons ni n'échangeons de renseignements personnels.</li>
+  <li>Nous n'affichons pas de publicité et ne partageons pas de données avec les marques alimentaires.</li>
+  <li>Nous ne recueillons ni votre position précise ni vos contacts.</li>
+  <li>Nous ne chargeons aucun traceur, outil d'analyse ou police web de tiers. Le site charge uniquement ses propres fichiers.</li>
+</ul>
+<h2>3. Vos droits</h2>
+<p>En vertu de la Loi 25 du Québec et de la LPRPDE du Canada, vous pouvez accéder à vos renseignements personnels, les faire corriger ou supprimer, et retirer votre consentement. Faites votre demande par le formulaire de contact en choisissant « Confidentialité ou demande de données ». Nous répondons dans un délai de 30 jours.</p>
+<h2>4. Conservation et sécurité</h2>
+<p>Les messages de contact sont conservés au plus 24 mois, puis supprimés. Les données en transit sont chiffrées (HTTPS). Tout ce qui est enregistré sur votre appareil (historique, profil et réglages) peut être effacé en tout temps avec <strong>Supprimer toutes mes données</strong> dans l'onglet Historique.</p>
+<h2>5. Responsable de la protection des renseignements personnels</h2>
+<p>Notre responsable de la protection des renseignements personnels veille à la protection de vos données chez NutriClarté. Joignez cette personne par le <a href="#contact">formulaire de contact</a>.</p>
+<h2>6. Modifications</h2>
+<p>Si nous modifions cette politique, nous mettrons à jour la date ci-dessus et afficherons un avis dans l'application.</p>`
+},
+es: {
+  "data.title":"Borrar todos mis datos","data.desc":"Borre todo lo que NutriClarté guardó en este navegador: historial de escaneos, perfil (grupo de edad y alergias) y elección de idioma. No se puede deshacer.","data.delete":"Borrar todos mis datos","data.confirm":"¿Borrar su historial, su perfil y sus ajustes de este dispositivo?","data.yes":"Sí, borrar todo","data.no":"Conservar mis datos","data.deleted":"Todos sus datos se borraron de este dispositivo.",
+  "tab.analyze":"Análisis","tab.history":"Historial","tab.faq":"Preguntas","tab.about":"Nosotros","tab.support":"Soporte","tab.privacy":"Privacidad","tab.contact":"Contacto",
+  "footer.tag":"Bienestar sin complicaciones.","footer.demo":"Demo interactiva",
+  "tagline":"El análisis transparente",
+  "goals.title":"Objetivos nutricionales (máx. 3):",
+  "goal.standard":"Estándar ⚖️","goal.lowsodium":"Bajo en sodio 🛡️","goal.lowsugar":"Bajo en azúcar 🩸","goal.highprotein":"Alto en proteínas 💪","goal.cardio":"Cardio / Anticolesterol ❤️",
+  "goals.std":"Análisis estandarizado de base.","goals.active":"{n} perfil(es) activo(s) simultáneamente.","goals.max":"Puede combinar hasta 3 objetivos.",
+  "scan.btn":"Escanear producto","profile.btn":"Ajustes avanzados del perfil",
+  "trust.1a":"Hecho en Canadá","trust.1b":"Creado en Quebec, para los supermercados de aquí",
+  "trust.2a":"Sin anuncios","trust.2b":"Ninguna marca paga por ser recomendada",
+  "trust.3a":"Privado","trust.3b":"Sus escaneos se quedan en su dispositivo",
+  "scanner.hint":"Coloque el código de barras dentro del marco","scanner.sim":"Simular un escaneo","scanner.cancel":"Cancelar","scanner.reading":"Leyendo el código de barras…",
+  "res.back":"Volver al inicio","res.filters":"Filtros combinados:","res.base":"Base fija (100 g)","res.portion":"Porción real",
+  "res.adjust":"Ajuste su porción real: x{m}","res.grams":"≈ {g} g",
+  "res.matches":"El producto cumple con sus criterios seleccionados.",
+  "alert.sugar":"Alerta glucémica: demasiado azúcar.","alert.satfat":"Cardio: grasas saturadas elevadas.","alert.sodium":"Alerta de sodio: demasiada sal para su objetivo.","alert.protein":"Proteínas: muy pocas para su objetivo.","alert.allergen":"Alérgeno: contiene {a}.",
+  "res.bio":"Análisis biológico","res.alts":"Mejores alternativas para usted","res.fits":"Se adapta a sus objetivos",
+  "nut.sugars":"Azúcares","nut.satfat":"Grasa sat.","nut.sodium":"Sodio","nut.protein":"Proteínas",
+  "rating.poor":"Deficiente","rating.fair":"Regular","rating.good":"Bueno","rating.excellent":"Excelente",
+  "hist.title":"Su historial de escaneos","hist.lede":"Toque un escaneo para volver a abrir su análisis.","hist.empty":"Todavía no hay escaneos. Escanee un producto desde la pestaña Análisis.","hist.clear":"Borrar historial","hist.example":"Ejemplo","hist.cleared":"Historial borrado.",
+  "faq.title":"Preguntas frecuentes",
+  "faq":[
+    ["¿Cómo se calcula la puntuación?","Cada producto recibe una puntuación sobre 100 según sus azúcares, grasas saturadas, sodio, fibra y proteínas por 100 g, comparados con los valores diarios de Salud Canadá. Sus objetivos añaden luego alertas específicas."],
+    ["¿Qué diferencia hay entre Base fija y Porción real?","La Base fija muestra los valores por 100 g para comparar de forma justa. La Porción real los multiplica por lo que usted realmente come, por ejemplo x0,3 para 30 g de crema untable."],
+    ["¿Por qué solo 3 objetivos?","Con más de tres, las alertas se vuelven contradictorias y difíciles de leer. Tres cubren las combinaciones más comunes, como Bajo en azúcar y Cardio."],
+    ["¿Las alternativas están patrocinadas?","No. Se ordenan solo según sus objetivos y su puntuación. Ninguna marca puede pagar para aparecer."],
+    ["¿NutriClarté es un consejo médico?","No. NutriClarté le ayuda a leer etiquetas. Para un diagnóstico o un plan de alimentación, consulte a su médico o a un nutricionista."],
+    ["¿Qué idiomas están disponibles?","Francés, inglés y español. Use el selector FR / EN / ES en la esquina superior derecha de cada página."]
+  ],
+  "profile.title":"Ajustes avanzados del perfil","profile.desc":"Estos ajustes añaden alertas personales a cada análisis. Se guardan solo en este dispositivo.",
+  "profile.age":"Grupo de edad","age.1":"18–34 años","age.2":"35–54 años","age.3":"55 años o más","profile.allergies":"Alergias e intolerancias",
+  "allergen.nuts":"Frutos secos","allergen.milk":"Leche","allergen.gluten":"Gluten","allergen.soy":"Soya","allergen.peanuts":"Cacahuetes",
+  "profile.save":"Guardar","profile.cancel":"Cancelar","profile.saved":"Perfil guardado.",
+  "contact.eyebrow":"Contacto","contact.title":"Hable con el equipo de NutriClarté","contact.lede":"¿Preguntas sobre una puntuación, un error o sus datos? Escríbanos y una persona real le responderá en un plazo de 2 días hábiles.",
+  "f.name":"Nombre completo","f.email":"Correo electrónico","f.topic":"Asunto","f.message":"Mensaje","f.consent":"Acepto que NutriClarté use esta información solo para responder a mi solicitud.","f.send":"Enviar mensaje",
+  "topic.general":"Pregunta general","topic.support":"Soporte técnico","topic.privacy":"Privacidad o solicitud de datos","topic.partner":"Alianzas y medios",
+  "err.name":"Por favor, escriba su nombre.","err.email":"Por favor, escriba un correo válido, como nombre@ejemplo.com.","err.message":"Por favor, escriba al menos 10 caracteres.","err.consent":"Marque esta casilla para que podamos responderle.",
+  "ok.title":"¡Gracias, {name}!","ok.body":"Hemos recibido su mensaje sobre «{topic}». Responderemos en un plazo de 2 días hábiles a {email}.","ok.demo":"Demo: en este prototipo el formulario aún no está conectado a un servidor, así que no se envió nada.","ok.again":"Enviar otro mensaje",
+  "c.call":"Llámenos","c.hours":"De lunes a viernes, de 9:00 a 17:00 (hora del Este)","c.copy":"Copiar número","c.copied":"Número copiado.","c.where":"Dónde estamos","c.place":"Quebec, Canadá","c.reply":"Tiempo de respuesta","c.replyv":"En un plazo de 2 días hábiles, en francés, inglés o español.",
+  "page.about":`
+<span class="eyebrow">Nosotros</span>
+<h1>Por qué creamos NutriClarté</h1>
+<p class="lede">NutriClarté nació de una frustración sencilla: estar en un pasillo del supermercado con dos frascos en la mano y no poder saber cuál es realmente mejor para la persona para quien compra.</p>
+<h2>La historia detrás de la aplicación</h2>
+<p>Las etiquetas nutricionales están llenas de números, pero rara vez responden a la verdadera pregunta: <em>¿esto es bueno para mí?</em> La etiqueta dice 55 g de azúcar por 100 g. ¿Es mucho para alguien con diabetes? ¿Y si solo come una cucharada? ¿Y si también cuida su colesterol?</p>
+<p>Vimos a seres queridos luchar con estas preguntas después de un diagnóstico. Les dijeron que «comieran mejor» y luego los dejaron solos frente a letra pequeña, dos idiomas en cada envase y frases como «light» o «natural» que significan muy poco.</p>
+<p class="quote">Queríamos una herramienta que convierta una etiqueta en una respuesta clara en menos de cinco segundos, en el idioma en que usted piensa.</p>
+<p>Así nació NutriClarté: escanee un código de barras, elija hasta tres objetivos y obtenga una puntuación, alertas en lenguaje sencillo y mejores alternativas del mismo estante.</p>
+<h2>Quiénes somos</h2>
+<p>Somos un equipo pequeño e independiente con sede en Quebec, que combina el desarrollo de software con un gran interés por la nutrición y la salud pública. No pertenecemos a ninguna empresa de alimentos ni cadena de supermercados, y queremos seguir así.</p>
+<h2>Por qué puede confiar en nosotros</h2>
+<div class="grid2">
+  <div class="card"><h3>Recomendaciones independientes</h3><p class="muted">Ninguna marca puede pagar para mejorar su puntuación o aparecer como alternativa.</p></div>
+  <div class="card"><h3>Fuentes de datos públicas</h3><p class="muted">Las puntuaciones usan la tabla nutricional del envase y los valores diarios de Salud Canadá.</p></div>
+  <div class="card"><h3>Privacidad primero</h3><p class="muted">Sus objetivos, su perfil y su historial se quedan en su dispositivo. Nunca vendemos datos.</p></div>
+  <div class="card"><h3>Personas reales</h3><p class="muted">Llámenos o escríbanos. Una persona del equipo le responde, en francés, inglés o español.</p></div>
+</div>
+<h2>Nuestra misión</h2>
+<p><strong>La santé sans confusion. Wellness made simple.</strong> Queremos que cada persona, sin importar su condición de salud o su idioma, pueda elegir con confianza en el supermercado.</p>
+<p><a class="btn" href="#contact">Contactar al equipo</a></p>`,
+  "page.support":`
+<span class="eyebrow">Soporte</span>
+<h1>¿Cómo podemos ayudarle?</h1>
+<p class="lede">Respuestas rápidas a las preguntas más comunes. Si aún tiene dudas, nuestro equipo está a un mensaje de distancia.</p>
+<h2>Primeros pasos</h2>
+<ol>
+  <li>Elija hasta 3 objetivos nutricionales en la pestaña Análisis (por ejemplo Bajo en azúcar y Cardio).</li>
+  <li>Toque <strong>Escanear producto</strong> y coloque el código de barras dentro del marco.</li>
+  <li>Lea la puntuación y las alertas, y cambie entre <strong>Base fija (100 g)</strong> y <strong>Porción real</strong>.</li>
+  <li>Mueva el control deslizante según la cantidad que realmente come.</li>
+  <li>Revise las <strong>Mejores alternativas para usted</strong> para encontrar una mejor opción.</li>
+</ol>
+<h2>Solución de problemas</h2>
+<div class="grid2">
+  <div class="card"><h3>La cámara no se abre</h3><p class="muted">Permita el acceso a la cámara para NutriClarté en los ajustes de su teléfono y vuelva a abrir la aplicación.</p></div>
+  <div class="card"><h3>Producto no encontrado</h3><p class="muted">Algunos productos locales o nuevos aún no están en nuestra base. Envíenos el código de barras con el formulario de contacto y lo añadiremos.</p></div>
+  <div class="card"><h3>La puntuación parece incorrecta</h3><p class="muted">Verifique si está en modo Porción real. Luego díganos el nombre del producto para revisarlo.</p></div>
+  <div class="card"><h3>Cambiar el idioma</h3><p class="muted">Use el selector FR / EN / ES en la esquina superior derecha de cualquier página. Su elección se recuerda.</p></div>
+</div>
+<h2>Cuenta y datos</h2>
+<p>NutriClarté funciona sin cuenta. Su historial y su perfil se quedan en su dispositivo. Para borrarlo todo, use <strong>Borrar todos mis datos</strong> en la pestaña Historial. <strong>Borrar historial</strong> elimina solo sus escaneos anteriores.</p>
+<h2>¿Todavía necesita ayuda?</h2>
+<p>Use nuestro formulario de contacto o llámenos en horario de atención. Respondemos en un plazo de 2 días hábiles.</p>
+<p><a class="btn" href="#contact">Contactar a soporte</a></p>`,
+  "page.privacy":`
+<span class="eyebrow">Privacidad</span>
+<h1>Política de privacidad</h1>
+<p class="updated">Última actualización: 1 de noviembre de 2026</p>
+<p class="lede">En resumen: sus objetivos de salud son personales. Recopilamos lo mínimo, lo guardamos en su dispositivo siempre que podemos y nunca lo vendemos.</p>
+<h2>1. Qué recopilamos</h2>
+<ul>
+  <li><strong>Solo en su dispositivo:</strong> los objetivos elegidos, su perfil avanzado (grupo de edad, alergias) y su historial de escaneos.</li>
+  <li><strong>Al escanear:</strong> el número del código de barras, enviado a nuestra base de productos para obtener la información nutricional. No se vincula a su identidad.</li>
+  <li><strong>Cuando nos escribe:</strong> su nombre, su correo y su mensaje, usados solo para responderle.</li>
+</ul>
+<h2>2. Lo que nunca hacemos</h2>
+<ul>
+  <li>No vendemos, alquilamos ni intercambiamos información personal.</li>
+  <li>No mostramos publicidad ni compartimos datos con marcas de alimentos.</li>
+  <li>No recopilamos su ubicación precisa ni sus contactos.</li>
+  <li>No cargamos rastreadores, herramientas de análisis ni fuentes web de terceros. El sitio solo carga sus propios archivos.</li>
+</ul>
+<h2>3. Sus derechos</h2>
+<p>Según la Ley 25 de Quebec y la ley canadiense PIPEDA, usted puede acceder a su información personal, corregirla o eliminarla, y retirar su consentimiento. Envíe su solicitud con el formulario de contacto eligiendo «Privacidad o solicitud de datos». Respondemos en un plazo de 30 días.</p>
+<h2>4. Conservación y seguridad</h2>
+<p>Los mensajes de contacto se conservan hasta 24 meses y luego se eliminan. Los datos en tránsito están cifrados (HTTPS). Todo lo guardado en su dispositivo (historial, perfil y ajustes) puede borrarse en cualquier momento con <strong>Borrar todos mis datos</strong> en la pestaña Historial.</p>
+<h2>5. Responsable de privacidad</h2>
+<p>Nuestro responsable de privacidad protege la información personal en NutriClarté. Puede contactarlo mediante el <a href="#contact">formulario de contacto</a>.</p>
+<h2>6. Cambios</h2>
+<p>Si modificamos esta política, actualizaremos la fecha de arriba y mostraremos un aviso en la aplicación.</p>`
+}
+};
+
+// ---------- Demo data (per 100 g) ----------
+const PRODUCTS = [
+  { id:"hazelnut", score:35, portion:0.3, allergens:["nuts","milk"],
+    name:{en:"Hazelnut spread with cocoa",fr:"Pâte à tartiner noisettes et cacao",es:"Crema de avellanas con cacao"},
+    n:{sugars:55,satfat:10,sodium:50,protein:6},
+    alts:[
+      {name:"Purée de Noisettes 100% Pure",score:88,goals:["lowsugar","cardio"],n:{sugars:3.5,satfat:4.5,sodium:5,protein:15},
+       why:{en:"Ideal for Diabetes & Cardio (zero added sugar, healthy fats)",fr:"Idéal diabète et cardio (zéro sucre ajouté, bons gras)",es:"Ideal para diabetes y cardio (sin azúcar añadido, grasas saludables)"}},
+      {name:"Beurre de Cacahuète Protéiné",score:78,goals:["highprotein"],n:{sugars:6,satfat:6.2,sodium:40,protein:30},
+       why:{en:"Ideal for Bulking (High in protein)",fr:"Idéal pour la prise de masse (riche en protéines)",es:"Ideal para ganar masa muscular (alto en proteínas)"}},
+      {name:"Pâte Tartiner Choco Bio Light",score:65,goals:["lowsugar","lowsodium"],n:{sugars:12,satfat:3.1,sodium:15,protein:7},
+       why:{en:"Guilt-free alternative with reduced sugar",fr:"Alternative sans culpabilité, moins sucrée",es:"Alternativa sin culpa, con menos azúcar"}}
+    ]},
+  { id:"cereal", score:42, portion:0.4, allergens:["gluten"],
+    name:{en:"Frosted corn flakes",fr:"Flocons de maïs givrés",es:"Copos de maíz azucarados"},
+    n:{sugars:37,satfat:0.5,sodium:450,protein:5},
+    alts:[
+      {name:"Gruau d'avoine nature",score:92,goals:["lowsugar","lowsodium","cardio"],n:{sugars:1,satfat:1.2,sodium:5,protein:13},
+       why:{en:"Soluble fibre helps lower cholesterol",fr:"Les fibres solubles aident à réduire le cholestérol",es:"La fibra soluble ayuda a bajar el colesterol"}},
+      {name:"Muesli sans sucre ajouté",score:81,goals:["lowsugar","lowsodium"],n:{sugars:8,satfat:1.5,sodium:20,protein:10},
+       why:{en:"Natural sweetness from dried fruit only",fr:"Douceur naturelle des fruits séchés seulement",es:"Dulzor natural solo de fruta deshidratada"}},
+      {name:"Céréales Protéinées Croquantes",score:74,goals:["highprotein"],n:{sugars:5,satfat:1,sodium:300,protein:25},
+       why:{en:"Keeps you full longer (high in protein)",fr:"Rassasie plus longtemps (riche en protéines)",es:"Le mantiene saciado más tiempo (alto en proteínas)"}}
+    ]},
+  { id:"soup", score:48, portion:2.5, allergens:["gluten","soy"],
+    name:{en:"Chicken noodle soup (canned)",fr:"Soupe poulet et nouilles (conserve)",es:"Sopa de pollo con fideos (lata)"},
+    n:{sugars:1.2,satfat:0.4,sodium:720,protein:3},
+    alts:[
+      {name:"Soupe aux lentilles maison",score:86,goals:["lowsodium","highprotein","cardio"],n:{sugars:2,satfat:0.2,sodium:230,protein:9},
+       why:{en:"Plant protein and fibre, much less salt",fr:"Protéines végétales et fibres, beaucoup moins de sel",es:"Proteína vegetal y fibra, mucha menos sal"}},
+      {name:"Soupe Poulet Réduite en Sodium",score:84,goals:["lowsodium","cardio"],n:{sugars:1,satfat:0.3,sodium:140,protein:3.5},
+       why:{en:"Same taste, 80% less sodium",fr:"Même goût, 80 % moins de sodium",es:"Mismo sabor, 80 % menos sodio"}},
+      {name:"Bouillon d'os Bio",score:77,goals:["highprotein","lowsugar"],n:{sugars:0.5,satfat:0.2,sodium:290,protein:10},
+       why:{en:"High in protein, almost no sugar",fr:"Riche en protéines, presque sans sucre",es:"Alto en proteínas, casi sin azúcar"}}
+    ]}
+];
+const GOALS = ["standard","lowsodium","lowsugar","highprotein","cardio"];
+// Alert thresholds apply to the values on screen (per 100 g or per real portion)
+const LIMITS = { sugars:15, satfat:5, sodium:400, protein:10 };
+const PHONE = "+1 (438) 808-8911";
+
+// ---------- State ----------
+const store = {
+  get(k,d){ try{ const v=localStorage.getItem("nc."+k); return v?JSON.parse(v):d; }catch(e){ return d; } },
+  set(k,v){ try{ localStorage.setItem("nc."+k,JSON.stringify(v)); }catch(e){} },
+  wipe(){ try{ Object.keys(localStorage).filter(k=>k.startsWith("nc.")).forEach(k=>localStorage.removeItem(k)); }catch(e){}
+          try{ sessionStorage.clear(); }catch(e){} }
+};
+// Validate everything read back from storage: it can be edited or corrupted, so keep only known values.
+const LANGS=["fr","en","es"], AGES=["1","2","3"], ALLERGENS=["nuts","peanuts","milk","gluten","soy"];
+function cleanLang(v){ return LANGS.includes(v)?v:"fr"; }
+function cleanProfile(v){
+  const o=(v&&typeof v==="object")?v:{};
+  return { age:AGES.includes(o.age)?o.age:"2",
+    allergies:Array.isArray(o.allergies)?[...new Set(o.allergies.filter(a=>ALLERGENS.includes(a)))]:[] };
+}
+function cleanHistory(v){
+  if(!Array.isArray(v)) return null;
+  return v.slice(0,30).filter(h=>h&&typeof h==="object"&&PRODUCTS.some(p=>p.id===h.pid)&&Number.isFinite(h.t))
+    .map(h=>{ let g=Array.isArray(h.goals)?[...new Set(h.goals.filter(x=>GOALS.includes(x)))]:[];
+      if(g.includes("standard")&&g.length>1) g=g.filter(x=>x!=="standard");
+      g=g.slice(0,3); return {pid:h.pid,goals:g.length?g:["standard"],t:h.t,example:h.example===true}; });
+}
+const S = {
+  lang: cleanLang(store.get("lang","fr")),
+  goals: ["standard"],
+  profile: cleanProfile(store.get("profile",null)),
+  history: cleanHistory(store.get("history",null)),
+  result: null, mode:"portion", mult:0.3, scanIdx:0,
+  contactSent: null, confirmDelete:false
+};
+if(!Array.isArray(S.history)){
+  const now=Date.now();
+  S.history=[
+    {pid:"cereal",goals:["lowsugar"],t:now-86400000*1-3600000*3,example:true},
+    {pid:"soup",goals:["lowsodium","cardio"],t:now-86400000*3-3600000*6,example:true}
+  ];
+}
+
+// ---------- Helpers ----------
+const $=(s,r=document)=>r.querySelector(s);
+const app=$("#app"), layer=$("#layer");
+function t(k,vars){ let s=(T[S.lang]&&T[S.lang][k]); if(s===undefined) s=T.en[k]; if(s===undefined) return k;
+  if(vars&&typeof s==="string") for(const v in vars) s=s.split("{"+v+"}").join(vars[v]); return s; }
+function esc(s){ return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+function num(x,dec){ return x.toLocaleString(S.lang==="en"?"en-CA":S.lang==="fr"?"fr-CA":"es",{minimumFractionDigits:dec,maximumFractionDigits:dec}); }
+function fmtMult(m){ return num(m,1); }
+function rating(sc){ return sc<40?"poor":sc<60?"fair":sc<80?"good":"excellent"; }
+function ringColor(sc){ return sc<40?"var(--bad)":sc<60?"var(--warn)":sc<80?"var(--water)":"var(--good)"; }
+function toast(msg){ const d=document.createElement("div"); d.className="toast"; d.setAttribute("role","status"); d.textContent=msg; document.body.appendChild(d); setTimeout(()=>d.remove(),2200); }
+function goalLabel(g){ return t("goal."+g); }
+function prod(id){ return PRODUCTS.find(p=>p.id===id); }
+function when(ts){ return new Date(ts).toLocaleString(S.lang==="en"?"en-CA":S.lang==="fr"?"fr-CA":"es",{dateStyle:"medium",timeStyle:"short"}); }
+
+// ---------- Chrome (header, tabs, lang) ----------
+function paintChrome(){
+  document.documentElement.lang = S.lang==="fr"?"fr-CA":S.lang==="es"?"es":"en-CA";
+  document.querySelectorAll("[data-lang]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.lang===S.lang)));
+  document.querySelectorAll("[data-i18n]").forEach(el=>el.textContent=t(el.dataset.i18n));
+  const route=currentRoute();
+  document.querySelectorAll("#tabs a").forEach(a=>{ if(a.getAttribute("href")==="#"+route) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current"); });
+  const tabs=$("#tabs"), act=tabs.querySelector('[aria-current="page"]');
+  if(act) tabs.scrollLeft=act.offsetLeft-(tabs.clientWidth-act.offsetWidth)/2;
+}
+document.querySelectorAll("[data-lang]").forEach(b=>b.addEventListener("click",()=>{ S.lang=b.dataset.lang; store.set("lang",S.lang); render(); }));
+
+const ROUTES=["analyze","history","faq","about","support","privacy","contact"];
+function currentRoute(){ const h=location.hash.replace("#",""); return ROUTES.includes(h)?h:"analyze"; }
+window.addEventListener("hashchange",()=>{ S.confirmDelete=false; render(); window.scrollTo(0,0); });
+
+// ---------- Views ----------
+function render(){
+  paintChrome();
+  const r=currentRoute();
+  if(r==="analyze") S.result?viewResult():viewHome();
+  else if(r==="history") viewHistory();
+  else if(r==="faq") viewFaq();
+  else if(r==="contact") viewContact();
+  else viewPage(r);
+}
+
+const CAM=`<svg viewBox="0 0 48 48" aria-hidden="true"><rect x="4" y="13" width="40" height="28" rx="6" fill="#7fb6e8"/><path d="M16 13l3-5h10l3 5z" fill="#5a8fc4"/><circle cx="24" cy="27" r="9" fill="#17365d" stroke="#fff" stroke-width="3"/><circle cx="24" cy="27" r="4" fill="#5aa6e6"/><path d="M36 6l1.6 3.4L41 11l-3.4 1.6L36 16l-1.6-3.4L31 11l3.4-1.6z" fill="#ffd34d"/></svg>`;
+
+function viewHome(){
+  const std=S.goals.includes("standard");
+  app.innerHTML=`<section class="view">
+    <div class="hero"><img src="${$(".brand img").src}" alt="NutriClarté — La santé sans confusion. Wellness made simple."><h1>Nutri<span>Clarté</span></h1><p>${t("tagline")}</p></div>
+    <div class="goals">
+      <h2><span aria-hidden="true">🎯</span>${t("goals.title")}</h2>
+      <div class="chips" role="group" aria-label="${esc(t("goals.title"))}">
+        ${GOALS.map(g=>`<button type="button" class="chip" data-goal="${g}" aria-pressed="${S.goals.includes(g)}">${goalLabel(g)}${S.goals.includes(g)&&g!=="standard"?" ✓":""}</button>`).join("")}
+      </div>
+      <p class="sub">${std?t("goals.std"):t("goals.active",{n:S.goals.length})}</p>
+    </div>
+    <div class="scanwrap"><button type="button" class="scanbtn" id="scan">${CAM}<span>${t("scan.btn")}</span></button></div>
+    <div class="center"><button type="button" class="btn ghost" id="profile"><span aria-hidden="true">👤</span>${t("profile.btn")}</button></div>
+    <div class="card trust">
+      <div><b>${t("trust.1a")}</b>${t("trust.1b")}</div>
+      <div><b>${t("trust.2a")}</b>${t("trust.2b")}</div>
+      <div><b>${t("trust.3a")}</b>${t("trust.3b")}</div>
+    </div>
+  </section>`;
+  app.querySelectorAll("[data-goal]").forEach(b=>b.addEventListener("click",()=>toggleGoal(b.dataset.goal)));
+  $("#scan").addEventListener("click",openScanner);
+  $("#profile").addEventListener("click",openProfile);
+}
+function toggleGoal(g){
+  let gs=S.goals.filter(x=>x!=="standard");
+  if(g==="standard"){ gs=[]; }
+  else if(gs.includes(g)) gs=gs.filter(x=>x!==g);
+  else { if(gs.length>=3){ toast(t("goals.max")); return; } gs.push(g); }
+  S.goals=gs.length?gs:["standard"];
+  const sc=$(".chips")?.scrollLeft||0; viewHome(); const c=$(".chips"); if(c) c.scrollLeft=sc;
+}
+
+function openScanner(){
+  layer.innerHTML=`<div class="scanner" role="dialog" aria-modal="true" aria-label="${esc(t("scan.btn"))}">
+    <div class="frame"><div class="bars"></div></div>
+    <p id="hint">${t("scanner.hint")}</p>
+    <button type="button" class="sim" id="sim">${t("scanner.sim")}</button>
+    <button type="button" class="cancel" id="cancel">${t("scanner.cancel")}</button>
+  </div>`;
+  $("#sim").focus();
+  $("#cancel").addEventListener("click",()=>layer.innerHTML="");
+  $("#sim").addEventListener("click",()=>{
+    $("#hint").textContent=t("scanner.reading"); $("#sim").disabled=true;
+    setTimeout(()=>{
+      const p=PRODUCTS[S.scanIdx%PRODUCTS.length]; S.scanIdx++;
+      layer.innerHTML="";
+      showResult(p.id,S.goals.slice(),true);
+    },900);
+  });
+}
+function showResult(pid,goals,record){
+  const p=prod(pid);
+  S.result={pid,goals}; S.mode="portion"; S.mult=p.portion; S.goals=goals.slice();
+  if(record){ S.history.unshift({pid,goals,t:Date.now()}); S.history=S.history.slice(0,30); store.set("history",S.history); }
+  if(location.hash!=="#analyze") location.hash="analyze"; else render();
+  window.scrollTo(0,0);
+}
+
+function computeAlerts(p,vals,goals){
+  const a=[];
+  if(goals.includes("lowsugar") && vals.sugars>LIMITS.sugars) a.push(["bad","!",t("alert.sugar")]);
+  if(goals.includes("cardio") && vals.satfat>LIMITS.satfat) a.push(["warn","⚠",t("alert.satfat")]);
+  if(goals.includes("lowsodium") && vals.sodium>LIMITS.sodium) a.push(["bad","!",t("alert.sodium")]);
+  if(goals.includes("highprotein") && vals.protein<LIMITS.protein) a.push(["warn","⚠",t("alert.protein")]);
+  const hits=p.allergens.filter(x=>S.profile.allergies.includes(x));
+  if(hits.length) a.push(["bad","!",t("alert.allergen",{a:hits.map(x=>t("allergen."+x).toLowerCase()).join(", ")})]);
+  return a;
+}
+function viewResult(){
+  const p=prod(S.result.pid), goals=S.result.goals;
+  const m=S.mode==="portion"?S.mult:1;
+  const v={sugars:p.n.sugars*m,satfat:p.n.satfat*m,sodium:p.n.sodium*m,protein:p.n.protein*m};
+  const alerts=computeAlerts(p,v,goals);
+  const rc=ringColor(p.score);
+  const filters=goals.map(goalLabel).join(" + ");
+  const rankedAlts=p.alts.map(a=>({...a,fit:a.goals.filter(g=>goals.includes(g)).length}))
+    .sort((x,y)=>y.fit-x.fit||y.score-x.score);
+  const cell=(k,unit,dec,over)=>`<div class="${over?"over":""}"><b>${num(v[k],dec)}${unit}</b><span>${t("nut."+k)}</span></div>`;
+  app.innerHTML=`<section class="view">
+    <button type="button" class="btn block" id="home"><span aria-hidden="true">🏠</span>${t("res.back")}</button>
+    <div class="filters"><strong>${t("res.filters")}</strong> ${esc(filters)}</div>
+    <div class="seg" role="group">
+      <button type="button" data-mode="base" aria-pressed="${S.mode==="base"}">${t("res.base")}</button>
+      <button type="button" data-mode="portion" aria-pressed="${S.mode==="portion"}">${t("res.portion")}</button>
+    </div>
+    ${S.mode==="portion"?`<div class="card slider"><label for="mult"><span>${t("res.adjust",{m:fmtMult(S.mult)})}</span><span class="muted">${t("res.grams",{g:Math.round(S.mult*100)})}</span></label>
+      <input id="mult" type="range" min="0.1" max="3" step="0.1" value="${S.mult}" aria-valuetext="x${S.mult}"></div>`:""}
+    <div class="card" style="--rc:${rc}">
+      <div class="score"><div class="ring" aria-label="${p.score}/100">${p.score}</div>
+        <div><div class="pname">${esc(p.name[S.lang])}</div><div class="rating">${t("rating."+rating(p.score))}</div></div></div>
+      <div class="alerts">${alerts.length?alerts.map(a=>`<div class="alert ${a[0]}"><i aria-hidden="true">${a[1]}</i><span>${a[2]}</span></div>`).join("")
+        :`<div class="alert good"><i aria-hidden="true">✓</i><span>${t("res.matches")}</span></div>`}</div>
+    </div>
+    <div class="label">${t("res.bio")}</div>
+    <div class="card nutr">
+      ${cell("sugars","g",1,goals.includes("lowsugar")&&v.sugars>LIMITS.sugars)}
+      ${cell("satfat","g",1,goals.includes("cardio")&&v.satfat>LIMITS.satfat)}
+      ${cell("sodium","mg",0,goals.includes("lowsodium")&&v.sodium>LIMITS.sodium)}
+      ${cell("protein","g",1,goals.includes("highprotein")&&v.protein<LIMITS.protein)}
+    </div>
+    <div class="label"><span aria-hidden="true">✨</span> ${t("res.alts")}</div>
+    ${rankedAlts.map(a=>`<div class="card alt">
+      <div class="head"><h3>${esc(a.name)}</h3><span class="pill">${a.score}/100</span></div>
+      <p class="why">${esc(a.why[S.lang])}</p>
+      ${a.fit&&!goals.includes("standard")?`<span class="match">✓ ${t("res.fits")}</span>`:""}
+      <div class="tags"><span>${t("nut.sugars")}: ${num(a.n.sugars*m,1)}g</span><span>${t("nut.satfat")}: ${num(a.n.satfat*m,1)}g</span><span>${t("nut.sodium")}: ${num(a.n.sodium*m,0)}mg</span><span>${t("nut.protein")}: ${num(a.n.protein*m,1)}g</span></div>
+    </div>`).join("")}
+  </section>`;
+  $("#home").addEventListener("click",()=>{ S.result=null; render(); window.scrollTo(0,0); });
+  app.querySelectorAll("[data-mode]").forEach(b=>b.addEventListener("click",()=>{ S.mode=b.dataset.mode; viewResult(); }));
+  const r=$("#mult"); if(r) r.addEventListener("input",()=>{ S.mult=Math.round(parseFloat(r.value)*10)/10; viewResult(); const n=$("#mult"); n&&n.focus(); });
+}
+
+function viewHistory(){
+  app.innerHTML=`<section class="view">
+    <div><h1 style="font-size:1.6rem">${t("hist.title")}</h1><p class="muted">${t("hist.lede")}</p></div>
+    <div class="hist">${S.history.length?S.history.map((h,i)=>{ const p=prod(h.pid); return `
+      <button type="button" class="card hrow" data-i="${i}" style="--rc:${ringColor(p.score)}">
+        <span class="ring">${p.score}</span>
+        <div><strong>${esc(p.name[S.lang])}</strong>${h.example?`<span class="ex">${t("hist.example")}</span>`:""}<br>
+        <small>${when(h.t)} · ${esc(h.goals.map(goalLabel).join(" + "))}</small></div>
+      </button>`;}).join(""):`<div class="card muted">${t("hist.empty")}</div>`}</div>
+    ${S.history.length?`<div><button type="button" class="btn ghost" id="clear">${t("hist.clear")}</button></div>`:""}
+    <div class="card danger">
+      <h2 style="font-size:1.1rem">${t("data.title")}</h2>
+      <p class="muted">${t("data.desc")}</p>
+      ${S.confirmDelete?`<p role="alert" style="font-weight:600">${t("data.confirm")}</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap"><button type="button" class="btn red" id="delyes">${t("data.yes")}</button><button type="button" class="btn ghost" id="delno">${t("data.no")}</button></div>`
+      :`<div><button type="button" class="btn red" id="delall">${t("data.delete")}</button></div>`}
+    </div>
+  </section>`;
+  const da=$("#delall"); if(da) da.addEventListener("click",()=>{ S.confirmDelete=true; viewHistory(); $("#delyes").focus(); });
+  const dn=$("#delno"); if(dn) dn.addEventListener("click",()=>{ S.confirmDelete=false; viewHistory(); });
+  const dy=$("#delyes"); if(dy) dy.addEventListener("click",()=>{
+    store.wipe();
+    S.history=[]; S.profile=cleanProfile(null); S.goals=["standard"]; S.result=null; S.contactSent=null; S.confirmDelete=false;
+    render(); toast(t("data.deleted"));
+  });
+  app.querySelectorAll("[data-i]").forEach(b=>b.addEventListener("click",()=>{ const h=S.history[+b.dataset.i]; showResult(h.pid,h.goals,false); }));
+  const c=$("#clear"); if(c) c.addEventListener("click",()=>{ S.history=[]; store.set("history",[]); viewHistory(); toast(t("hist.cleared")); });
+}
+
+function viewFaq(){
+  app.innerHTML=`<section class="view"><h1 style="font-size:1.6rem">${t("faq.title")}</h1>
+    <div>${t("faq").map((q,i)=>`<details${i===0?" open":""}><summary>${q[0]}</summary><p>${q[1]}</p></details>`).join("")}</div>
+    <p class="muted"><a href="#support">${t("tab.support")}</a> · <a href="#contact">${t("tab.contact")}</a></p></section>`;
+}
+
+function viewPage(r){ app.innerHTML=`<article class="view prose">${t("page."+r)}</article>`; }
+
+function viewContact(){
+  const topics=["general","support","privacy","partner"];
+  const sent=S.contactSent;
+  const prev=$("#cform")?{n:$("#c-name").value,e:$("#c-email").value,tp:$("#c-topic").value,m:$("#c-msg").value,c:$("#c-consent").checked}:null;
+  app.innerHTML=`<section class="view">
+    <div class="prose"><span class="eyebrow">${t("contact.eyebrow")}</span><h1>${t("contact.title")}</h1><p class="lede">${t("contact.lede")}</p></div>
+    <div class="contact">
+      <div class="card">${sent?`<div class="success" role="status">
+          <h3>${esc(t("ok.title",{name:sent.name}))}</h3>
+          <p>${esc(t("ok.body",{topic:t("topic."+sent.topic),email:sent.email}))}</p>
+          <p class="muted" style="font-size:.88rem">${t("ok.demo")}</p>
+          <div><button type="button" class="btn ghost" id="again">${t("ok.again")}</button></div></div>`
+      :`<form id="cform" novalidate>
+        <div class="field"><label for="c-name">${t("f.name")}</label><input id="c-name" name="name" autocomplete="name" required><span class="err" id="e-name"></span></div>
+        <div class="field"><label for="c-email">${t("f.email")}</label><input id="c-email" name="email" type="email" autocomplete="email" required><span class="err" id="e-email"></span></div>
+        <div class="field"><label for="c-topic">${t("f.topic")}</label><select id="c-topic" name="topic">${topics.map(x=>`<option value="${x}">${t("topic."+x)}</option>`).join("")}</select></div>
+        <div class="field"><label for="c-msg">${t("f.message")}</label><textarea id="c-msg" name="message" required></textarea><span class="err" id="e-message"></span></div>
+        <label class="check"><input type="checkbox" id="c-consent"><span>${t("f.consent")}</span></label><span class="err" id="e-consent" style="color:var(--bad);font-size:.85rem"></span>
+        <button type="submit" class="btn">${t("f.send")}</button>
+      </form>`}</div>
+      <aside class="side">
+        <div class="card"><span class="label">${t("c.call")}</span><span class="phone" id="phone">${PHONE}</span><span class="muted">${t("c.hours")}</span>
+          <button type="button" class="copy" id="copy">${t("c.copy")}</button></div>
+        <div class="card"><span class="label">${t("c.reply")}</span><span>${t("c.replyv")}</span></div>
+        <div class="card"><span class="label">${t("c.where")}</span><span>${t("c.place")}</span></div>
+      </aside>
+    </div></section>`;
+  $("#copy").addEventListener("click",()=>{
+    const ok=()=>toast(t("c.copied"));
+    try{ navigator.clipboard.writeText(PHONE).then(ok,()=>selectPhone()); }catch(e){ selectPhone(); }
+  });
+  const again=$("#again"); if(again) again.addEventListener("click",()=>{ S.contactSent=null; viewContact(); });
+  const f=$("#cform"); if(!f) return;
+  if(prev){ $("#c-name").value=prev.n; $("#c-email").value=prev.e; $("#c-topic").value=prev.tp; $("#c-msg").value=prev.m; $("#c-consent").checked=prev.c; }
+  f.addEventListener("submit",e=>{
+    e.preventDefault();
+    const d={name:$("#c-name").value.trim(),email:$("#c-email").value.trim(),topic:$("#c-topic").value,message:$("#c-msg").value.trim(),consent:$("#c-consent").checked};
+    const errs={name:!d.name&&t("err.name"),email:!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email)&&t("err.email"),message:d.message.length<10&&t("err.message"),consent:!d.consent&&t("err.consent")};
+    let first=null;
+    for(const k in errs){ $("#e-"+k).textContent=errs[k]||""; if(errs[k]&&!first) first=k; }
+    if(first){ ({name:"#c-name",email:"#c-email",message:"#c-msg",consent:"#c-consent"})[first] && $(({name:"#c-name",email:"#c-email",message:"#c-msg",consent:"#c-consent"})[first]).focus(); return; }
+    // Production: POST `d` to your form endpoint here (e.g. Formspree, Netlify Forms or your own API).
+    S.contactSent=d; viewContact(); window.scrollTo(0,0);
+  });
+}
+function selectPhone(){ const r=document.createRange(); r.selectNodeContents($("#phone")); const s=getSelection(); s.removeAllRanges(); s.addRange(r); }
+
+function openProfile(){
+  const P=S.profile, al=["nuts","peanuts","milk","gluten","soy"];
+  layer.innerHTML=`<div class="modal" id="pm"><div class="sheet" role="dialog" aria-modal="true" aria-labelledby="pt">
+    <h2 id="pt">${t("profile.title")}</h2><p class="muted">${t("profile.desc")}</p>
+    <div class="field"><label for="p-age">${t("profile.age")}</label><select id="p-age">${["1","2","3"].map(x=>`<option value="${x}"${P.age===x?" selected":""}>${t("age."+x)}</option>`).join("")}</select></div>
+    <div class="field"><span style="font-weight:600">${t("profile.allergies")}</span><div class="opts">${al.map(x=>`<button type="button" class="chip" data-al="${x}" aria-pressed="${P.allergies.includes(x)}">${t("allergen."+x)}</button>`).join("")}</div></div>
+    <div class="row"><button type="button" class="btn ghost" id="pc">${t("profile.cancel")}</button><button type="button" class="btn" id="ps">${t("profile.save")}</button></div>
+  </div></div>`;
+  layer.querySelectorAll("[data-al]").forEach(b=>b.addEventListener("click",()=>b.setAttribute("aria-pressed",String(b.getAttribute("aria-pressed")!=="true"))));
+  $("#pc").addEventListener("click",()=>layer.innerHTML="");
+  $("#pm").addEventListener("click",e=>{ if(e.target.id==="pm") layer.innerHTML=""; });
+  $("#ps").addEventListener("click",()=>{
+    S.profile={age:$("#p-age").value,allergies:[...layer.querySelectorAll('[data-al][aria-pressed="true"]')].map(b=>b.dataset.al)};
+    store.set("profile",S.profile); layer.innerHTML=""; toast(t("profile.saved"));
+  });
+}
+document.addEventListener("keydown",e=>{ if(e.key==="Escape") layer.innerHTML=""; });
+
+render();
+
+</script>
+
+</body>
 </html>
